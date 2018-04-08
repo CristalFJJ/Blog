@@ -1,0 +1,141 @@
+// 适配最小宽度
+$screen-width: 1260px; //最低适配1280，减去20是为了避免垂直滚动条影响布局
+html,
+body {
+  font-size: 12px;
+  font-family: Microsoft YaHei, Verdana, Arial, Helvetica, sans-serif;
+  color: #333;
+}
+
+body,
+ul,
+p ,
+{
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  min-width: $screen-width;
+  height: inherit;
+}
+
+ul {
+  list-style: none;
+}
+
+.fl {
+  float: left;
+}
+
+.fr {
+  float: right;
+}
+
+.clear {
+  zoom: 1;
+}
+
+.clearfix {
+  &:after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0;
+  }
+}
+
+a {
+  text-decoration: none;
+  color: #333; 
+}
+
+// 颜色
+$dialog-title-color: linear-gradient(-1deg, #2EA1F8 2%, #1990EA 100%);
+$font-color-normal:#666666;
+$font-color-gray: #333333;
+$font-color-white:#FFFFFF;
+$font-color-brown:rgb(116, 130, 150);
+$font-color-blue:#1464C2; // 
+$button-color:#419BF9;
+
+// 背景颜色
+$bg-color-white: #FFFFFF;
+$bg-color-blue_s: #419BF9;
+$bg-color-blue_m: #1075DE;
+$bg-color-green: #35AC45;
+$bg-color-gray: #EEEEEE;
+
+// 字体大小
+$font-size-20:20px;
+$font-size-18:18px;
+$font-size-14:14px;
+$font-size-12:12px;
+
+/*========= 通用 ========*/
+@mixin padding-left-right($left, $right) {
+  padding-left: $left;
+  padding-right: $right;
+}
+@mixin flex($justify, $aitems) {
+  display: flex;
+  justify-content: $justify;
+  align-items: $aitems;
+  @content;
+}
+@mixin border($border: solid 1px #FFFFFF, $shadow: none){
+  border: $border;
+  box-shadow: $shadow;
+}
+@mixin wh($width, $height) {
+  width: $width;
+  height: $height;
+}
+@mixin mmW ($min, $max) {
+  min-width: $min;
+  max-width: $max;
+}
+// 生成字体大小类
+@each $size in 40,36,32,28,24,20,18,16,14,12 {
+  .font-size-#{$size} {
+      font-size: #{$size}px;
+  }
+}
+// 生成字体颜色类
+@each $type, $color in (normal, $font-color-normal), (white, $font-color-white), (gray, $font-color-gray), (brown, $font-color-brown),(blue,$font-color-blue) {
+  .font-color-#{$type} {
+      color: #{$color};
+  }
+}
+// 生成背景颜色类
+@each $type, $color in (white, $bg-color-white), (blue_s, $bg-color-blue_s), (blue_m, $bg-color-blue_m), (green, $bg-color-green),(gray,$bg-color-gray) {
+  .bg-color-#{$type} {
+    background-color: #{$color};
+  }
+}
+// text-align
+@each $type in left, center, right {
+  .text-align-#{$type} { text-align: #{$type}; }
+}
+//flex-start
+@each $type in flex-start,space-around,space-between{
+  .#{$type}{
+    @include flex($type,center);
+  }
+}
+
+
+html, body {
+  @extend .font-size-12;
+  font-family: Microsoft YaHei, Verdana, Arial, Helvetica, sans-serif;
+  @extend .font-color-gray;
+}
+div,p,ul,li{
+  box-sizing: border-box;
+}

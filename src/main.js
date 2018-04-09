@@ -15,6 +15,10 @@ import api from "./common/api"; // 公共请求/接口
 import iview from 'iview';
 import 'iview/dist/styles/iview.css';
 Vue.use(iview);
+
+import Scrollbar from './common/js/scroller'; //滚动条
+Vue.use(Scrollbar);
+
 // Vue.config.productionTip = false
 /* eslint-disable no-new */
 window.bus = new Vue(); //非父子传值中间件

@@ -21,7 +21,9 @@ export default {
     justify-content: flex-start;
     height: 100%;
     .right-area{
+      padding: 30px;
       width:100%;
+      height: 100%;
     }
   }
   

@@ -1,52 +1,54 @@
 <template>
   <div class="control flex-start">
-    <div class="left-area">
-      <div class="left-area-statistics">
+    <div class="control-left-area">
+      <div class="control-left-area-statistics">
           <p class="font-color-blue font-size-24">网站统计</p>
           <div class="flex-start">
-            <ul class="flex-start left-area-statistics-count font-size-16">
+            <ul class="flex-start control-left-area-statistics-count font-size-16">
               <li>文章 <span>37</span></li>
               <li>评论 <span>25</span></li>
               <li>分类 <span>8</span></li>
               <li>访问量 <span>1111</span></li>
             </ul>
-            <div class="left-area-statistics-info font-size-20">
-              <div class="left-area-statistics-info-name">Cristal</div>
-              <p class="left-area-statistics-info-version">版本:1.0</p>
+            <div class="control-left-area-statistics-info font-size-20">
+              <div class="control-left-area-statistics-info-name">Cristal</div>
+              <p class="control-left-area-statistics-info-version">版本:1.0</p>
             </div>
           </div>
       </div>
-      <ul class="left-area-nav space-between font-size-18 font-color-blue">
+      <ul class="control-left-area-nav space-between font-size-18 font-color-blue">
         <li>撰写文章</li>
         <li>查看文章</li>
         <li>个人设置</li>
       </ul>
-      <div class="left-area-recently-artcle">
-        <p class="font-size-18 font-color-blue">最近文章</p>
-        <ul>
-          <li>
-            <span>2018/04/01</span>
-            <span>测试</span>
-            <span>测试XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</span>
-          </li>
-          <li>
-            <span>2018/04/01</span>
-            <span>测试</span>
-            <span>测试XXXXXXXXXXXXXXXXXXXXX</span>
-          </li>
-          <li>
-            <span>2018/04/01</span>
-            <span>测试</span>
-            <span>测试XXXXXXXXXXXXXXXXXXXXX</span>
-          </li>
-          <li>
-            <span>2018/04/01</span>
-            <span>测试</span>
-            <span>测试XXXXXXXXXXXXXXXXXXXXX</span>
-          </li>
-        </ul>
+      <div class="control-left-area-recently-artcle">
+        <scroll-bar>
+          <p class="font-size-18 font-color-blue">最近文章</p>
+          <ul>
+            <li>
+              <span>2018/04/01</span>
+              <span>测试</span>
+              <span>测试XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</span>
+            </li>
+            <li>
+              <span>2018/04/01</span>
+              <span>测试</span>
+              <span>测试XXXXXXXXXXXXXXXXXXXXX</span>
+            </li>
+            <li>
+              <span>2018/04/01</span>
+              <span>测试</span>
+              <span>测试XXXXXXXXXXXXXXXXXXXXX</span>
+            </li>
+            <li>
+              <span>2018/04/01</span>
+              <span>测试</span>
+              <span>测试XXXXXXXXXXXXXXXXXXXXX</span>
+            </li>
+          </ul>
+        </scroll-bar>
       </div>
-      <div class="left-area-recently-comment">
+      <div class="control-left-area-recently-comment">
         <p class="font-size-18 font-color-blue">最近评论</p>
         <ul>
          <li>
@@ -72,11 +74,11 @@
         </ul>
       </div>
     </div>
-    <div class="right-area">
-      <div class="right-area-cheat">
+    <div class="control-right-area">
+      <div class="control-right-area-cheat">
         <div class="space-between">
-          <div class="right-area-cheat-time font-size-20"><span>2018</span>年 <span>04</span>月<span>01</span>日</div>
-          <div class="right-area-cheat-add font-size-14">新增备忘</div>
+          <div class="control-right-area-cheat-time font-size-20"><span>2018</span>年 <span>04</span>月<span>01</span>日</div>
+          <div class="control-right-area-cheat-add font-size-14">新增备忘</div>
         </div>
         <ul>
           <li>
@@ -103,7 +105,7 @@
         </ul>
         <div>更多</div>
       </div>
-      <div class="right-area-draft">
+      <div class="control-right-area-draft">
         <p>最近保存草稿</p>
         <div>
           <div>
@@ -113,7 +115,7 @@
           <div>继续编写</div>
         </div>
       </div>
-      <div class="right-area-log">
+      <div class="control-right-area-log">
         <p>最新日志</p>
         <ul>
           <li>10.14 参与官方下个版本的投票</li>
@@ -134,17 +136,16 @@ export default {
 
 <style lang="scss">
   .control{
-    padding: 30px;
     align-items: stretch;
-    .left-area{
+    .control-left-area{
       flex: 2;
       width: 600px;
-      .left-area-statistics{
+      .control-left-area-statistics{
         width: 100%;
         background: #FFF;
         padding: 5%;
         border-radius: 4px;
-        .left-area-statistics-count{
+        .control-left-area-statistics-count{
           width: 66.7%;
           flex: 2;
           padding-top: 30px;
@@ -166,21 +167,21 @@ export default {
             }
           }
         }
-        .left-area-statistics-info{
+        .control-left-area-statistics-info{
           width: 33.3%;
           flex: 1;
           color: #BABABA;
-          .left-area-statistics-info-name{
+          .control-left-area-statistics-info-name{
             color: #060606;
             text-align: center;
             margin-bottom: 15%;
           }
-          .left-area-statistics-info-version{
+          .control-left-area-statistics-info-version{
             text-align: center;
           }
         }
       }
-      .left-area-nav{
+      .control-left-area-nav{
         width: 100%;
         li{
           width: 30%;
@@ -197,12 +198,14 @@ export default {
           }
         }
       }
-      .left-area-recently-artcle,.left-area-recently-comment{
+      .control-left-area-recently-artcle,.control-left-area-recently-comment{
         padding: 10px 30px;
         margin-top:30px; 
         width: 100%;
         background-color: #FFF; 
         border-radius: 4px;
+        height: 9%;
+        
         ul{
           li{
             font-size: 14px;
@@ -224,14 +227,14 @@ export default {
 
       
     }
-    .right-area{
+    .control-right-area{
       flex: 1;
       margin-left: 30px;
-      .right-area-cheat{
+      .control-right-area-cheat{
         background-color: #FFF;
         padding: 20px;
         border-radius: 4px;
-        .right-area-cheat-time{
+        .control-right-area-cheat-time{
           color: rgb(136, 136, 136);
           span{
             color: #1464C2;
@@ -242,7 +245,7 @@ export default {
             margin-left: 0;
           }
         }
-        .right-area-cheat-add{
+        .control-right-area-cheat-add{
           cursor: pointer;
           margin-top: 10px;
           padding: 0 10px;

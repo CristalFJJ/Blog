@@ -22,35 +22,52 @@
         <li>个人设置</li>
       </ul>
       <div class="control-left-area-recently-artcle">
-        <scroll-bar>
-          <p class="font-size-18 font-color-blue">最近文章</p>
-          <ul>
-            <li>
-              <span>2018/04/01</span>
-              <span>测试</span>
-              <span>测试XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</span>
-            </li>
-            <li>
-              <span>2018/04/01</span>
-              <span>测试</span>
-              <span>测试XXXXXXXXXXXXXXXXXXXXX</span>
-            </li>
-            <li>
-              <span>2018/04/01</span>
-              <span>测试</span>
-              <span>测试XXXXXXXXXXXXXXXXXXXXX</span>
-            </li>
-            <li>
-              <span>2018/04/01</span>
-              <span>测试</span>
-              <span>测试XXXXXXXXXXXXXXXXXXXXX</span>
-            </li>
+        <p class="font-size-18 font-color-blue">最近文章</p>
+        <ul>
+            <scroll-bar>
+              <li>
+                <span>2018/04/01</span>
+                <span>测试</span>
+                <span>测试XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</span>
+              </li>
+              <li>
+                <span>2018/04/01</span>
+                <span>测试</span>
+                <span>测试XXXXXXXXXXXXXXXXXXXXX</span>
+              </li>
+              <li>
+                <span>2018/04/01</span>
+                <span>测试</span>
+                <span>测试XXXXXXXXXXXXXXXXXXXXX</span>
+              </li>
+              <li>
+                <span>2018/04/01</span>
+                <span>测试</span>
+                <span>测试XXXXXXXXXXXXXXXXXXXXX</span>
+              </li>
+              <li>
+                <span>2018/04/01</span>
+                <span>测试</span>
+                <span>测试XXXXXXXXXXXXXXXXXXXXX</span>
+              </li>
+              <li>
+                <span>2018/04/01</span>
+                <span>测试</span>
+                <span>测试XXXXXXXXXXXXXXXXXXXXX</span>
+              </li>
+              <li>
+                <span>2018/04/01</span>
+                <span>测试</span>
+                <span>测试XXXXXXXXXXXXXXXXXXXXX</span>
+              </li>
+            </scroll-bar>
           </ul>
-        </scroll-bar>
+        
       </div>
       <div class="control-left-area-recently-comment">
         <p class="font-size-18 font-color-blue">最近评论</p>
         <ul>
+         <scroll-bar>
          <li>
             <span>2018/04/01</span>
             <span>测试</span>
@@ -71,6 +88,17 @@
             <span>测试</span>
             <span>测试XXXXXXXXXXXXXXXXXXXXX</span>
           </li>
+           <li>
+            <span>2018/04/01</span>
+            <span>测试</span>
+            <span>测试XXXXXXXXXXXXXXXXXXXXX</span>
+          </li>
+           <li>
+            <span>2018/04/01</span>
+            <span>测试</span>
+            <span>测试XXXXXXXXXXXXXXXXXXXXX</span>
+          </li>
+          </scroll-bar>
         </ul>
       </div>
     </div>
@@ -80,49 +108,55 @@
           <div class="control-right-area-cheat-time font-size-20"><span>2018</span>年 <span>04</span>月<span>01</span>日</div>
           <div class="control-right-area-cheat-add font-size-14">新增备忘</div>
         </div>
-        <ul>
+        <ul class="control-right-area-cheat-detail">
           <li>
             <div>
-              <p>4月</p>
-              <p>1日</p>
+              <p>04月</p>
+              <p>01日</p>
+            </div>
+            <p>XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</p>
+          </li>
+          <li>
+            <div>
+              <p>04月</p>
+              <p>01日</p>
             </div>
             <p>XXXXXXXXXX</p>
           </li>
           <li>
             <div>
-              <p>4月</p>
-              <p>1日</p>
-            </div>
-            <p>XXXXXXXXXX</p>
-          </li>
-          <li>
-            <div>
-              <p>4月</p>
-              <p>1日</p>
+              <p>04月</p>
+              <p>01日</p>
             </div>
             <p>XXXXXXXXXX</p>
           </li>
         </ul>
-        <div>更多</div>
+        <div class="control-right-area-cheat-more">更多</div>
       </div>
       <div class="control-right-area-draft">
-        <p>最近保存草稿</p>
-        <div>
-          <div>
+        <p class="font-size-18 font-color-blue">最近保存草稿</p>
+        <div class="flex-start">
+          <div class="control-right-area-draft-content font-size-14">
             <p>标题</p>
-            <p>XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</p>
+            <p class="font-size-12">XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</p>
           </div>
-          <div>继续编写</div>
+          <div class="control-right-area-draft-write font-size-14">继续编写</div>
         </div>
       </div>
       <div class="control-right-area-log">
-        <p>最新日志</p>
+        <p class="font-size-18 font-color-blue">最新日志</p>
         <ul>
-          <li>10.14 参与官方下个版本的投票</li>
-          <li>10.11 XXXXXXXXXXXXXXXXXXX</li>
-          <li>10.04 XXXXXXXXXXXXXXXXXXX</li>
+          <scroll-bar>
+            <li><span>10.14</span> 参与官方下个版本的投票</li>
+            <li><span>10.14</span> XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</li>
+            <li><span>10.14</span> XXXXXXXXXXXXXXXXXXX</li>
+            <li><span>10.14</span> XXXXXXXXXXXXXXXXXXX</li>
+            <li><span>10.14</span> XXXXXXXXXXXXXXXXXXX</li>
+            <li><span>10.14</span> XXXXXXXXXXXXXXXXXXX</li>
+            <li><span>10.14</span> XXXXXXXXXXXXXXXXXXX</li>
+          </scroll-bar>
         </ul>
-        <div>更多</div>
+        <div class="control-right-area-log-more">更多</div>
       </div>
     </div>
   </div>
@@ -143,7 +177,7 @@ export default {
       .control-left-area-statistics{
         width: 100%;
         background: #FFF;
-        padding: 5%;
+        padding: 3.5% 5% 3.5%;
         border-radius: 4px;
         .control-left-area-statistics-count{
           width: 66.7%;
@@ -188,7 +222,7 @@ export default {
           text-align: center;
           background-color: #FFF;
           line-height: 40px;
-          margin-top: 30px;
+          margin-top: 20px;
           border-radius: 4px;
           box-shadow: 0 0 5px rgb(224, 222, 222);
           cursor: pointer;
@@ -200,20 +234,21 @@ export default {
       }
       .control-left-area-recently-artcle,.control-left-area-recently-comment{
         padding: 10px 30px;
-        margin-top:30px; 
+        margin-top:20px; 
         width: 100%;
         background-color: #FFF; 
         border-radius: 4px;
-        height: 9%;
-        
+        height: 26%;
         ul{
+          height: 80%;
           li{
+            width: 100%;
             font-size: 14px;
             margin-top: 10px;
             cursor: pointer;
             overflow: hidden;
             white-space: nowrap;
-            
+            text-overflow:ellipsis;
             span{
               margin-right: 20px
             }
@@ -228,6 +263,7 @@ export default {
       
     }
     .control-right-area{
+      width: 400px;
       flex: 1;
       margin-left: 30px;
       .control-right-area-cheat{
@@ -254,6 +290,120 @@ export default {
           color: #9E9E9E;
           &:hover{
             color: #060606;
+          }
+        }
+        .control-right-area-cheat-detail{
+          margin-top: 20px;
+          li{
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            margin-bottom: 10px;
+            div{
+              margin-right: 20px;
+              padding-right: 20px;
+              border-right: 2px solid; 
+              font-size: 12px;
+            }
+            >p{
+              flex: 1;
+              width: 100px;
+              flex-wrap: nowrap;
+              overflow: hidden;
+              text-overflow:ellipsis;
+              font-size: 16px;
+              color: rgb(172, 169, 169);
+            }
+          }
+          li:nth-child(1) div{
+            border-color: rgb(208, 19, 59);
+            p:nth-child(2){
+              color: rgb(208, 19, 59);
+            }
+          }
+          li:nth-child(2) div{
+            border-color: rgb(90, 174, 214);
+            p:nth-child(2){
+              color: rgb(90, 174, 214);
+            }
+          }
+          li:nth-child(3) div{
+            border-color: rgb(55, 143, 59);
+            p:nth-child(2){
+              color: rgb(55, 143, 59);
+            }
+          }
+        }
+        .control-right-area-cheat-more{
+          text-align: right;
+          cursor: pointer;
+          color: rgb(172, 169, 169);
+          &:hover{
+            color: rgb(104, 104, 104);
+          }
+        }
+      }
+      .control-right-area-draft,.control-right-area-log{
+        padding: 10px 20px;
+        margin-top:20px; 
+        width: 100%;
+        background-color: #FFF; 
+        border-radius: 4px;
+      }
+      .control-right-area-draft{
+        .control-right-area-draft-content{
+          margin-bottom: 10px;
+          margin-top: 20px;
+          flex: 1;
+          width: 100px;
+          flex-wrap: nowrap;
+          margin-right: 20px;
+          padding-left: 8px;
+          border-left: 2px solid rgb(30, 145, 206); 
+          p{
+            overflow: hidden;
+            text-overflow:ellipsis;
+          }
+          p:nth-child(2){
+            margin-top: 5px;
+            color: rgb(172, 169, 169);
+          }
+        }
+        .control-right-area-draft-write{
+          cursor: pointer;
+          padding: 0 10px;
+          border: 1px solid #eaeaea;
+          border-radius: 8px;
+          color: #9E9E9E;
+          &:hover{
+            color: #060606;
+          }
+        }
+      }
+      .control-right-area-log{
+        height: 38.5%;
+        ul{
+          height: 80%;
+          li{
+            font-size: 14px;
+            margin-top: 10px;
+            cursor: pointer;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow:ellipsis;
+            color: rgb(172, 169, 169);
+            span{
+              margin-right: 5px;
+              color: #060606;
+            }
+          }
+        }
+        .control-right-area-log-more{
+          text-align: right;
+          cursor: pointer;
+          color: rgb(172, 169, 169);
+          &:hover{
+            color: rgb(104, 104, 104);
           }
         }
       }

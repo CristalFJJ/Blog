@@ -24,9 +24,9 @@ Vue.use(Scrollbar);
 window.bus = new Vue(); //非父子传值中间件
 Vue.prototype.$utils = utils; // 工具类
 Vue.prototype.$api = api; // 公共请求
-new Vue({
+new Vue({  
   el: '#app',
-  router,
+  router ,
   store,
   i18n,
   template: '<App/>',

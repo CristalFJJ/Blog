@@ -263,7 +263,7 @@ export default {
       
     }
     .control-right-area{
-      width: 400px;
+      width: 300px;
       flex: 1;
       margin-left: 30px;
       .control-right-area-cheat{

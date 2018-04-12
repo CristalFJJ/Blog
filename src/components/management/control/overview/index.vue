@@ -238,7 +238,7 @@ export default {
         width: 100%;
         background-color: #FFF; 
         border-radius: 4px;
-        height: 26%;
+        height: calc(50% - 162px);
         ul{
           height: 80%;
           li{
@@ -381,7 +381,7 @@ export default {
         }
       }
       .control-right-area-log{
-        height: 38.5%;
+        height: calc(100% - 422px);
         ul{
           height: 80%;
           li{

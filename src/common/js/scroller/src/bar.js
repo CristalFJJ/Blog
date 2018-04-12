@@ -72,6 +72,7 @@ export default {
       const thumbPositionPercentage = ((offset - thumbClickPosition) * 100 / this.$el[this.bar.offset]);
 
       this.wrap[this.bar.scroll] = (thumbPositionPercentage * this.wrap[this.bar.scrollSize] / 100);
+      
     },
 
     mouseUpDocumentHandler(e) {

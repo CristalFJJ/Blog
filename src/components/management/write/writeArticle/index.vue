@@ -1,7 +1,10 @@
 <template>
   <div class="write-article  flex-start">
+
     <div class="write-article-editor">
+
       <i-input class="write-article-editor-title" v-model="title" placeholder="标题"></i-input>
+
       <quill-editor 
         class="write-article-editor-content"
         v-model="content"
@@ -11,26 +14,48 @@
         @focus="onEditorFocus($event)"
         @ready="onEditorReady($event)">
       </quill-editor>
+
       <div class="write-article-editor-button">
-        <i-button>草稿</i-button>
-        <i-button type="info">发布</i-button>
+        <i-button @click="draft">草稿</i-button>
+        <i-button type="info" @click="release">发布</i-button>
       </div>
+
     </div>
+
     <div class="write-article-class">
+
       <div>选项</div>
+
       <div class="write-article-class-content">
+
         <p>分类</p>
+
         <RadioGroup v-model="radioValue" vertical class="write-article-class-content-radio-group" @on-change="radioChange">
           <Radio v-for="(item,index) in radioData" :key="index" :label="item.value" class="write-article-class-content-radio">
               <Icon :type="item.icon" class="write-article-class-content-radio-icon"></Icon>
               <span>{{item.title}}</span>
           </Radio>
         </RadioGroup >
+
         <i-input v-model="articleLabel" placeholder="标签"></i-input>
-        <div class="write-article-class-content-senior"><i-button type="info">高级选项</i-button></div>
+
+        <div class="write-article-class-content-senior">
+          <i-button type="info" @click="optionsShow">高级选项</i-button>
+        </div>
+
+        <collapse-transition>
+          <ul v-show="optionsBol">
+            <li>更新</li>
+            <li>选项一</li>
+            <li>选项一</li>
+            <li>选项一</li>
+          </ul>
+        </collapse-transition>
+
       </div>
       
     </div>
+
   </div>
 </template>
 
@@ -45,12 +70,12 @@ export default {
   },
   data () {
     return {
-      title:'',
-      content: '<h2>I am Example</h2>',
+      title:'', //标题
+      content: '', //内容
       editorOption: {
           // some quill options
       },
-      radioData:[
+      radioData:[ //分类
         {
           title:"技术",
           value:'technology',
@@ -72,8 +97,9 @@ export default {
           icon:'waterdrop'
         },
       ],
-      radioValue:'',
-      articleLabel: '',
+      radioValue:'', //单选值
+      articleLabel: '', //标签
+      optionsBol: false,
     }
   },
   methods: {
@@ -92,6 +118,21 @@ export default {
     },
     radioChange(e){
       console.log(e);
+    },
+    draft(){ //草稿
+      console.log(this.title);
+      console.log(this.content);
+      console.log(this.radioValue);
+      console.log(this.articleLabel);
+    },
+    release(){ //发布
+      console.log(this.title);
+      console.log(this.content);
+      console.log(this.radioValue);
+      console.log(this.articleLabel);
+    },
+    optionsShow(){ //选项
+      this.optionsBol = !this.optionsBol;
     }
   },
   computed: {

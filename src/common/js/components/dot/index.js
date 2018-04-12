@@ -66,7 +66,6 @@ function dotLine(cav) {
     
     area = width * height, // canvas区域面积
     cssText = `width: ${width} px; height: ${height} px`;
-    console.log(document.body.scrollHeight);
   // 设置canvas的宽高
   canvas.setAttribute('style', cssText);
   canvas.width = width.toString();

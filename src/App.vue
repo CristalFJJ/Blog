@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import dotLine from './common/js/canvas';
+import dotLine from './common/js/dot';
 export default {
   name: 'app',
   mounted () {

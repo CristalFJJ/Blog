@@ -19,6 +19,8 @@ Vue.use(iview);
 import Scrollbar from './common/js/scroller'; //滚动条
 Vue.use(Scrollbar);
 
+import Components from './common/js/components'; //组件
+Vue.use(Components);
 // Vue.config.productionTip = false
 /* eslint-disable no-new */
 window.bus = new Vue(); //非父子传值中间件

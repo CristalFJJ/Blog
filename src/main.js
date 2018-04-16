@@ -21,6 +21,8 @@ Vue.use(Scrollbar);
 
 import Components from './common/js/components'; //组件
 Vue.use(Components);
+
+
 // Vue.config.productionTip = false
 /* eslint-disable no-new */
 window.bus = new Vue(); //非父子传值中间件
@@ -34,3 +36,4 @@ new Vue({
   template: '<App/>',
   components: { App }
 })
+console.log(Vue.options.components);

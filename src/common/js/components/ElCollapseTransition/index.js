@@ -1,10 +1,9 @@
 import { addClass, removeClass } from './src/dom';
-
+import "./src/theme.css"
 class Transition {
   beforeEnter(el) {
     addClass(el, 'collapse-transition');
     if (!el.dataset) el.dataset = {};
-
     el.dataset.oldPaddingTop = el.style.paddingTop;
     el.dataset.oldPaddingBottom = el.style.paddingBottom;
 
@@ -63,6 +62,8 @@ class Transition {
     el.style.paddingBottom = el.dataset.oldPaddingBottom;
   }
 }
+  
+// }
 
 export default {
   name: 'CollapseTransition',
@@ -71,7 +72,6 @@ export default {
     const data = {
       on: new Transition()
     };
-
     return h('transition', data, children);
   }
 };

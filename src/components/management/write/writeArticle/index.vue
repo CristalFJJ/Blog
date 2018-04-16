@@ -40,17 +40,23 @@
         <i-input v-model="articleLabel" placeholder="标签"></i-input>
 
         <div class="write-article-class-content-senior">
-          <i-button type="info" @click="optionsShow">高级选项</i-button>
+          <i-button type="info" @click="optionsShow">其它选项</i-button>
         </div>
 
-        <collapse-transition>
-          <ul v-show="optionsBol">
-            <li>更新</li>
-            <li>选项一</li>
-            <li>选项一</li>
-            <li>选项一</li>
-          </ul>
-        </collapse-transition>
+        <transition 
+          @enter="enter" 
+          @beforeEnter="beforeEnter" 
+          @afterEnter="afterEnter" 
+          @leave="leave" 
+          @beforeLeave="beforeLeave" 
+          @afterLeave="afterLeave"
+        >
+          <CheckboxGroup v-model="checkValue" v-if="optionsBol" class="other-options">
+            <Checkbox label="更新"></Checkbox>
+            <Checkbox label="其它一" ></Checkbox>
+            <Checkbox label="其它二"></Checkbox>
+          </CheckboxGroup>
+        </transition>
 
       </div>
       
@@ -60,10 +66,11 @@
 </template>
 
 <script>
-import 'quill/dist/quill.core.css'
-import 'quill/dist/quill.snow.css'
-import 'quill/dist/quill.bubble.css'
-import { quillEditor } from 'vue-quill-editor'
+import 'quill/dist/quill.core.css';
+import 'quill/dist/quill.snow.css';
+import 'quill/dist/quill.bubble.css';
+import { quillEditor } from 'vue-quill-editor';
+import { addClass, removeClass } from './../../../../common/js/components/ElCollapseTransition/src/dom';
 export default {
   components: {
     quillEditor
@@ -100,6 +107,7 @@ export default {
       radioValue:'', //单选值
       articleLabel: '', //标签
       optionsBol: false,
+      checkValue: [],//多选值
     }
   },
   methods: {
@@ -133,7 +141,65 @@ export default {
     },
     optionsShow(){ //选项
       this.optionsBol = !this.optionsBol;
-    }
+      console.log(this.checkValue);
+    },
+    beforeEnter(el) {
+      addClass(el, 'collapse-transition');
+      if (!el.dataset) el.dataset = {};
+      el.dataset.oldPaddingTop = el.style.paddingTop;
+      el.dataset.oldPaddingBottom = el.style.paddingBottom;
+
+      el.style.height = '0';
+      el.style.paddingTop = 0;
+      el.style.paddingBottom = 0;
+    },
+
+    enter(el) {
+      el.dataset.oldOverflow = el.style.overflow;
+      if (el.scrollHeight !== 0) {
+        el.style.height = el.scrollHeight + 'px';
+        el.style.paddingTop = el.dataset.oldPaddingTop;
+        el.style.paddingBottom = el.dataset.oldPaddingBottom;
+      } else {
+        el.style.height = '';
+        el.style.paddingTop = el.dataset.oldPaddingTop;
+        el.style.paddingBottom = el.dataset.oldPaddingBottom;
+      }
+
+      el.style.overflow = 'hidden';
+    },
+    afterEnter(el) {
+      removeClass(el, 'collapse-transition');
+      el.style.height = '';
+      el.style.overflow = el.dataset.oldOverflow;
+    },
+
+    beforeLeave(el) {
+      if (!el.dataset) el.dataset = {};
+      el.dataset.oldPaddingTop = el.style.paddingTop;
+      el.dataset.oldPaddingBottom = el.style.paddingBottom;
+      el.dataset.oldOverflow = el.style.overflow;
+
+      el.style.height = el.scrollHeight + 'px';
+      el.style.overflow = 'hidden';
+    },
+
+    leave(el) {
+      if (el.scrollHeight !== 0) {
+        addClass(el, 'collapse-transition');
+        el.style.height = 0;
+        el.style.paddingTop = 0;
+        el.style.paddingBottom = 0;
+      }
+    },
+
+    afterLeave(el) {
+      removeClass(el, 'collapse-transition');
+      el.style.height = '';
+      el.style.overflow = el.dataset.oldOverflow;
+      el.style.paddingTop = el.dataset.oldPaddingTop;
+      el.style.paddingBottom = el.dataset.oldPaddingBottom;
+    },
   },
   computed: {
     editor() {
@@ -232,6 +298,12 @@ export default {
         .write-article-class-content-senior{
           margin-top: 150px;
           text-align: center;
+        }
+        .other-options{
+          .ivu-checkbox-wrapper{
+            width: 100%;
+            margin-top: 10px;
+          }
         }
         
       }

@@ -5,12 +5,18 @@
     </div>
     <div class="login-page">
       <p class="login-title">LOGIN</p>
-      <Input v-model="userForm.userName" placeholder="please input userName..." >
-        <span slot="prepend"><Icon type="person"></Icon></span>
-      </Input>
-      <Input v-model="userForm.passWord" type="password" placeholder="please input passWord...">
-        <span slot="prepend"><Icon type="locked"></Icon></span>
-      </Input>
+      <Form :model="userForm" class="login-form">
+        <FormItem prop="user">
+          <Input type="text" v-model="userForm.userName" placeholder="Username">
+            <Icon type="ios-person-outline" slot="prepend"></Icon>
+          </Input>
+        </FormItem>
+        <FormItem prop="password">
+          <Input type="password" v-model="userForm.password" placeholder="Password">
+            <Icon type="ios-locked-outline" slot="prepend"></Icon>
+          </Input>
+        </FormItem>
+      </Form>
       <div class="login-forgot">
         <Checkbox v-model="rememberPassword"> Remember Me</Checkbox>
         <p>Forgot Password?</p>
@@ -33,7 +39,7 @@ export default {
       },
       rememberPassword: false,
       loginLoading: false
-    };
+    }
   },
   mounted() {
     this.init();
@@ -116,6 +122,14 @@ export default {
     .login-title {
       font-size: 28px;
       font-weight: 400;
+    }
+    .login-form{
+      .ivu-form-item{
+        margin-bottom: 0px;
+      }
+      .ivu-form-item-error-tip{
+        position:static;
+      }
     }
     .ivu-input-group {
       max-width: 400px;

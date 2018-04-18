@@ -177,7 +177,7 @@ export default {
       .control-left-area-statistics{
         width: 100%;
         background: #FFF;
-        padding: 3.5% 5% 3.5%;
+        padding: 20px 30px;
         border-radius: 4px;
         .control-left-area-statistics-count{
           width: 66.7%;
@@ -191,7 +191,7 @@ export default {
             margin-right: 30px;
             margin-bottom: 30px;
             span{
-              margin-left: 8.3%;
+              margin-left: 10px;
               display: inline-block;
               width: 41.7%;
               text-align: center;
@@ -208,7 +208,7 @@ export default {
           .control-left-area-statistics-info-name{
             color: #060606;
             text-align: center;
-            margin-bottom: 15%;
+            margin-bottom: 30px;
           }
           .control-left-area-statistics-info-version{
             text-align: center;
@@ -238,9 +238,8 @@ export default {
         width: 100%;
         background-color: #FFF; 
         border-radius: 4px;
-        height: calc(50% - 162px);
         ul{
-          height: 80%;
+          height: calc(50vh - 237px);
           li{
             width: 100%;
             font-size: 14px;
@@ -381,7 +380,7 @@ export default {
         }
       }
       .control-right-area-log{
-        height: calc(100% - 422px);
+        height: calc(100vh - 60px - 422px);
         ul{
           height: 80%;
           li{

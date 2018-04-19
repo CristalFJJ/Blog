@@ -40,7 +40,9 @@ function apiPost(url, param = {}, sucess, fail) {
 }
 export default {
   login(param, sucess, fail) { // 登录接口
-      // 检测参数
-      apiPost(config.LOGIN, param, sucess, fail);
+    apiPost(config.LOGIN, param, sucess, fail);
   },
+  upload(param, sucess, fail){ //上传接口
+		apiPost(config.UPLOAD, param, sucess, fail);
+	}
 }

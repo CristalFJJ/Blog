@@ -380,9 +380,8 @@ export default {
         }
       }
       .control-right-area-log{
-        height: calc(100vh - 60px - 422px);
         ul{
-          height: 80%;
+          height: calc(100vh - 555px);
           li{
             font-size: 14px;
             margin-top: 10px;

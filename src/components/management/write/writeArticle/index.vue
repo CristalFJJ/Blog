@@ -110,6 +110,14 @@ export default {
       checkValue: [],//多选值
     }
   },
+  computed: {
+    editor() {
+      return this.$refs.myQuillEditor.quill;
+    }
+  },
+  mounted() {
+    console.log('this is current quill instance object', this.editor);
+  },
   methods: {
     onEditorBlur(quill) {
       console.log('editor blur!', quill);
@@ -201,14 +209,7 @@ export default {
       el.style.paddingBottom = el.dataset.oldPaddingBottom;
     },
   },
-  computed: {
-    editor() {
-      return this.$refs.myQuillEditor.quill;
-    }
-  },
-  mounted() {
-    console.log('this is current quill instance object', this.editor);
-  }
+  
 }
 </script>
 

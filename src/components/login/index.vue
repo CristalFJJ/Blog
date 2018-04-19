@@ -12,7 +12,7 @@
           </Input>
         </FormItem>
         <FormItem prop="password">
-          <Input type="password" v-model="userForm.password" placeholder="Password">
+          <Input type="password" v-model="userForm.passWord" placeholder="Password">
             <Icon type="ios-locked-outline" slot="prepend"></Icon>
           </Input>
         </FormItem>

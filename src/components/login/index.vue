@@ -89,6 +89,7 @@ export default {
         this.userForm,
         res => {
           if (res.status == 200) {
+            console.log(res);
             let data = res.data;
             this.$utils.Storage.setObj("userInfo", data);
             this.$router.push("/management");

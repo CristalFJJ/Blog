@@ -118,7 +118,6 @@ export default {
   },
   methods: {
     upDateDate() {
-      console.log(this.uploadList);
     },
     upDatePassWord(){
 
@@ -147,12 +146,7 @@ export default {
     },
   },
   watch:{
-    uploadList:{
-      handler:(val,oldVal) => {
-        console.log(val);
-      },
-      deep:true
-    }
+    
   }
   
 };

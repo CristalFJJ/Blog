@@ -5,8 +5,8 @@
     </div>
     <div class="login-page">
       <p class="login-title">LOGIN</p>
-      <Form :model="userForm" class="login-form">
-        <FormItem prop="user">
+      <Form :model="userForm" class="login-form" @submit.native.prevent>
+        <FormItem prop="userName">
           <Input type="text" v-model="userForm.userName" placeholder="Username">
             <Icon type="ios-person-outline" slot="prepend"></Icon>
           </Input>
@@ -21,8 +21,26 @@
         <Checkbox v-model="rememberPassword"> Remember Me</Checkbox>
         <p>Forgot Password?</p>
       </div>
-      <Button  :loading="loginLoading" long @click="login">Login</Button>
+      <div class="login-button"><Button  :loading="loginLoading" long @click="login">登录</Button></div>
+      <div><Button long type="success" @click="registerModal">注册</Button></div>
     </div>
+    <Modal
+      v-model="registerShow"
+      title="用户注册"
+      @on-ok="register"
+      @on-cancel="registerCancel">
+      <Form :model="registerForm" class="login-form" :rules="registerRule" @submit.native.prevent>
+        <FormItem prop="userName" label="用户名">
+          <Input type="text" v-model="registerForm.userName" :icon="userNameIcon" placeholder="Username" autocomplete.native="off"></Input>
+        </FormItem>
+        <FormItem prop="passWord" label="用户密码" :show-message="passWordErr">
+          <Input type="password" v-model="registerForm.passWord" :icon="passWordIcon" placeholder="Password" autocomplete.native="off"></Input>
+        </FormItem>
+        <FormItem prop="passWordAgain" label="确认密码" :show-message="passWordErr">
+          <Input type="password" v-model="registerForm.passWordAgain" :icon="passWordIcon" placeholder="passWordAgain" autocomplete.native="off"></Input>
+        </FormItem>
+      </Form>
+    </Modal>
   </div>
 </template>
 
@@ -37,8 +55,61 @@ export default {
         userName: "",
         passWord: ""
       },
+      registerForm:{
+        userName: "",
+        passWord: "",
+        passWordAgain: "",
+      },
+      userNameCheck:0, //0:未检测 1:已注册 2:可用
+      passWordCheck:0,//0:未检测 1:不一样 2:一样
       rememberPassword: false,
-      loginLoading: false
+      loginLoading: false,
+      registerShow:false,
+      registerRule: {
+        userName: [{ validator: this.checkName, trigger: 'blur' }],
+        passWord:[{validator: this.checkPassWord, trigger: 'blur' }],
+        passWordAgain:[{validator: this.checkPassWord, trigger: 'blur'}]
+      }
+    }
+  },
+  computed:{
+    userNameIcon:function(){
+      switch(this.userNameCheck){
+        case 0:
+          return "";
+          break;
+        case 1:
+          return "close";
+          break;
+        case 2:
+          return "checkmark"
+      }
+    },
+    passWordIcon:function(){
+      switch(this.passWordCheck){
+        case 0:
+          return "";
+          break;
+        case 1:
+          return "close";
+          break;
+        case 2:
+          return "checkmark"
+      }
+    },
+    passWordErr:function(){
+      if(this.passWordCheck == 2){
+        return false;
+      }else{
+        return true;
+      }
+    },
+  },
+  created(){
+    this.registerForm = {
+      userName: "",
+      passWord: "",
+      passWordAgain: "",
     }
   },
   mounted() {
@@ -89,7 +160,7 @@ export default {
         this.userForm,
         res => {
           if (res.status == 200) {
-            console.log(res);
+            console.log(res.data);
             let data = res.data;
             this.$utils.Storage.setObj("userInfo", data);
             this.$router.push("/management");
@@ -97,6 +168,84 @@ export default {
         },
         err => {}
       );
+    },
+    registerModal(){
+      this.registerShow = true;
+      console.log(this.registerForm);
+    },
+    //检测用户名
+    checkName(rule, value, callback){
+      if(value == ""){
+        this.userNameCheck = 0;
+        return callback(new Error('请输入用户名'));
+      }
+      let reg = /^[a-zA-Z0-9]{2,12}$/;
+      if(!reg.test(value)){
+        this.userNameCheck = 1;
+        return callback(new Error('请输入2-12位数字或字母'));
+      }
+
+      this.$api.registerPreview({userName:value},res => {
+        console.log(res);
+        if(res.code == 202){
+          this.userNameCheck = 1;
+          return callback(new Error('该用户已存在'));
+        }else{
+          this.userNameCheck = 2;
+          callback();
+        }
+        
+      })
+    },
+    //检测密码是否重复
+    checkPassWord(rule, value, callback){
+      let reg = /^.{6,12}$/;
+      if(!reg.test(value)){
+        this.passWordCheck = 0;
+        return callback(new Error('请输入6-12位密码'));
+      }
+      if(this.registerForm.passWord == "" || this.registerForm.passWordAgain == ""){
+        this.passWordCheck = 0;
+        return callback();
+      }
+      if(this.registerForm.passWord != this.registerForm.passWordAgain){
+        this.passWordCheck = 1;
+        return callback(new Error('两次密码输入不一致'));
+      }else{
+        console.log(this.registerForm.passWord,this.registerForm.passWordAgain);
+        this.passWordCheck = 2;
+        
+        callback();
+      }
+    },
+    //注册
+    register(){
+      if(this.registerForm.userName == "" || this.registerForm.passWord == "" || this.registerForm.passWordAgain == ""){
+        this.message("请输入完整信息");
+        return;
+      }
+      this.$api.userRegister(this.registerForm,res => {
+        console.log('注册成功');
+        console.log(res);
+      });
+    },
+    //取消注册
+    registerCancel(){
+      this.registerForm = {
+        userName: "",
+        passWord: "",
+        passWordAgain: "",
+      };
+      this.userNameCheck = 0;
+      this.passWordCheck = 0;
+      this.registerShow = false;
+    },
+    message(content,time=1500){
+      this.$Message.warning({
+        content:content,
+        duration:time,
+        closable:true,
+      });
     }
   }
 };
@@ -156,17 +305,21 @@ export default {
         }
       }
     }
+    .login-button{
+      .ivu-btn {
+        color: #57c2f3;
+        background-color: #fff;
+        border-color: #57c2f3;
+        &:hover {
+          color: #5774f3;
+          border-color: #5774f3;
+        }
+      }
+    }
     .ivu-btn {
       margin-top: 20px;
       height: 40px;
       max-width: 400px;
-      color: #57c2f3;
-      background-color: #fff;
-      border-color: #57c2f3;
-      &:hover {
-        color: #5774f3;
-        border-color: #5774f3;
-      }
     }
   }
 }

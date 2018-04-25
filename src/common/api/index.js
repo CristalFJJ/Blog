@@ -42,6 +42,12 @@ export default {
   login(param, sucess, fail) { // 登录接口
     apiPost(config.LOGIN, param, sucess, fail);
   },
+  registerPreview(param, sucess, fail){
+    apiGet(config.REGISTER_PREVIEW,param, sucess, fail);
+	},
+	userRegister(param, sucess, fail){
+		apiPost(config.USER_REGISTER,param, sucess, fail);
+	},
   upload(param, sucess, fail){ //上传接口
 		apiPost(config.UPLOAD, param, sucess, fail);
 	}

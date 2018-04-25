@@ -38,7 +38,7 @@ axios
         //         return Promise.reject(res);
         //     };
         // }
-        return res;
+        return res.data;
     }, error => {
         // if (error && error.response) {
         //     if (error.response.data.code === 401) {

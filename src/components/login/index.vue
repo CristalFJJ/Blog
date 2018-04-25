@@ -186,7 +186,6 @@ export default {
       }
 
       this.$api.registerPreview({userName:value},res => {
-        console.log(res);
         if(res.code == 202){
           this.userNameCheck = 1;
           return callback(new Error('该用户已存在'));
@@ -212,9 +211,7 @@ export default {
         this.passWordCheck = 1;
         return callback(new Error('两次密码输入不一致'));
       }else{
-        console.log(this.registerForm.passWord,this.registerForm.passWordAgain);
         this.passWordCheck = 2;
-        
         callback();
       }
     },
@@ -225,8 +222,19 @@ export default {
         return;
       }
       this.$api.userRegister(this.registerForm,res => {
-        console.log('注册成功');
+        if(res.code == 200){
+          let obj = {
+            userName: res.info.userName,
+            _id: res.info._id,
+            level: res.info.level,
+            token: res.token
+          } 
+          this.$utils.Storage.setObj("userInfo", obj);
+          this.$router.push("/management");
+        }
         console.log(res);
+      },err => {
+        console.log(err);
       });
     },
     //取消注册

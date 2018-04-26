@@ -3,11 +3,11 @@
 
     <div class="write-article-editor">
 
-      <i-input class="write-article-editor-title" v-model="title" placeholder="标题"></i-input>
+      <i-input class="write-article-editor-title" v-model="article.title" placeholder="标题"></i-input>
 
       <quill-editor 
         class="write-article-editor-content"
-        v-model="content"
+        v-model="article.content"
         ref="myQuillEditor"
         :options="editorOption"
         @blur="onEditorBlur($event)"
@@ -30,14 +30,14 @@
 
         <p>分类</p>
 
-        <RadioGroup v-model="radioValue" vertical class="write-article-class-content-radio-group" @on-change="radioChange">
-          <Radio v-for="(item,index) in radioData" :key="index" :label="item.value" class="write-article-class-content-radio">
+        <RadioGroup v-model="article.classification" vertical class="write-article-class-content-radio-group" @on-change="radioChange">
+          <Radio v-for="(item,index) in classificationData" :key="index" :label="item.value" class="write-article-class-content-radio">
               <Icon :type="item.icon" class="write-article-class-content-radio-icon"></Icon>
               <span>{{item.title}}</span>
           </Radio>
         </RadioGroup >
 
-        <i-input v-model="articleLabel" placeholder="标签"></i-input>
+        <i-input v-model="article.label" placeholder="标签"></i-input>
 
         <div class="write-article-class-content-senior">
           <i-button type="info" @click="optionsShow">其它选项</i-button>
@@ -77,12 +77,17 @@ export default {
   },
   data () {
     return {
-      title:'', //标题
-      content: '', //内容
+      article:{
+        title:'', //标题
+        content: '', //内容
+        classification: "", //分类
+        label: "", //标签
+      },
+      
       editorOption: {
           // some quill options
       },
-      radioData:[ //分类
+      classificationData:[ //分类
         {
           title:"技术",
           value:'technology',
@@ -104,10 +109,9 @@ export default {
           icon:'waterdrop'
         },
       ],
-      radioValue:'', //单选值
-      articleLabel: '', //标签
       optionsBol: false,
       checkValue: [],//多选值
+
     }
   },
   computed: {
@@ -142,10 +146,13 @@ export default {
       console.log(this.articleLabel);
     },
     release(){ //发布
-      console.log(this.title);
-      console.log(this.content);
-      console.log(this.radioValue);
-      console.log(this.articleLabel);
+      Object.values(this.article).map(item=>{
+        if(this.$utils.CommonUtils.isEmptyOrNull(item)){
+          console.log(item);
+          return;
+        }
+      });
+      console.log(arr);
     },
     optionsShow(){ //选项
       this.optionsBol = !this.optionsBol;

@@ -18,8 +18,8 @@
         </FormItem>
       </Form>
       <div class="login-forgot">
-        <Checkbox v-model="rememberPassword"> Remember Me</Checkbox>
-        <p>Forgot Password?</p>
+        <Checkbox v-model="rememberPassword" @on-change="rememberControl"> Remember Me</Checkbox>
+        <p @click="forGot">Forgot Password?</p>
       </div>
       <div class="login-button"><Button  :loading="loginLoading" long @click="login">登录</Button></div>
       <div><Button long type="success" @click="registerModal">注册</Button></div>
@@ -27,6 +27,7 @@
     <Modal
       v-model="registerShow"
       title="用户注册"
+      :loading="registerLoading"
       @on-ok="register"
       @on-cancel="registerCancel">
       <Form :model="registerForm" class="login-form" :rules="registerRule" @submit.native.prevent>
@@ -62,6 +63,7 @@ export default {
       },
       userNameCheck:0, //0:未检测 1:已注册 2:可用
       passWordCheck:0,//0:未检测 1:不一样 2:一样
+      registerLoading: true,
       rememberPassword: false,
       loginLoading: false,
       registerShow:false,
@@ -118,16 +120,19 @@ export default {
   methods: {
     init(){
       let CommonUtils = this.$utils.CommonUtils;
-      let cyusername = this.$utils.Cookie.getCookie('blog_username');
-      let cypassword = this.$utils.Cookie.getCookie('blog_password');
-      if(!CommonUtils.isEmptyOrNull(cyusername)){
-        this.userForm.userName  = this.decipher(cyusername, 'cristal');
-      }
-      if(!CommonUtils.isEmptyOrNull(cypassword)){
-        this.userForm.passWord  = this.decipher(cypassword, 'cristal');
-      }
-      if(this.userForm.userName && this.userForm.passWord){
+      let remember = this.$utils.Storage.getItem("remember");
+
+      if(!CommonUtils.isEmptyOrNull(remember)){
+        if(remember == "notRemember") return;
         this.rememberPassword = true;
+        let cyusername = this.$utils.Cookie.getCookie('blog_username');
+        let cypassword = this.$utils.Cookie.getCookie('blog_password');
+        if(!CommonUtils.isEmptyOrNull(cyusername)){
+          this.userForm.userName  = this.decipher(cyusername, 'cristal');
+        }
+        if(!CommonUtils.isEmptyOrNull(cypassword)){
+          this.userForm.passWord  = this.decipher(cypassword, 'cristal');
+        }
       }
     },
     cipher(mainText, subText) {
@@ -144,8 +149,26 @@ export default {
       decrypted += decipher.final("utf8");
       return decrypted;
     },
+    //是否记住密码
+    rememberControl(bol){
+      console.log(bol);
+      if(bol){
+        this.$utils.Storage.setItem("remember","remember");
+      }else{
+        this.$utils.Storage.setItem("remember","notRemember");
+      }
+      console.log(this.$utils.Storage.getItem("remember"));
+    },
+    //忘记密码
+    forGot(){
+      this.$msg("可以重新注册哟~",2,"info");
+    },
     //登录
     login() {
+      if(this.$utils.CommonUtils.isEmptyOrNull(this.userForm.userName) || this.$utils.CommonUtils.isEmptyOrNull(this.userForm.passWord)){
+        this.$msg("请输入完整登录信息");
+        return;
+      }
       if (this.rememberPassword) {
         let userName = this.cipher(this.userForm.userName, "cristal");
         let passWord = this.cipher(this.userForm.passWord, "cristal");
@@ -156,22 +179,21 @@ export default {
         this.$utils.Cookie.clearCookie("blog_password");
       }
 
-      this.$api.login(
-        this.userForm,
-        res => {
-          if (res.status == 200) {
-            console.log(res.data);
-            let data = res.data;
-            this.$utils.Storage.setObj("userInfo", data);
-            this.$router.push("/management");
-          }
-        },
-        err => {}
-      );
+      this.$api.login(this.userForm,res => {
+        if (res.code == 200) {
+          let data = res.info;
+          console.log(data);
+          this.$utils.Storage.setObj("userInfo", data);
+          this.$router.push("/management");
+        }else{
+          this.$msg(res.msg);
+        }
+      },err => {
+        console.log(err);
+      });
     },
     registerModal(){
       this.registerShow = true;
-      console.log(this.registerForm);
     },
     //检测用户名
     checkName(rule, value, callback){
@@ -215,19 +237,32 @@ export default {
         callback();
       }
     },
+    changeLoading() {
+      this.registerLoading = false;
+      this.$nextTick().then(()=> {
+        this.registerLoading = true;
+      });
+    },
     //注册
     register(){
       if(this.registerForm.userName == "" || this.registerForm.passWord == "" || this.registerForm.passWordAgain == ""){
-        this.message("请输入完整信息");
+        this.msg("请输入完整信息");
+        this.changeLoading();
+        return;
+      }
+      if(this.userNameCheck != 2 || this.passWordCheck != 2){
+        this.msg("请输入正确格式");
+        this.changeLoading();
         return;
       }
       this.$api.userRegister(this.registerForm,res => {
         if(res.code == 200){
+          this.registerShow = false;
           let obj = {
             userName: res.info.userName,
             _id: res.info._id,
             level: res.info.level,
-            token: res.token
+            token: res.info.token
           } 
           this.$utils.Storage.setObj("userInfo", obj);
           this.$router.push("/management");
@@ -248,13 +283,7 @@ export default {
       this.passWordCheck = 0;
       this.registerShow = false;
     },
-    message(content,time=1500){
-      this.$Message.warning({
-        content:content,
-        duration:time,
-        closable:true,
-      });
-    }
+    
   }
 };
 </script>

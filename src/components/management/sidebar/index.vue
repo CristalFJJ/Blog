@@ -13,12 +13,13 @@
         <MenuItem v-for="(childItem,childIndex) in item.children" :key="childIndex" :name="childItem.name">{{childItem.title}}</MenuItem>
       </Submenu>
     </Menu>
-    <div class="exit"><div class="exitLogin">登出</div></div>
+    <div class="exit"><div class="exitLogin" @click="loginOut">登出</div></div>
   </div>
 </template>
 
 <script>
-import photo from '../../../../static/image/me.png'
+import photo from '../../../../static/image/me.png';
+import {Account} from '../../../common/js/blogUtils';
 export default {
   data () {
     return {
@@ -105,7 +106,16 @@ export default {
           this.$router.push("/management/personalSetting");
           break;
       }
-    }
+    },
+    loginOut(){
+      let _id = Account.getUserInfo()._id;
+      this.$api.loginOut({_id:_id},res => {
+        this.$router.push("/login");
+      },err =>{
+        console.log(err);
+        this.$router.push("/login");
+      })
+    },
   }
 };
 </script>

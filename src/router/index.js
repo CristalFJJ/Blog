@@ -11,6 +11,7 @@ const Management = resolve => require(['@/components/management'], resolve);
 const Overview = resolve => require(['@/components/management/control/overview'], resolve);
 const Article = resolve => require(['@/components/management/manage/article'], resolve);
 const Classification = resolve => require(['@/components/management/manage/classification'], resolve);
+const Draft = resolve => require(['@/components/management/manage/draft'], resolve);
 const Label = resolve => require(['@/components/management/manage/label'], resolve);
 const PersonalSetting = resolve => require(['@/components/management/setting/personalSetting'], resolve);
 const WriteArticle = resolve => require(['@/components/management/write/writeArticle'], resolve);
@@ -83,11 +84,12 @@ const management = getModel('/management', Management, 'management',null,'/manag
 const overview = getModel('/management/overview', Overview, 'overview');
 const article = getModel('/management/article', Article, 'article');
 const classification = getModel('/management/classification', Classification, 'classification');
+const draft = getModel('/management/draft', Draft, 'draft');
 const label = getModel('/management/label', Label, 'label');
 const personalSetting = getModel('/management/personalSetting', PersonalSetting, 'personalSetting');
 const writeArticle = getModel('/management/writeArticle', WriteArticle, 'writeArticle');
 
-management.children = [overview,article,classification,label,personalSetting,writeArticle];
+management.children = [overview,article,classification,draft,label,personalSetting,writeArticle];
 
 const routes = [
   main,

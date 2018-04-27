@@ -47,11 +47,17 @@ export default {
 	loginOut(param, sucess, fail){ // 登出接口
 		apiPost(config.LOGIN_OUT, param, sucess, fail);
 	},
-  registerPreview(param, sucess, fail) {
+  registerPreview(param, sucess, fail) { //用户名检测
     apiGet(config.REGISTER_PREVIEW, param, sucess, fail);
   },
-  userRegister(param, sucess, fail) {
+  userRegister(param, sucess, fail) { //用户注册
     apiPost(config.USER_REGISTER, param, sucess, fail);
+  },
+  createArticle(param, sucess, fail){ //创建文章
+    apiPost(config.CREATE_ARTICLE, param, sucess, fail);
+  },
+  listArticle(param, sucess, fail){ //查询文章
+    apiGet(config.LIST_ARTICLE, param, sucess, fail)
   },
   upload(param, sucess, fail) { //上传接口
     apiPost(config.UPLOAD, param, sucess, fail);

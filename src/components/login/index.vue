@@ -246,12 +246,12 @@ export default {
     //注册
     register(){
       if(this.registerForm.userName == "" || this.registerForm.passWord == "" || this.registerForm.passWordAgain == ""){
-        this.msg("请输入完整信息");
+        this.$msg("请输入完整信息");
         this.changeLoading();
         return;
       }
       if(this.userNameCheck != 2 || this.passWordCheck != 2){
-        this.msg("请输入正确格式");
+        this.$msg("请输入正确格式");
         this.changeLoading();
         return;
       }

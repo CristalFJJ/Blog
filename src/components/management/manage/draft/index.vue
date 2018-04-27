@@ -2,7 +2,7 @@
   <div class="manage-article-container">
     <div class="manage-article">
       <div class="space-between manage-article-title">
-        <p class="font-color-blue font-size-20">管理文章</p>
+        <p class="font-color-blue font-size-20">草稿箱</p>
         <div class="font-size-16">
           <AutoComplete
             class="search-article"
@@ -17,7 +17,7 @@
         </div>
     </div>
     <Table class="manage-article-table" ellipsis border ref="selection" :columns="tableColumn" :data="tableData"></Table>
-    <Page class="manage-article-page" :total="total" :current="queryData.page" show-elevator show-total @on-change="pageChange"></Page>
+    <Page class="manage-article-page" :total="11" :current="page" show-elevator show-total @on-change="pageChange"></Page>
   </div>
   </div>
 </template>
@@ -29,11 +29,7 @@ export default {
       searchValue: "",
       searchData: [],
       searchBol: false,
-      queryData:{
-        page:1,
-        rows:10
-      },
-      total:1,
+      page:1,
       tableColumn: [
         {
           type: 'selection',
@@ -48,16 +44,16 @@ export default {
         },
         {
           title: '作者',
-          key: 'userName'
+          key: 'writer'
         },
         {
           title: '分类',
-          key: 'classification'
+          key: 'class'
          
         },
         {
           title: '日期',
-          key: 'created'
+          key: 'date'
           
         }
       ],
@@ -86,25 +82,46 @@ export default {
           class: "technology",
           date: "2018/04/16"
         },
+        {
+          title: '文章测试',
+          writer: 'Cristal',
+          class: "technology",
+          date: "2018/04/16"
+        },
+        {
+          title: '文章测试',
+          writer: 'Cristal',
+          class: "technology",
+          date: "2018/04/16"
+        },
+        {
+          title: '文章测试',
+          writer: 'Cristal',
+          class: "technology",
+          date: "2018/04/16"
+        },
+        {
+          title: '文章测试',
+          writer: 'Cristal',
+          class: "technology",
+          date: "2018/04/16"
+        },
+        {
+          title: '文章测试',
+          writer: 'Cristal',
+          class: "technology",
+          date: "2018/04/16"
+        },
+        {
+          title: '文章测试',
+          writer: 'Cristal',
+          class: "technology",
+          date: "2018/04/16"
+        },
       ]
     };
   },
-  mounted(){
-    this.init();
-  },
   methods: {
-    init(){
-      this.search();
-    },
-    search(){
-      this.$api.listArticle(this.queryData,res=>{
-        console.log(res);
-        this.tableData = res.data;
-        this.total = res.total;
-      },err=>{
-        console.log(err);
-      })
-    },
     searchArticle(val) {
       this.searchData = !val ? [] : [val, val + val, val + val + val];
     },

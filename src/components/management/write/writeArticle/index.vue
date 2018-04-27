@@ -30,7 +30,7 @@
 
         <p>分类</p>
 
-        <RadioGroup v-model="article.classification" vertical class="write-article-class-content-radio-group" @on-change="radioChange">
+        <RadioGroup v-model="article.classification" vertical class="write-article-class-content-radio-group" @on-change="classificationChange">
           <Radio v-for="(item,index) in classificationData" :key="index" :label="item.value" class="write-article-class-content-radio">
               <Icon :type="item.icon" class="write-article-class-content-radio-icon"></Icon>
               <span>{{item.title}}</span>
@@ -40,24 +40,56 @@
         <i-input v-model="article.label" placeholder="标签"></i-input>
 
         <div class="write-article-class-content-senior">
-          <i-button type="info" @click="optionsShow">其它选项</i-button>
+          <i-button type="info" @click="optionsDisplay">其它选项</i-button>
         </div>
 
-        <transition 
-          @enter="enter" 
-          @beforeEnter="beforeEnter" 
-          @afterEnter="afterEnter" 
-          @leave="leave" 
-          @beforeLeave="beforeLeave" 
-          @afterLeave="afterLeave"
-        >
-          <CheckboxGroup v-model="checkValue" v-if="optionsBol" class="other-options">
-            <Checkbox label="更新"></Checkbox>
-            <Checkbox label="其它一" ></Checkbox>
-            <Checkbox label="其它二"></Checkbox>
-          </CheckboxGroup>
-        </transition>
+        <div class="upload-list" v-if="uploadList.status === 'finished'">
+          <p>封面图片</p>
+          <div class="upload-list-content">
+            <img :src="uploadList.url">
+            <div class="upload-list-cover">
+              <div class="upload-list-cover-icon">
+                <Icon type="ios-eye-outline" @click.native="handleView()"></Icon>
+                <Icon type="ios-trash-outline" @click.native="handleRemove()"></Icon>
+              </div>
+            </div>
+          </div>
+        </div>
 
+        <Modal title="预览" v-model="preview">
+          <img :src="uploadList.url" v-if="preview" style="width: 100%">
+        </Modal>
+
+        <Modal
+          v-model="optionsShow"
+          title="其它选项"
+          :loading="optionsLoading"
+          @on-ok="optionsSure"
+          @on-cancel="optionsCancel">
+          <Form :model="optionsForm" @submit.native.prevent>
+
+            <FormItem>
+              <p>●上传封面</p>
+              <Upload
+                type="drag"
+                :show-upload-list="true"
+                :before-upload="handleBeforeUpload"
+                accept="image/jpg,image/jpeg,image/png"
+                :max-size="2048"
+                @on-error="handleUploadErr"
+                @on-format-error="handleUploadFormatErr"
+                @on-exceeded-size="handleUploadSize"
+                action="javascript:void(0)">
+                <div style="padding: 20px 0">
+                    <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
+                    <p>点击或者拖动图片到此区域上传</p>
+                </div>
+              </Upload>
+              <p class="font-color-green" v-show="uploadSuccess">上传成功</p>
+            </FormItem>
+
+          </Form>
+        </Modal>
       </div>
       
     </div>
@@ -80,10 +112,19 @@ export default {
       article:{
         title:'', //标题
         content: '', //内容
-        classification: "", //分类
-        label: "", //标签
+        classification: '',//分类
+        label: '', //标签
+        userName: '', 
+        level: 2,
       },
-      
+      optionsShow: false,
+      optionsForm:{ //其它选项
+        
+      },
+      uploadList: {}, //封面上传
+      uploadSuccess: false, //上传成功
+      optionsLoading: true,
+      preview: false, //预览
       editorOption: {
           // some quill options
       },
@@ -109,9 +150,6 @@ export default {
           icon:'waterdrop'
         },
       ],
-      optionsBol: false,
-      checkValue: [],//多选值
-
     }
   },
   computed: {
@@ -124,19 +162,15 @@ export default {
   },
   methods: {
     onEditorBlur(quill) {
-      console.log('editor blur!', quill);
+      // console.log('editor blur!', quill);
     },
     onEditorFocus(quill) {
-      console.log('editor focus!', quill);
+      // console.log('editor focus!', quill);
     },
     onEditorReady(quill) {
-      console.log('editor ready!', quill);
+      // console.log('editor ready!', quill);
     },
-    onEditorChange({ quill, html, text }) {
-      console.log('editor change!', quill, html, text);
-      this.content = html;
-    },
-    radioChange(e){
+    classificationChange(e){
       console.log(e);
     },
     draft(){ //草稿
@@ -146,75 +180,83 @@ export default {
       console.log(this.articleLabel);
     },
     release(){ //发布
+      let release = true;
+      let userInfo = this.$utils.Account.getUserInfo();
+      this.article.userName = userInfo.userName;
+      this.article.level = userInfo.level;
+      
       Object.values(this.article).map(item=>{
         if(this.$utils.CommonUtils.isEmptyOrNull(item)){
-          console.log(item);
+          release = false;
           return;
         }
       });
-      console.log(arr);
-    },
-    optionsShow(){ //选项
-      this.optionsBol = !this.optionsBol;
-      console.log(this.checkValue);
-    },
-    beforeEnter(el) {
-      addClass(el, 'collapse-transition');
-      if (!el.dataset) el.dataset = {};
-      el.dataset.oldPaddingTop = el.style.paddingTop;
-      el.dataset.oldPaddingBottom = el.style.paddingBottom;
 
-      el.style.height = '0';
-      el.style.paddingTop = 0;
-      el.style.paddingBottom = 0;
-    },
-
-    enter(el) {
-      el.dataset.oldOverflow = el.style.overflow;
-      if (el.scrollHeight !== 0) {
-        el.style.height = el.scrollHeight + 'px';
-        el.style.paddingTop = el.dataset.oldPaddingTop;
-        el.style.paddingBottom = el.dataset.oldPaddingBottom;
-      } else {
-        el.style.height = '';
-        el.style.paddingTop = el.dataset.oldPaddingTop;
-        el.style.paddingBottom = el.dataset.oldPaddingBottom;
-      }
-
-      el.style.overflow = 'hidden';
-    },
-    afterEnter(el) {
-      removeClass(el, 'collapse-transition');
-      el.style.height = '';
-      el.style.overflow = el.dataset.oldOverflow;
-    },
-
-    beforeLeave(el) {
-      if (!el.dataset) el.dataset = {};
-      el.dataset.oldPaddingTop = el.style.paddingTop;
-      el.dataset.oldPaddingBottom = el.style.paddingBottom;
-      el.dataset.oldOverflow = el.style.overflow;
-
-      el.style.height = el.scrollHeight + 'px';
-      el.style.overflow = 'hidden';
-    },
-
-    leave(el) {
-      if (el.scrollHeight !== 0) {
-        addClass(el, 'collapse-transition');
-        el.style.height = 0;
-        el.style.paddingTop = 0;
-        el.style.paddingBottom = 0;
+      if(release){
+        if(this.uploadList.url){
+          this.article.coverPicture = this.uploadList.url;
+        }
+        this.$api.createArticle(this.article,res=>{
+          this.$router.push("/management/article");
+        },err=>{
+          console.log('err',err);
+        })
+      }else{
+        this.$msg('请填写完整');
       }
     },
-
-    afterLeave(el) {
-      removeClass(el, 'collapse-transition');
-      el.style.height = '';
-      el.style.overflow = el.dataset.oldOverflow;
-      el.style.paddingTop = el.dataset.oldPaddingTop;
-      el.style.paddingBottom = el.dataset.oldPaddingBottom;
+    optionsDisplay(){ //选项
+      this.optionsShow = true;
+      this.uploadSuccess = false;
     },
+    handleBeforeUpload(file){
+      let reader = new FileReader(); 
+      //为文件读取成功设置事件  
+      reader.onload = e => {
+        this.uploadSuccess = true;
+        this.$set(this.uploadList,'url', e.target.result);
+        this.$set(this.uploadList,'status', "finished");
+      };
+      reader.onprogress = e => {
+        this.$set(this.uploadList,'percentage', (e.loaded/e.total).toFixed(2) * 100);
+        this.$set(this.uploadList,'status', "loading");
+      }
+      //正式读取文件  
+      reader.readAsDataURL(file);  
+      return false;
+    },
+    handleUploadErr(err){
+      this.$msg(err,1.5,'error');
+    },
+    handleUploadFormatErr(err){
+      this.$msg(err,1.5,'error');
+    },
+    handleUploadSize(err){
+      this.$msg(err,1.5,'error');
+    },
+    handleView(){
+      this.preview = true;
+    },
+    handleRemove(){
+      this.uploadList = {};
+    },
+    changeLoading() {
+      this.optionsLoading = false;
+      this.$nextTick().then(()=> {
+        this.optionsLoading = true;
+      });
+    },
+    optionsSure(){
+      if(this.uploadList.status && this.uploadList.status == 'loading'){
+        this.$msg("图片暂未上传完毕");
+        this.changeLoading();
+        return;
+      }
+      this.optionsShow = false;
+    },
+    optionsCancel(){
+
+    }
   },
   
 }
@@ -304,14 +346,52 @@ export default {
           font-size: 14px;
         }
         .write-article-class-content-senior{
-          margin-top: 150px;
+          margin-top: 50px;
           text-align: center;
         }
-        .other-options{
-          .ivu-checkbox-wrapper{
-            width: 100%;
-            margin-top: 10px;
+        .upload-list{
+          margin-top: 20px;
+          padding-bottom: 10px;
+          border-bottom: 1px solid #eaeaea;
+          >p{
+            font-weight: 600;
+            margin-bottom: 10px;
           }
+          .upload-list-content{
+            position: relative;
+            border-radius: 4px;
+            overflow: hidden;
+            img{
+              width: 100%;
+            }
+            .upload-list-cover{
+              display: none;
+              position: absolute;
+              top: 0;
+              bottom: 0;
+              left: 0;
+              right: 0;
+              background: rgba(0,0,0,.6);
+              .upload-list-cover-icon{
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                margin-top: -8px;
+                margin-left: -23px;
+                i{
+                  color:#FFF;
+                  margin-right: 15px;
+                  font-size: 20px;
+                  cursor: pointer;
+                }
+              }
+              
+            }
+            &:hover .upload-list-cover{
+              display: block;
+            }
+          }
+          
         }
         
       }

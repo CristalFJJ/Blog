@@ -66,6 +66,10 @@ export default {
               name:'3-3',
               title: '标签',
             },
+            {
+              name:'3-4',
+              title: '草稿箱'
+            }
           ]
         },
         {
@@ -101,6 +105,9 @@ export default {
           break;
         case '3-3':
           this.$router.push("/management/label");
+          break;
+        case '3-4':
+          this.$router.push("/management/draft");
           break;
         case '4-1':
           this.$router.push("/management/personalSetting");

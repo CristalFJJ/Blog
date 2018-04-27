@@ -21,7 +21,9 @@
               :show-upload-list="false"
               :before-upload="handleBeforeUpload"
               type="drag"
-              :action="testUrl">
+              :format="['jpg','jpeg','png']"
+              :max-size="2048"
+              action="javascript:void(0)">
               <div class="upload-icon">
                 <Icon type="camera" size="30"></Icon>
               </div>
@@ -82,12 +84,10 @@
 </template>
 
 <script>
-import {UPLOAD} from '../../../../common/api/config';
 import personalImg from '../../../../../static/image/personal.jpg';
 export default {
   data() {
     return {
-      testUrl:UPLOAD,
       formData: {
         name: "",
         email: ""
@@ -114,7 +114,7 @@ export default {
     }
   },
   mounted() {
-
+    
   },
   methods: {
     upDateDate() {
@@ -125,7 +125,7 @@ export default {
     handleView () {
       this.visible = true;
     },
-    handleRemove (file) {
+    handleRemove () {
       this.uploadList = {};
     },
     handleBeforeUpload (file) {

@@ -81,8 +81,8 @@
                 @on-exceeded-size="handleUploadSize"
                 action="javascript:void(0)">
                 <div style="padding: 20px 0">
-                    <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
-                    <p>点击或者拖动图片到此区域上传</p>
+                  <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
+                  <p>点击或者拖动图片到此区域上传</p>
                 </div>
               </Upload>
               <p class="font-color-green" v-show="uploadSuccess">上传成功</p>
@@ -98,9 +98,6 @@
 </template>
 
 <script>
-import 'quill/dist/quill.core.css';
-import 'quill/dist/quill.snow.css';
-import 'quill/dist/quill.bubble.css';
 import { quillEditor } from 'vue-quill-editor';
 import { addClass, removeClass } from './../../../../common/js/components/ElCollapseTransition/src/dom';
 export default {
@@ -197,7 +194,7 @@ export default {
           this.article.coverPicture = this.uploadList.url;
         }
         this.$api.createArticle(this.article,res=>{
-          this.$router.push("/management/article");
+          // this.$router.push("/management/article");
         },err=>{
           console.log('err',err);
         })

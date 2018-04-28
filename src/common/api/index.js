@@ -41,25 +41,31 @@ function apiPost(url, param = {}, sucess, fail) {
     });
 }
 export default {
-  login(param, sucess, fail) { // 登录接口
-    apiPost(config.LOGIN_IN, param, sucess, fail);
+  login(param, success, fail) { // 登录接口
+    apiPost(config.LOGIN_IN, param, success, fail);
 	},
-	loginOut(param, sucess, fail){ // 登出接口
-		apiPost(config.LOGIN_OUT, param, sucess, fail);
+	loginOut(param, success, fail){ // 登出接口
+		apiPost(config.LOGIN_OUT, param, success, fail);
 	},
-  registerPreview(param, sucess, fail) { //用户名检测
-    apiGet(config.REGISTER_PREVIEW, param, sucess, fail);
+  registerPreview(param, success, fail) { //用户名检测
+    apiGet(config.REGISTER_PREVIEW, param, success, fail);
   },
-  userRegister(param, sucess, fail) { //用户注册
-    apiPost(config.USER_REGISTER, param, sucess, fail);
+  userRegister(param, success, fail) { //用户注册
+    apiPost(config.USER_REGISTER, param, success, fail);
   },
-  createArticle(param, sucess, fail){ //创建文章
-    apiPost(config.CREATE_ARTICLE, param, sucess, fail);
+  createArticle(param, success, fail){ //创建文章
+    apiPost(config.CREATE_ARTICLE, param, success, fail);
   },
-  listArticle(param, sucess, fail){ //查询文章
-    apiGet(config.LIST_ARTICLE, param, sucess, fail)
+  listArticle(param, success, fail){ //查询文章
+    apiGet(config.LIST_ARTICLE, param, success, fail)
   },
-  upload(param, sucess, fail) { //上传接口
-    apiPost(config.UPLOAD, param, sucess, fail);
+  detailArticle(param,success, fail){ //查询文章具体
+    apiGet(config.DETAIL_ARTICLE, param, success, fail)
+  },
+  deleteArticle(param,success,fail){ //删除文章
+    apiPost(config.DELETE_ARTICLE, param, success, fail);
+  },
+  upload(param, success, fail) { //上传接口
+    apiPost(config.UPLOAD, param, success, fail);
   }
 }

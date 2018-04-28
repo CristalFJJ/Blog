@@ -40,14 +40,11 @@ ul {
   zoom: 1;
 }
 
-.clearfix {
+.clear-float {
   &:after {
-    visibility: hidden;
     display: block;
-    font-size: 0;
     content: " ";
     clear: both;
-    height: 0;
   }
 }
 

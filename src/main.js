@@ -24,6 +24,9 @@ Vue.use(Components);
 
 import message from '../src/components/common/message';//提示框
 
+import 'quill/dist/quill.core.css';
+import 'quill/dist/quill.snow.css';
+import 'quill/dist/quill.bubble.css';
 // Vue.config.productionTip = false
 /* eslint-disable no-new */
 window.bus = new Vue(); //非父子传值中间件

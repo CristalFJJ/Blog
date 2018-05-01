@@ -56,6 +56,9 @@ export default {
   createArticle(param, success, fail){ //创建文章
     apiPost(config.CREATE_ARTICLE, param, success, fail);
   },
+  updateArticle(param, success, fail){ //更新文章
+    apiPost(config.UPDATE_ARTICLE, param, success, fail);
+  },
   listArticle(param, success, fail){ //查询文章
     apiGet(config.LIST_ARTICLE, param, success, fail)
   },
@@ -64,6 +67,12 @@ export default {
   },
   deleteArticle(param,success,fail){ //删除文章
     apiPost(config.DELETE_ARTICLE, param, success, fail);
+  },
+  searchArticle(param,success,fail){ //模糊搜索
+    apiGet(config.SEARCH_ARTICLE, param, success, fail);
+  },
+  searchOneArticle(param,success,fail){ //搜索单个
+    apiGet(config.SEARCH_ONE_ARTICLE, param, success, fail);
   },
   upload(param, success, fail) { //上传接口
     apiPost(config.UPLOAD, param, success, fail);

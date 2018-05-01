@@ -16,8 +16,8 @@
       </quill-editor>
 
       <div class="write-article-editor-button">
-        <i-button @click="draft">草稿</i-button>
-        <i-button type="info" @click="release">发布</i-button>
+        <i-button v-if="!upDateArticle" @click="draft">草稿</i-button>
+        <i-button type="info" @click="release">{{upDateArticle?'更新':'发布'}}</i-button>
       </div>
 
     </div>
@@ -147,6 +147,7 @@ export default {
           icon:'waterdrop'
         },
       ],
+      upDateArticle:false,
     }
   },
   computed: {
@@ -155,9 +156,23 @@ export default {
     }
   },
   mounted() {
-    console.log('this is current quill instance object', this.editor);
+    this.init();
   },
   methods: {
+    init(){
+      if(JSON.stringify(this.$route.params) != "{}"){
+        let data = this.$route.params.data;
+        this.upDateArticle = true;
+        Object.keys(this.article).forEach(item=>{
+          this.article[item] = data[item];
+        })
+        this.article['_id'] = data['_id']; //记录id直接更新
+        if(data['coverPicture']){
+          this.uploadList.url = data['coverPicture'];
+          this.uploadList.status = 'finished';
+        }
+    }
+    },
     onEditorBlur(quill) {
       // console.log('editor blur!', quill);
     },
@@ -181,7 +196,6 @@ export default {
       let userInfo = this.$utils.Account.getUserInfo();
       this.article.userName = userInfo.userName;
       this.article.level = userInfo.level;
-      
       Object.values(this.article).map(item=>{
         if(this.$utils.CommonUtils.isEmptyOrNull(item)){
           release = false;
@@ -193,11 +207,18 @@ export default {
         if(this.uploadList.url){
           this.article.coverPicture = this.uploadList.url;
         }
-        this.$api.createArticle(this.article,res=>{
-          // this.$router.push("/management/article");
-        },err=>{
-          console.log('err',err);
-        })
+        if(this.upDateArticle){ //更新
+          this.$api.updateArticle(this.article,res=>{
+            this.$router.push("/management/article");
+          })
+        }else{ //发布
+          this.$api.createArticle(this.article,res=>{
+            this.$router.push("/management/article");
+          },err=>{
+            console.log('err',err);
+          })
+        }
+        
       }else{
         this.$msg('请填写完整');
       }

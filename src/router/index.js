@@ -81,13 +81,13 @@ const login = getModel('/login', Login, 'login');
 
 //management
 const management = getModel('/management', Management, 'management',null,'/management/overview');
-const overview = getModel('/management/overview', Overview, 'overview');
-const article = getModel('/management/article', Article, 'article');
-const classification = getModel('/management/classification', Classification, 'classification');
-const draft = getModel('/management/draft', Draft, 'draft');
-const label = getModel('/management/label', Label, 'label');
-const personalSetting = getModel('/management/personalSetting', PersonalSetting, 'personalSetting');
-const writeArticle = getModel('/management/writeArticle', WriteArticle, 'writeArticle');
+const overview = getModel('/management/overview', Overview, 'overview',{menuName:'1-1',openName:["1"]});
+const article = getModel('/management/article', Article, 'article',{menuName:'3-1',openName:["3"]});
+const classification = getModel('/management/classification', Classification, 'classification',{menuName:'3-2',openName:["3"]});
+const draft = getModel('/management/draft', Draft, 'draft',{menuName:'3-4',openName:["3"]});
+const label = getModel('/management/label', Label, 'label',{menuName:'3-3',openName:["3"]});
+const personalSetting = getModel('/management/personalSetting', PersonalSetting, 'personalSetting',{menuName:'4-1',openName:["4"]});
+const writeArticle = getModel('/management/writeArticle', WriteArticle, 'writeArticle',{menuName:'2-1',openName:["2"]});
 
 management.children = [overview,article,classification,draft,label,personalSetting,writeArticle];
 

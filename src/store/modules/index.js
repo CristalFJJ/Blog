@@ -7,3 +7,7 @@ export const Common = {
     actions,
     mutations: mutation.Common
 };
+export const Management = {
+    state: state.Management,
+    mutations: mutation.Management
+};

@@ -4,7 +4,7 @@
       <img :src="imgSrc" alt=" ">
       <p>{{name}}</p>
     </div>
-    <Menu active-name="1-1" :open-names="['1']" width="260px" class="menu-content" @on-select="selectNav">
+    <Menu :active-name="menuActiveName" :open-names="openName" width="260px" class="menu-content" @on-select="selectNav" ref="menu">
       <Submenu v-for="(item,index) in menuData" :key="index" :name="item.name">
         <template slot="title">
           <Icon :type="item.icon"></Icon>
@@ -20,6 +20,7 @@
 <script>
 import photo from '../../../../static/image/me.png';
 import {Account} from '../../../common/js/blogUtils';
+import { mapState, mapMutations } from "vuex";
 export default {
   data () {
     return {
@@ -85,10 +86,20 @@ export default {
       ],
     }
   },
+  computed: {
+    ...mapState({
+      menuActiveName: state => state.Management.menuActiveName, // 当前选择
+      openName: state => state.Management.openName, // 当前展开
+    })
+  },
   mounted () {
-    
+    this.init();
   },
   methods: {
+    ...mapMutations(['menu_active_name_fn','open_name_fn']),
+    init(){
+      this.$router.push('/management/overview');
+    },
     selectNav(val){
       switch(val){
         case '1-1':
@@ -123,6 +134,16 @@ export default {
         this.$router.push("/login");
       })
     },
+  },
+  watch: {
+    $route:function(val){
+      this.menu_active_name_fn(val.meta.menuName);
+      this.open_name_fn(val.meta.openName);
+      this.$nextTick().then(()=>{
+        this.$refs.menu.updateOpened();
+        this.$refs.menu.updateActiveName();
+      })
+    }
   }
 };
 </script>

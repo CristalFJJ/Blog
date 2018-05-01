@@ -9,11 +9,14 @@
             :class="searchBol?'search-articl-show':'search-articl-hidden'"
             v-model="searchValue"
             :data="searchData"
+            @on-click="searchSelect"
+            @on-enter="searchSelect"
+            @on-select="searchSelect"
             @on-search="searchArticle">
           </AutoComplete>
           <div v-show="!batchDeleteShow">
             <Icon type="search" @click.native="searchShow"></Icon>
-            <Icon type="plus"></Icon>
+            <Icon type="plus"  @click.native="addArticle"></Icon>
             <Icon type="more"  @click.native="batchDelete"></Icon>
           </div>
           <div v-show="batchDeleteShow" class="delete-button">
@@ -53,7 +56,7 @@
       <div class="article-detail-info">
         <div class="article-detail-info-create font-color-brown">创建时间:{{articleDetail.createdTime}}</div>
         <div class="article-detail-info-writer">{{articleDetail.userName}}</div>
-        <div class="article-detail-info-upDate font-color-brown" v-show="articleDetail.updatedTime">更新时间:{{articleDetail.updatedTime}}</div>
+        <div class="article-detail-info-upDate font-color-brown" v-show="articleDetail.upDatedTime">更新时间:{{articleDetail.upDatedTime}}</div>
       </div>
       <div class="article-detail-contain">
         <scroll-bar>
@@ -75,6 +78,7 @@
 </template>
 
 <script>
+import {mapMutations} from 'vuex';
 export default {
   data() {
     return {
@@ -151,6 +155,8 @@ export default {
       detailShow:false, // 是否显示具体文章
       individualData: {}, // 单个删除对应的信息
       batchDeleteShow:false, // 批量删除显示 
+      searchTimer:'', //搜索节流定时器
+      searchFuzzyBol: false, //是否在搜索中
     };
   },
   computed:{
@@ -160,6 +166,7 @@ export default {
     this.init();
   },
   methods: {
+    ...mapMutations(['menu_active_name_fn','open_name_fn']),
     init(){
       this.search();
     },
@@ -176,10 +183,37 @@ export default {
       })
     },
     searchArticle(val) {
-      this.searchData = !val ? [] : [val, val + val, val + val + val];
+      if(this.$utils.CommonUtils.isEmptyOrNull(val) || this.searchFuzzyBol) return; 
+      this.searchFuzzyBol = true;
+      this.searchData = [];
+      this.searchTimer = setTimeout(()=>{
+        this.$api.searchArticle({content: val},res=>{
+          let data = res.data;
+          let arr = [];
+          data.forEach(item=>{
+            arr.push(item.title);
+          })
+          this.searchData = arr;
+          this.searchFuzzyBol = false;
+        },err=>{
+          this.searchFuzzyBol = false;
+          console.log(err);
+        })
+      },1000)
     },
-    searchShow() {
+    searchSelect(val){ 
+      console.log("按下了");
+      this.$api.searchOneArticle({type:'title',value:val},res=>{
+        console.log(res);
+      },err=>{
+        console.log(err);
+      })
+    },
+    searchShow() { //出现搜索框
       this.searchBol = !this.searchBol;
+    },
+    addArticle(){ //添加文章
+      this.$router.push('/management/writeArticle');
     },
     batchDelete(){  //点击批量删除图标
       let select = {
@@ -241,7 +275,13 @@ export default {
       this.individualData = {};
     },
     editorPost(val){ //点击修改
-      console.log(val);
+      this.$api.detailArticle(val,res=>{
+        this.menu_active_name_fn('2-1');
+        this.open_name_fn(['2']);
+        this.$router.push({path:'/management/writeArticle',name:'writeArticle',params:{data:res.data}})
+      },err=>{
+        cosnole.log(err);
+      })
     },
     deletePost(val){ //点击单个删除
       this.individualData = val;

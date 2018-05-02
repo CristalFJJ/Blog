@@ -74,6 +74,24 @@ export default {
   searchOneArticle(param,success,fail){ //搜索单个
     apiGet(config.SEARCH_ONE_ARTICLE, param, success, fail);
   },
+  createDraft(param, success, fail){ //创建草稿
+    apiPost(config.CREATE_DRAFT, param, success, fail);
+  },
+  listDraft(param, success, fail){ //草稿列表
+    apiGet(config.LIST_DRAFT, param, success, fail);
+  },
+  detailDraft(param,success, fail){ //查询文章具体
+    apiGet(config.DETAIL_DRAFT, param, success, fail)
+  },
+  deleteDraft(param,success,fail){ //删除文章
+    apiPost(config.DELETE_DRAFT, param, success, fail);
+  },
+  searchDraft(param,success,fail){ //模糊搜索
+    apiGet(config.SEARCH_DRAFT, param, success, fail);
+  },
+  searchOneDraft(param,success,fail){ //搜索单个
+    apiGet(config.SEARCH_ONE_DRAFT, param, success, fail);
+  },
   upload(param, success, fail) { //上传接口
     apiPost(config.UPLOAD, param, success, fail);
   }

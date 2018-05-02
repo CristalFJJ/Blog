@@ -148,6 +148,7 @@ export default {
         },
       ],
       upDateArticle:false,
+
     }
   },
   computed: {
@@ -186,10 +187,14 @@ export default {
       console.log(e);
     },
     draft(){ //草稿
-      console.log(this.title);
-      console.log(this.content);
-      console.log(this.radioValue);
-      console.log(this.articleLabel);
+      let userInfo = this.$utils.Account.getUserInfo();
+      this.article.userName = userInfo.userName;
+      this.article.level = userInfo.level;
+      this.$api.createDraft(this.article,res=>{
+        this.$router.push("/management/draft");
+      },err=>{
+        console.log('err',err);
+      })
     },
     release(){ //发布
       let release = true;

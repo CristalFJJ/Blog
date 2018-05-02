@@ -63,10 +63,10 @@ export default {
               name:'3-2',
               title: '分类',
             },
-            {
-              name:'3-3',
-              title: '标签',
-            },
+            // {
+            //   name:'3-3',
+            //   title: '标签',
+            // },
             {
               name:'3-4',
               title: '草稿箱'
@@ -114,9 +114,9 @@ export default {
         case '3-2':
           this.$router.push("/management/classification");
           break;
-        case '3-3':
-          this.$router.push("/management/label");
-          break;
+        // case '3-3':
+        //   this.$router.push("/management/label");
+        //   break;
         case '3-4':
           this.$router.push("/management/draft");
           break;

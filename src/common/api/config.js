@@ -1,6 +1,6 @@
 // export const SERVICE = 'https://easy-mock.com/mock/5aa5140a22dafa042a4c7289/blog';// 测试接口
-// export const SERVICE = 'http://192.168.0.23:3000';// 公司测试接口
-export const SERVICE = 'http://192.168.3.28:3000';// 测试接口
+export const SERVICE = 'http://192.168.0.23:3000';// 公司测试接口
+// export const SERVICE = 'http://192.168.3.28:3000';// 测试接口
 
 export const API_PATH = '/blog/api';
 export const API_FULL = SERVICE + API_PATH;
@@ -22,5 +22,14 @@ export const DETAIL_ARTICLE = API_FULL + '/detailArticle'; // 查询文章具体
 export const DELETE_ARTICLE = API_FULL + '/deleteArticle'; // 删除文章
 export const SEARCH_ARTICLE = API_FULL + '/searchArticle'; // 搜索文章
 export const SEARCH_ONE_ARTICLE = API_FULL + '/searchOneArticle'; // 搜索单个文章
+
+/*草稿*/
+export const CREATE_DRAFT = API_FULL + '/createDraft'; //创建草稿
+export const LIST_DRAFT =  API_FULL + '/listDraft'; // 查询文章列表
+export const DETAIL_DRAFT = API_FULL + '/detailDraft'; // 查询文章具体信息
+export const DELETE_DRAFT = API_FULL + '/deleteDraft'; // 删除文章
+export const SEARCH_DRAFT = API_FULL + '/searchDraft'; // 搜索文章
+export const SEARCH_ONE_DRAFT = API_FULL + '/searchOneDraft'; // 搜索单个文章
+
 /* 上传接口 */
 export const UPLOAD = API_FULL + '/upload'; // 上传

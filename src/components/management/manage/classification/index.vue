@@ -6,6 +6,7 @@
       :page="queryData.page" 
       :tableData="tableData" 
 			:searchALL="false"
+      :classification="true"
 			:searchClass="queryData.searchClass"
       @searchSelect="searchOneArticle" 
       @pageChange="pageChange"
@@ -89,7 +90,7 @@ export default {
 					break;
 			}
 			this.search();
-		}
+		},
   }
 
 }

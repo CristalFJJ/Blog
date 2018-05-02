@@ -30,16 +30,21 @@
 		</div>
     <slot></slot>
     <div v-show="!detailShow">
-			<Table 
-				class="article-table" 
-				ellipsis 
-				border 
-				ref="articleTable" 
-				:columns="tableColumn" 
-				:data="tableData" 
-				@on-row-dblclick="searchDetail"
-				@on-selection-change="selectChange">
-			</Table>
+      <div :style="{height:tableHeight}">
+        <scroll-bar>
+          <Table 
+            class="article-table" 
+            ellipsis 
+            border 
+            ref="articleTable" 
+            :columns="tableColumn" 
+            :data="tableData" 
+            @on-row-dblclick="searchDetail"
+            @on-selection-change="selectChange">
+          </Table>
+        </scroll-bar>
+      </div>
+			
 			<Page class="table-page" :total="total" :current="page" show-elevator show-total @on-change="pageChange"></Page>
 		</div>
 
@@ -105,6 +110,10 @@ export default {
     draft:{
       type: Boolean,
       default: false
+    },
+    classification:{
+      type:Boolean,
+      default:false
     }
 
   },
@@ -115,6 +124,7 @@ export default {
       searchBol: false,
       modalTitle: '',
       deleteModel: false,
+      tableHeight:'',
       tableColumn: [
         {
           title: '标题',
@@ -185,9 +195,31 @@ export default {
   mounted(){
     this.init();
   },
+  beforeDestroy() {
+    this.$utils.CommonUtils.resetResize();
+  },
   methods: {
     ...mapMutations(['menu_active_name_fn','open_name_fn']),
     init(){
+      this.setHeight();
+    },
+    setHeight(){
+      var _this = this;
+      getHeight();
+      function getHeight() {
+        let clientHeight = document.body.clientHeight;
+        let height;
+        if(_this.classification){
+          height = clientHeight - 260;
+        }else{
+          height = clientHeight - 200;
+        }
+        
+        _this.tableHeight = height + "px";
+      }
+      window.onresize = function() {
+        getHeight();
+      };
     },
     searchArticle(val) {
       if(this.$utils.CommonUtils.isEmptyOrNull(val) || this.searchFuzzyBol) return; 
@@ -314,9 +346,9 @@ export default {
         })
       }else{
         this.$api.detailDraft(val,res=>{
-          this.menu_active_name_fn('3-4');
-          this.open_name_fn(['3']);
-          this.$router.push({path:'/management/draft',name:'draft',params:{data:res.data}})
+          this.menu_active_name_fn('2-1');
+          this.open_name_fn(['2']);
+          this.$router.push({path:'/management/writeArticle',name:'writeArticle',params:{data:res.data,from:'draft'}});
         },err=>{
           cosnole.log(err);
         })
@@ -340,12 +372,12 @@ export default {
           cosnole.log(err);
         })
      }else{
-       this.$api.detailDraft(val,res=>{
-          this.articleDetail = res.data;
-          this.detailShow = true;
-        },err=>{
-          cosnole.log(err);
-        })
+      this.$api.detailDraft(val,res=>{
+        this.articleDetail = res.data;
+        this.detailShow = true;
+      },err=>{
+        cosnole.log(err);
+      })
      }
       
     },

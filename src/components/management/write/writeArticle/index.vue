@@ -123,7 +123,7 @@ export default {
       optionsLoading: true,
       preview: false, //预览
       editorOption: {
-          // some quill options
+        // some quill options
       },
       classificationData:[ //分类
         {
@@ -148,7 +148,7 @@ export default {
         },
       ],
       upDateArticle:false,
-
+      draftArticle:false,
     }
   },
   computed: {
@@ -163,7 +163,6 @@ export default {
     init(){
       if(JSON.stringify(this.$route.params) != "{}"){
         let data = this.$route.params.data;
-        this.upDateArticle = true;
         Object.keys(this.article).forEach(item=>{
           this.article[item] = data[item];
         })
@@ -172,7 +171,12 @@ export default {
           this.uploadList.url = data['coverPicture'];
           this.uploadList.status = 'finished';
         }
-    }
+        if(this.$route.params.from == 'draft'){
+          this.draftArticle = true;
+        }else{
+          this.upDateArticle = true;
+        } 
+      }
     },
     onEditorBlur(quill) {
       // console.log('editor blur!', quill);
@@ -186,7 +190,19 @@ export default {
     classificationChange(e){
       console.log(e);
     },
+    deleteDraft(){
+      return new Promise((resolve,reject)=>{
+        this.$api.deleteDraft([this.article],res=>{
+          resolve();
+        },err=>{
+          reject(err);
+        })
+      })
+    },
     draft(){ //草稿
+      if(this.draftArticle){
+        this.deleteDraft();
+      }
       let userInfo = this.$utils.Account.getUserInfo();
       this.article.userName = userInfo.userName;
       this.article.level = userInfo.level;
@@ -207,7 +223,9 @@ export default {
           return;
         }
       });
-
+      if(this.draftArticle){
+        this.deleteDraft();
+      }
       if(release){
         if(this.uploadList.url){
           this.article.coverPicture = this.uploadList.url;

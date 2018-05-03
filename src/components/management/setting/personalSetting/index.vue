@@ -85,6 +85,7 @@
 
 <script>
 import personalImg from '../../../../../static/image/personal.jpg';
+import {SERVICE} from '../../../../common/api/config';
 export default {
   data() {
     return {
@@ -123,6 +124,9 @@ export default {
         let data = res.data;
         this.formData.remarks = data.remarks || '';
         this.formData.email = data.email || '';
+        if(data.portrait.includes('defaultAvatar')){
+          data.portrait = SERVICE + data.portrait
+        }
         this.$set(this.uploadList,'url', data.portrait);
         this.$set(this.uploadList,'status', "finished");
       },err=>{
@@ -295,7 +299,7 @@ export default {
         text-align: center;
       }
       .completion-margin{
-        margin-top: calc(100vh - 800px);
+        margin-top: calc(100vh - 760px);
       }
     }
     .personal-setting-right{

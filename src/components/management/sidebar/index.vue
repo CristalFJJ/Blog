@@ -21,6 +21,7 @@
 import photo from '../../../../static/image/me.png';
 import {Account} from '../../../common/js/blogUtils';
 import { mapState, mapMutations } from "vuex";
+import {SERVICE} from '../../../common/api/config';
 export default {
   data () {
     return {
@@ -109,6 +110,9 @@ export default {
       this.$api.userFind({_id:userInfo._id},res=>{
         let data = res.data;
         this.userName = data.userName;
+        if(data.portrait.includes('defaultAvatar')){
+          data.portrait = SERVICE+data.portrait
+        }
         this.imgSrc = data.portrait;
       },err=>{
         console.log(err);

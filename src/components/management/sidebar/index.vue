@@ -2,7 +2,7 @@
   <div class="menu">
     <div class="menu-header">
       <img :src="imgSrc" alt=" ">
-      <p>{{name}}</p>
+      <p>{{userName}}</p>
     </div>
     <Menu :active-name="menuActiveName" :open-names="openName" width="260px" class="menu-content" @on-select="selectNav" ref="menu">
       <Submenu v-for="(item,index) in menuData" :key="index" :name="item.name">
@@ -24,8 +24,8 @@ import { mapState, mapMutations } from "vuex";
 export default {
   data () {
     return {
-      name:'Cristal',
-      imgSrc:photo,
+      userName:'',
+      imgSrc:'',
       menuHeight:0,//高度
       menuData:[
         {
@@ -99,6 +99,20 @@ export default {
     ...mapMutations(['menu_active_name_fn','open_name_fn']),
     init(){
       this.$router.push('/management/overview');
+      this.userInfo();
+      window.bus.$on('userUpDate',()=>{
+        this.userInfo();
+      });
+    },
+    userInfo(){
+      let userInfo = this.$utils.Account.getUserInfo();
+      this.$api.userFind({_id:userInfo._id},res=>{
+        let data = res.data;
+        this.userName = data.userName;
+        this.imgSrc = data.portrait;
+      },err=>{
+        console.log(err);
+      })
     },
     selectNav(val){
       switch(val){

@@ -1,3 +1,5 @@
+import { RegexEnum } from './enum/regexEnum'; // 正则规则枚举
+
 export const CommonUtils = {
   isEmptyOrNull(v) { // 判断字符串是否为空
     return typeof (v) === 'undefined' || v == '' || v == null ? true : false;
@@ -35,9 +37,67 @@ export const CommonUtils = {
 	},
 	getDefaultPath(){ //返回入口面
 		window.location.href = window.location.origin;
-	},
+  },
+  regValidator(regx, value) {
+    /**
+     * 正则统一验证函数
+     * @param (regex : regex) 正则规则
+     * @param (value : Objext) 值
+     * @return Boolean
+     * 
+     */
+    if (CommonUtils.isEmptyOrNull(regx) || CommonUtils.isEmptyOrNull(value) || CommonUtils.isArray(value)) {
+        // throw new Error('参数有误...');
+        return false;
+    }
+    return regx.test(value);
+  },
 }
-
+// 正则工具类
+export const RegexUtils = {
+  accountFormat(v) {  //账户格式
+    return CommonUtils.regValidator(RegexEnum.ISACCOUNT, v);
+  },
+  phoneFormat(v) { // 手机格式
+    return CommonUtils.regValidator(RegexEnum.ISMOBILE, v);
+  },
+  TelFormat(v) { // 座机格式
+    return CommonUtils.regValidator(RegexEnum.TELPHONE, v);
+  },
+  email(v) { // 邮箱
+    return CommonUtils.regValidator(RegexEnum.EMAIL, v);
+  },
+  userName(v) { // 用户名格式
+    return CommonUtils.regValidator(RegexEnum.USERNAME, v);
+  },
+  isName(v) { // 名称
+    return CommonUtils.regValidator(RegexEnum.NAME, v);
+  },
+  isPassword(v) { // 检测密码格式
+    return CommonUtils.regValidator(RegexEnum.ISPWD, v);
+  },
+  isNumber(v) { // 是否为数字
+    return CommonUtils.regValidator(RegexEnum.NUMBER, v);
+  },
+  lowLevel(v) { // 弱密码格式
+    return CommonUtils.regValidator(RegexEnum.LOWPWD, v);
+  },
+  highLevel(v) { // 强密码格式
+    return CommonUtils.regValidator(RegexEnum.HIGHPWD, v);
+  },
+  isMileage(v) { // Mileage
+    return CommonUtils.regValidator(RegexEnum.MILEAGE, v);
+  },
+  isCost(v) { // COST
+    return CommonUtils.regValidator(RegexEnum.COST, v);
+  },
+  isErrorCost(v) { // setError COST
+    return CommonUtils.regValidator(RegexEnum.ERRORCOST, v);
+  },
+  isUrl(v) { // 匹配url地址
+    return CommonUtils.regValidator(RegexEnum.URL, v);
+  }
+}
 /**
  * 本地保存父类
  */

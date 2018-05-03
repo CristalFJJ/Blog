@@ -1,6 +1,5 @@
-// export const SERVICE = 'https://easy-mock.com/mock/5aa5140a22dafa042a4c7289/blog';// 测试接口
-// export const SERVICE = 'http://192.168.0.23:3000';// 公司测试接口
-export const SERVICE = 'http://192.168.3.28:3000';// 测试接口
+export const SERVICE = 'http://192.168.0.23:3000';// 公司测试接口
+// export const SERVICE = 'http://192.168.3.28:3000';// 测试接口
 
 export const API_PATH = '/blog/api';
 export const API_FULL = SERVICE + API_PATH;
@@ -13,6 +12,9 @@ export const REGISTER_PREVIEW = API_FULL + '/registerPreview'; // 验证用户�
 export const USER_REGISTER = API_FULL + '/userRegister'; // 用户注册
 export const LOGIN_IN = API_FULL + '/loginIn'; // 登录
 export const LOGIN_OUT = API_FULL + '/loginOut'; // 登出
+export const USER_FIND = API_FULL + '/userFind'; // 查找用户
+export const USER_UPDATE_PASSWORD = API_FULL + '/userUpDatePassWord'; //更新密码
+export const USER_UPDATE = API_FULL + '/userUpDate'; //更新资料
 
 /* 文章管理接口*/
 export const CREATE_ARTICLE = API_FULL + '/createArticle'; //创建文章

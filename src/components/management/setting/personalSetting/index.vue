@@ -4,9 +4,9 @@
       <div class="personal-setting-left">
         <p class="font-color-blue font-size-20">个人设置</p>
         <Form ref="formData" :model="formData" >
-          <FormItem label="昵称" prop="name">
-            <Input type="text" v-model="formData.name" placeholder="nickname">
-              <Icon type="android-contact" slot="prepend"></Icon>
+          <FormItem label="个性签名" prop="name">
+            <Input type="text" v-model="formData.remarks" placeholder="remark">
+              <Icon type="paintbrush" slot="prepend"></Icon>
             </Input>
           </FormItem>
           <FormItem prop="email" label="电子邮箱地址">
@@ -89,11 +89,11 @@ export default {
   data() {
     return {
       formData: {
-        name: "",
+        remarks: "",
         email: ""
       },
       passWord:{
-        firse: '',
+        first: '',
         again: '',
       },
       defaultList: [],
@@ -114,13 +114,68 @@ export default {
     }
   },
   mounted() {
-    
+    this.init();
   },
   methods: {
+    init(){
+      let userInfo = this.$utils.Account.getUserInfo();
+      this.$api.userFind({_id:userInfo._id},res=>{
+        let data = res.data;
+        this.formData.remarks = data.remarks || '';
+        this.formData.email = data.email || '';
+        this.$set(this.uploadList,'url', data.portrait);
+        this.$set(this.uploadList,'status', "finished");
+      },err=>{
+        console.log(err);
+      })
+    },
     upDateDate() {
+      if(this.formData.email !='' && !this.$utils.RegexUtils.email(this.formData.email)){ //验证邮箱格式
+        console.log(this.formData.email);
+        this.$msg('邮箱格式有误');
+        return 
+      }
+      let userInfo = this.$utils.Account.getUserInfo();
+
+      let obj = {
+        _id: userInfo._id,
+        remarks: this.formData.remarks,
+        email: this.formData.email,
+        portrait: this.uploadList.url
+      }
+      this.$api.userUpDate(obj,res=>{
+        if(res.code == 200){
+          window.bus.$emit('userUpDate');
+          this.$msg('资料更新成功',2,'success');
+        }
+      },err=>{
+        console.log(err);
+      });
     },
     upDatePassWord(){
+      let userInfo = this.$utils.Account.getUserInfo();
+      if(this.passWord.first !== this.passWord.again){
+        this.$msg('两次密码输入不一致',1.5,'error');
+        return;
+      }
+      let reg = /^.{6,12}$/;
+      if(!reg.test(this.passWord.first)){
+        return this.$msg('密码长度为6-12',1.5,'error');
+      }
+      let obj = {
+        _id: userInfo._id,
+        passWord: this.passWord.first
+      }
 
+      this.$api.userUpDatePassWord(obj,res=>{
+        if(res.code == 200){
+          this.passWord.first = '';
+          this.passWord.again = '';
+          this.$msg('密码更新成功',2,'success');
+        }
+      },err=>{
+        console.log(err);
+      });
     },
     handleView () {
       this.visible = true;

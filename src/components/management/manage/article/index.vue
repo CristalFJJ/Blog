@@ -9,6 +9,7 @@
       @pageChange="pageChange"
       @sureDelete="sureDelete"
       @sureDeleteAll="sureDeleteAll"
+      ref="table"
     ></tableComponent>
   </div>
 </template>
@@ -36,6 +37,10 @@ export default {
   methods:{
     init(){
      this.search();
+     if(JSON.stringify(this.$route.params) != "{}"){
+      let _id = this.$route.params._id;
+      this.$refs.table.searchDetail({_id:_id});
+     }
     },
     search(){
       return new Promise((resolve,reject)=>{

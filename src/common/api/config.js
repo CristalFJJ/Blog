@@ -1,5 +1,5 @@
-// export const SERVICE = 'http://192.168.0.23:3000';// 公司测试接口
-export const SERVICE = 'http://192.168.3.28:3000';// 测试接口
+export const SERVICE = 'http://192.168.0.23:3000';// 公司测试接口
+// export const SERVICE = 'http://192.168.3.28:3000';// 测试接口
 
 export const API_PATH = '/blog/api';
 export const API_FULL = SERVICE + API_PATH;
@@ -33,5 +33,3 @@ export const DELETE_DRAFT = API_FULL + '/deleteDraft'; // 删除文章
 export const SEARCH_DRAFT = API_FULL + '/searchDraft'; // 搜索文章
 export const SEARCH_ONE_DRAFT = API_FULL + '/searchOneDraft'; // 搜索单个文章
 
-/* 上传接口 */
-export const UPLOAD = API_FULL + '/upload'; // 上传

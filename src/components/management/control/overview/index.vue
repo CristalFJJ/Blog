@@ -5,99 +5,68 @@
           <p class="font-color-blue font-size-24">网站统计</p>
           <div class="flex-start">
             <ul class="flex-start control-left-area-statistics-count font-size-16">
-              <li>文章 <span>37</span></li>
+              <li>文章 <span>{{statistical.articleTotal}}</span></li>
               <li>评论 <span>25</span></li>
               <li>分类 <span>8</span></li>
               <li>访问量 <span>1111</span></li>
             </ul>
             <div class="control-left-area-statistics-info font-size-20">
-              <div class="control-left-area-statistics-info-name">Cristal</div>
+              <div class="control-left-area-statistics-info-name">{{userName}}</div>
               <p class="control-left-area-statistics-info-version">版本:1.0</p>
             </div>
           </div>
       </div>
       <ul class="control-left-area-nav space-between font-size-18 font-color-blue">
-        <li>撰写文章</li>
-        <li>查看文章</li>
-        <li>个人设置</li>
+        <li @click="goWrite">撰写文章</li>
+        <li @click="goArticle">查看文章</li>
+        <li @click="goPersonal">个人设置</li>
       </ul>
       <div class="control-left-area-recently-artcle">
         <p class="font-size-18 font-color-blue">最近文章</p>
         <ul>
-            <scroll-bar>
-              <li>
-                <span>2018/04/01</span>
-                <span>测试</span>
-                <span>测试XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</span>
-              </li>
-              <li>
-                <span>2018/04/01</span>
-                <span>测试</span>
-                <span>测试XXXXXXXXXXXXXXXXXXXXX</span>
-              </li>
-              <li>
-                <span>2018/04/01</span>
-                <span>测试</span>
-                <span>测试XXXXXXXXXXXXXXXXXXXXX</span>
-              </li>
-              <li>
-                <span>2018/04/01</span>
-                <span>测试</span>
-                <span>测试XXXXXXXXXXXXXXXXXXXXX</span>
-              </li>
-              <li>
-                <span>2018/04/01</span>
-                <span>测试</span>
-                <span>测试XXXXXXXXXXXXXXXXXXXXX</span>
-              </li>
-              <li>
-                <span>2018/04/01</span>
-                <span>测试</span>
-                <span>测试XXXXXXXXXXXXXXXXXXXXX</span>
-              </li>
-              <li>
-                <span>2018/04/01</span>
-                <span>测试</span>
-                <span>测试XXXXXXXXXXXXXXXXXXXXX</span>
-              </li>
-            </scroll-bar>
-          </ul>
-        
+          <scroll-bar>
+            <li v-for="(item,index) in articleArr" :key="index" @click="articleDetail(item._id)">
+              <span>{{item.createdTime.split(" ")[0]}}</span>
+              <span>{{item.title}}</span>
+              <span>{{regfilter(item.content,index)}}</span>
+            </li>
+          </scroll-bar>
+        </ul>
       </div>
       <div class="control-left-area-recently-comment">
         <p class="font-size-18 font-color-blue">最近评论</p>
         <ul>
          <scroll-bar>
-         <li>
-            <span>2018/04/01</span>
-            <span>测试</span>
-            <span>测试XXXXXXXXXXXXXXXXXXXXX</span>
-          </li>
           <li>
-            <span>2018/04/01</span>
-            <span>测试</span>
-            <span>测试XXXXXXXXXXXXXXXXXXXXX</span>
+              <span>2018/04/01</span>
+              <span>测试</span>
+              <span>测试XXXXXXXXXXXXXXXXXXXXX</span>
           </li>
-          <li>
-            <span>2018/04/01</span>
-            <span>测试</span>
-            <span>测试XXXXXXXXXXXXXXXXXXXXX</span>
-          </li>
-          <li>
-            <span>2018/04/01</span>
-            <span>测试</span>
-            <span>测试XXXXXXXXXXXXXXXXXXXXX</span>
-          </li>
-           <li>
-            <span>2018/04/01</span>
-            <span>测试</span>
-            <span>测试XXXXXXXXXXXXXXXXXXXXX</span>
-          </li>
-           <li>
-            <span>2018/04/01</span>
-            <span>测试</span>
-            <span>测试XXXXXXXXXXXXXXXXXXXXX</span>
-          </li>
+            <li>
+              <span>2018/04/01</span>
+              <span>测试</span>
+              <span>测试XXXXXXXXXXXXXXXXXXXXX</span>
+            </li>
+            <li>
+              <span>2018/04/01</span>
+              <span>测试</span>
+              <span>测试XXXXXXXXXXXXXXXXXXXXX</span>
+            </li>
+            <li>
+              <span>2018/04/01</span>
+              <span>测试</span>
+              <span>测试XXXXXXXXXXXXXXXXXXXXX</span>
+            </li>
+            <li>
+              <span>2018/04/01</span>
+              <span>测试</span>
+              <span>测试XXXXXXXXXXXXXXXXXXXXX</span>
+            </li>
+            <li>
+              <span>2018/04/01</span>
+              <span>测试</span>
+              <span>测试XXXXXXXXXXXXXXXXXXXXX</span>
+            </li>
           </scroll-bar>
         </ul>
       </div>
@@ -105,7 +74,7 @@
     <div class="control-right-area">
       <div class="control-right-area-cheat">
         <div class="space-between">
-          <div class="control-right-area-cheat-time font-size-20"><span>2018</span>年 <span>04</span>月<span>01</span>日</div>
+          <div class="control-right-area-cheat-time font-size-20"><span>{{year}}</span>年 <span>{{month}}</span>月<span>{{day}}</span>日</div>
           <div class="control-right-area-cheat-add font-size-14">新增备忘</div>
         </div>
         <ul class="control-right-area-cheat-detail">
@@ -164,7 +133,74 @@
 
 <script>
 export default {
-
+  data(){
+    return{
+      userName:'',
+      articleArr:[],
+      statistical:{
+        articleTotal:0,
+      }
+    }
+  },
+  computed:{
+    year(){
+      return new Date().getFullYear();
+    },
+    month(){
+      let month = new Date().getMonth() + 1;
+      return month>10?month:'0'+month;
+    },
+    day(){
+      let day = new Date().getDay();
+      return day>10?day:'0'+day;
+    }
+  },
+  mounted(){
+    this.init();
+  },
+  methods:{
+    init(){
+      let userInfo = this.$utils.Account.getUserInfo();
+      this.userName = userInfo.userName;
+      this.searchArticle();
+    },
+    searchArticle(){
+      let obj = {
+        page:1,
+        rows:10
+      }
+      return new Promise((resolve,reject)=>{
+        this.$api.listArticle(obj,res=>{
+          this.articleArr = res.data;
+          this.statistical.articleTotal = res.total;
+          resolve();
+        },err=>{
+          console.log(err);
+          reject(err);
+        })
+      })
+    },
+    regfilter(val){
+      if(val.length>50){
+        val = val.slice(0,50) + '</p>';
+      }
+      val = val.replace(/\s+/g, "");
+      let reg = /<p>(\S*)<\/p>/;
+      return val.match(reg)[1];
+    },
+    articleDetail(_id){
+      this.$router.push({path:'/management/article',name:'article',params:{_id:_id}})
+    },
+    goWrite(){
+      this.$router.push('/management/writeArticle');
+    },
+    goArticle(){
+      this.$router.push('/management/article');
+    },
+    goPersonal(){
+      this.$router.push('/management/personalSetting');
+    }
+  }
 }
 </script>
 
@@ -249,11 +285,19 @@ export default {
             white-space: nowrap;
             text-overflow:ellipsis;
             span{
-              margin-right: 20px
+              margin-right: 20px;
+              color: rgb(10, 10, 10);
+              opacity: 0.7;
             }
             span:nth-child(3){
-              color: rgb(182, 182, 182);
+              color: rgb(112, 112, 112);
               margin-right: 0px;
+            }
+            &:hover{
+              span{
+                opacity: 1;
+              }
+              
             }
           }
         }

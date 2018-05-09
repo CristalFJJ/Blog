@@ -62,7 +62,6 @@ export default {
   userUpDatePassWord(param, success, fail) { //用户更新密码
     apiPost(config.USER_UPDATE_PASSWORD, param, success, fail);
   },
-  
   createArticle(param, success, fail){ //创建文章
     apiPost(config.CREATE_ARTICLE, param, success, fail);
   },
@@ -102,9 +101,4 @@ export default {
   searchOneDraft(param,success,fail){ //搜索单个
     apiGet(config.SEARCH_ONE_DRAFT, param, success, fail);
   },
-
-
-  upload(param, success, fail) { //上传接口
-    apiPost(config.UPLOAD, param, success, fail);
-  }
 }

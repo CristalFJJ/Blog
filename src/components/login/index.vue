@@ -1,8 +1,5 @@
 <template>
-  <div class="login">
-    <div class="login-img">
-      <img :src="loginImg" alt="">
-    </div>
+  <div class="login flex-start">
     <div class="login-page">
       <p class="login-title">LOGIN</p>
       <Form :model="userForm" class="login-form" @submit.native.prevent>
@@ -46,12 +43,10 @@
 </template>
 
 <script>
-import loginImg from "../../../static/image/login.jpg";
 const crypto = require('crypto');
 export default {
   data() {
     return {
-      loginImg: loginImg,
       userForm: {
         userName: "",
         passWord: ""
@@ -290,25 +285,22 @@ export default {
 
 <style lang="scss">
 .login {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
+  background-image: url(../../../static/image/background.jpg);
+  background-size:100%; 
   height: 100%;
   .login-img {
-    flex: 1;
+    position: absolute;
+    width: 100%;
     height: 100%;
-    img {
-      width: 100%;
-      height: 100%;
-    }
   }
   .login-page {
     flex: 1;
-    background-color: #fff;
+    background-color: transparent;
     text-align: center;
     .login-title {
       font-size: 28px;
       font-weight: 400;
+      color: white;
     }
     .login-form{
       .ivu-form-item{
@@ -316,6 +308,13 @@ export default {
       }
       .ivu-form-item-error-tip{
         position:static;
+      }
+      .ivu-input{
+        background-color: transparent;
+        color: white;
+        &:hover{
+          border-color:rgb(68, 189, 236);
+        }
       }
     }
     .ivu-input-group {
@@ -344,9 +343,9 @@ export default {
     }
     .login-button{
       .ivu-btn {
-        color: #57c2f3;
-        background-color: #fff;
-        border-color: #57c2f3;
+        color: #2a86ad;
+        background-color: transparent;
+        border-color: #2a86ad;
         &:hover {
           color: #5774f3;
           border-color: #5774f3;

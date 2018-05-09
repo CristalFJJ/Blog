@@ -5,6 +5,8 @@
 
       <i-input class="write-article-editor-title" v-model="article.title" placeholder="标题"></i-input>
 
+      <i-input class="write-article-editor-describe" v-model="article.describe" placeholder="描述"></i-input>
+
       <quill-editor 
         class="write-article-editor-content"
         v-model="article.content"
@@ -108,6 +110,7 @@ export default {
     return {
       article:{
         title:'', //标题
+        describe: '', //描述
         content: '', //内容
         classification: '',//分类
         label: '', //标签
@@ -322,8 +325,14 @@ export default {
       .write-article-editor-title{
         margin-bottom: 20px;
       }
+      .write-article-editor-describe{
+        margin-bottom: 20px;
+        .ivu-input{
+          font-size: 14px; 
+        }
+      }
       .write-article-editor-content{
-        height: calc(100% - 112px);
+        height: calc(100% - 162px);
         margin-bottom: 20px;
         .ql-container{
           height: calc(100% - 90px);

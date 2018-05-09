@@ -1,7 +1,7 @@
 <template>
 	<div class="main">
-		<div class="login" v-show="loginShow">
-			<Button type="primary" class="login-button" @click="login">登录后台</Button>
+		<div class="login-background" v-show="loginShow">
+			<Button type="primary" class="login-button" @click="login">个人后台</Button>
 			<p class="notTips" @click="notTips">
 				<Icon type="close"></Icon>
 				<span>不再提醒</span>
@@ -114,6 +114,9 @@ export default {
 	mounted () {
 	},
 	methods: {
+		init(){
+			
+		},
 		sliding() {
 			
 		},
@@ -130,7 +133,7 @@ export default {
 <style lang="scss" scoped>
 .main{
 	overflow-x: hidden;
-	.login{
+	.login-background{
 		display: flex;
 		justify-content: flex-end;
 		align-items: center;

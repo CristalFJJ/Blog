@@ -28,7 +28,7 @@
             <li v-for="(item,index) in articleArr" :key="index" @click="articleDetail(item._id)">
               <span>{{item.createdTime.split(" ")[0]}}</span>
               <span>{{item.title}}</span>
-              <span>{{regfilter(item.content,index)}}</span>
+              <span class="beyond-ellipsis">{{item.describe}}</span>
             </li>
           </scroll-bar>
         </ul>
@@ -179,14 +179,6 @@ export default {
           reject(err);
         })
       })
-    },
-    regfilter(val){
-      if(val.length>50){
-        val = val.slice(0,50) + '</p>';
-      }
-      val = val.replace(/\s+/g, "");
-      let reg = /<p>(\S*)<\/p>/;
-      return val.match(reg)[1];
     },
     articleDetail(_id){
       this.$router.push({path:'/management/article',name:'article',params:{_id:_id}})

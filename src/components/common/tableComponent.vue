@@ -342,7 +342,7 @@ export default {
           this.open_name_fn(['2']);
           this.$router.push({path:'/management/writeArticle',name:'writeArticle',params:{data:res.data}})
         },err=>{
-          cosnole.log(err);
+          console.log(err);
         })
       }else{
         this.$api.detailDraft(val,res=>{
@@ -350,10 +350,9 @@ export default {
           this.open_name_fn(['2']);
           this.$router.push({path:'/management/writeArticle',name:'writeArticle',params:{data:res.data,from:'draft'}});
         },err=>{
-          cosnole.log(err);
+          console.log(err);
         })
-      }
-      
+      }      
     },
     deletePost(val){ //点击单个删除
       this.individualData = val;
@@ -369,14 +368,14 @@ export default {
           this.articleDetail = res.data;
           this.detailShow = true;
         },err=>{
-          cosnole.log(err);
+          console.log(err);
         })
      }else{
       this.$api.detailDraft(val,res=>{
         this.articleDetail = res.data;
         this.detailShow = true;
       },err=>{
-        cosnole.log(err);
+        console.log(err);
       })
      }
       

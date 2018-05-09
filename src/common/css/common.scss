@@ -52,6 +52,11 @@ a {
   text-decoration: none;
   color: #333; 
 }
+.beyond-ellipsis{ //超出省略
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
+}
 
 // 颜色
 $dialog-title-color: linear-gradient(-1deg, #2EA1F8 2%, #1990EA 100%);

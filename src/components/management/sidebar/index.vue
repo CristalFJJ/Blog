@@ -13,7 +13,10 @@
         <MenuItem v-for="(childItem,childIndex) in item.children" :key="childIndex" :name="childItem.name">{{childItem.title}}</MenuItem>
       </Submenu>
     </Menu>
-    <div class="exit"><div class="exitLogin" @click="loginOut">登出</div></div>
+
+    <div class="exit exit_back"><div class="exitLogin" @click="back">返回</div></div>
+
+    <div class="exit exit_out"><div class="exitLogin" @click="loginOut">登出</div></div>
   </div>
 </template>
 
@@ -104,6 +107,9 @@ export default {
       window.bus.$on('userUpDate',()=>{
         this.userInfo();
       });
+    },
+    back(){
+      this.$router.push('/');
     },
     userInfo(){
       let userInfo = this.$utils.Account.getUserInfo();
@@ -199,21 +205,34 @@ export default {
   }
   .exit{
     position: absolute;
-    bottom: 50px;
     z-index: 900;
     width: 100%;
+    div{
+      width: 180px;
+      line-height: 30px;
+      border-radius: 4px;
+      text-align: center;
+      margin: 0 auto;
+      color: #FFF;
+      cursor: pointer;
+    }
   }
-  .exitLogin{
-    width: 180px;
-    line-height: 30px;
-    border-radius: 4px;
-    background-color: rgb(201, 77, 77);
-    text-align: center;
-    margin: 0 auto;
-    color: #FFF;
-    cursor: pointer;
-    &:hover{
-       background-color: rgb(253, 93, 93);
+  .exit_back{
+    bottom: 100px;
+    div{
+      background-color: rgb(58, 170, 214);
+      &:hover{
+        background-color: rgb(70, 193, 230);
+      }
+    }
+  }
+  .exit_out{
+    bottom: 50px;
+    div{
+      background-color: rgb(201, 77, 77);
+      &:hover{
+        background-color: rgb(253, 93, 93);
+      }
     }
   }
 </style>

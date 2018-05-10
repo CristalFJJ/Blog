@@ -52,6 +52,16 @@ export const CommonUtils = {
     }
     return regx.test(value);
   },
+  randomString(len) {  // 获取随机字符串
+    len = len || 0;
+    var ranStr= 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678<>%#$~(){}^&*!+-';    /****默认去掉了容易混淆的字符oOLl,9gq,Vv,Uu,I1****/
+    var maxPos = ranStr.length;
+    var str = '';
+    for (let i = 0; i < len; i++) {
+      str += ranStr.charAt(Math.floor(Math.random() * maxPos));
+    }
+    return str;
+  }
 }
 // 正则工具类
 export const RegexUtils = {

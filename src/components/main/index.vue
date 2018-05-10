@@ -1,12 +1,5 @@
 <template>
 	<div class="main">
-		<div class="login-background" v-show="loginShow">
-			<Button type="primary" class="login-button" @click="login">个人后台</Button>
-			<p class="notTips" @click="notTips">
-				<Icon type="close"></Icon>
-				<span>不再提醒</span>
-			</p>
-		</div>
 		<Header></Header>
 		<div class="motto">
 			<p>Cristal</p>
@@ -14,16 +7,16 @@
 		</div>
 		<Carousel v-model="sweeperIndex" loop  autoplay :autoplay-speed='3000' dots="outside" class="sweeper" >
         <CarouselItem v-for="(items,indexs) in photoData" :key="indexs">
-            <ul>
-							<li v-for="(item,index) in items.children" :key="index" class="article-introduce">
-								<img :src="item.img" alt="">
-								<div>
-									<p>{{item.title}}</p>
-									<p>{{item.describe}}</p>
-								</div>
-							</li>
-						</ul>
-        </CarouselItem>
+          <ul>
+						<li v-for="(item,index) in items.children" :key="index" class="article-introduce">
+							<img :src="item.img" alt="">
+							<div>
+								<p>{{item.title}}</p>
+								<p>{{item.describe}}</p>
+							</div>
+						</li>
+					</ul>
+      </CarouselItem>
     </Carousel>
 		<Slide class="slide"></Slide>
 		<div class="content">
@@ -49,7 +42,6 @@ export default {
 	},
 	data () {
 		return {
-			loginShow: true,
 			sweeperIndex: 0,
 			photoData:[
 				{
@@ -120,12 +112,7 @@ export default {
 		sliding() {
 			
 		},
-		login() {
-			this.$router.push('/login');
-		},
-		notTips() {
-			this.loginShow = false;
-		},
+		
 	}
 };
 </script>
@@ -133,31 +120,6 @@ export default {
 <style lang="scss" scoped>
 .main{
 	overflow-x: hidden;
-	.login-background{
-		display: flex;
-		justify-content: flex-end;
-		align-items: center;
-		padding: 10px 20px;
-		color: #337ab7;
-		border-bottom: 1px dashed #d0d4d9;
-		.login-button{
-			margin-right: 20px;
-		}
-		.ivu-btn-primary{
-			background-color: #337ab7;
-			border-color: #337ab7;
-			&:hover{
-				background-color: #439be9;
-				border-color: #439be9;
-			}
-		}
-		.notTips{
-			cursor: pointer;
-			&:hover{
-				color: #439be9;
-			}
-		}
-	}
 	.motto{
 		padding: 80px 0;
 		p:nth-child(1){

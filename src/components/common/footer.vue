@@ -1,17 +1,69 @@
 <template>
   <div class="footer">
-      <div class="footer-content">
-          <ul>
-              <li>Cristal</li>
-              <li>学习好比苦行，需朝课暮诵，朝夕勤修务</li>
-          </ul>
-      </div>
-			<p>Copyright ©cristal.com All rights reserved.</p>
+    <div class="footer-content">
+      <ul>
+        <li>Cristal</li>
+        <li>学习好比苦行，需朝课暮诵，朝夕勤修务</li>
+				<li class="change-word">{{prefixWord}}<span v-for="(item,index) in changeWord" :key="index" :style="{color:makeColor(index)}">{{item}}</span></li>
+      </ul>
+    </div>
+		<p>Copyright ©cristal.com All rights reserved.</p>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+	data(){
+		return{
+			prefixWord: '',
+			prefixTimer: '',
+			prefixMessage: 'I work with ',
+			changeWord: [],
+			someWord:['JavaScript.','Html & Css.','Vue.','Node.js.','Passion & Love.'],
+			changeTimer: '',
+		}
+	},
+	computed:{
+		
+	},
+	mounted(){
+		this.init();
+	},
+	methods:{
+		async init(){
+			await this.prefixFun();
+			await this.changeFun();
+		},
+		prefixFun(){ //前缀生成
+			return new Promise((resolve,reject)=>{
+				clearInterval(this.prefixTimer);
+				let length = this.prefixMessage.length;
+				let count = 0;
+				this.prefixTimer = setInterval(()=>{
+					if(count >= length-1){
+						clearInterval(this.prefixTimer);
+						resolve();
+					}
+					this.changeWord = this.$utils.CommonUtils.randomString((length - count - 1)*2).split('');
+					console.log(this.changeWord);
+					this.prefixWord += this.prefixMessage[count];
+					count ++;
+				},200);
+			})
+		},
+		changeFun(){
+			return new Promise((resolve,rejevt)=>{
+				clearInterval(this.changeTimer);
+			})
+		},
+		makeColor(index){
+			let r = Math.floor(Math.random()*index*256);
+			let g = Math.floor(Math.random()*index*256);
+			let b = Math.floor(Math.random()*index*256);
+			return `rgb(${r},${g},${b})`;
+		}
+	}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -33,6 +85,11 @@ export default {};
 			color: #d9d9d9;
 			font-weight: 300;
 			font-size: 16px;
+		}
+		.change-word{
+			height: 24px;
+			font-size: 16px;
+			color: white;
 		}
 	}
 	>p{

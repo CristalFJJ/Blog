@@ -2,11 +2,13 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 // import * as routesEnum from 'assets/js/enum/routeEnum';
 const Main = resolve => require(['@/components/main'], resolve);
-const Hobby = resolve => require(['@/components/hobby'], resolve);
-const Note = resolve => require(['@/components/note'], resolve);
+const Share = resolve => require(['@/components/share'], resolve);
+const Archives = resolve => require(['@/components/archives'], resolve);
 const Study = resolve => require(['@/components/study'], resolve);
-const Technology = resolve => require(['@/components/technology'], resolve);
+const About = resolve => require(['@/components/about'], resolve);
+
 const Login = resolve => require(['@/components/login'], resolve);
+
 const Management = resolve => require(['@/components/management'], resolve);
 const Overview = resolve => require(['@/components/management/control/overview'], resolve);
 const Article = resolve => require(['@/components/management/manage/article'], resolve);
@@ -64,17 +66,17 @@ function getModel(path, component, name = undefined, meta = null, redirect = und
 // main
 const main = getModel('/', Main, 'main');
 
-//hobby
-const hobby = getModel('/hobby', Hobby, 'hobby');
+//share
+const share = getModel('/share', Share, 'share');
 
-//note
-const note = getModel('/note', Note, 'note');
+//archives
+const archives = getModel('/archives', Archives, 'archives');
 
 //study
 const study = getModel('/study', Study, 'study');
 
 //technology
-const technology = getModel('/technology', Technology, 'technology');
+const about = getModel('/about', About, 'about');
 
 //login
 const login = getModel('/login', Login, 'login');
@@ -93,10 +95,9 @@ management.children = [overview,article,classification,draft,label,personalSetti
 
 const routes = [
   main,
-  hobby,
-  note,
-  study,
-  technology,
+  archives,
+  share,
+  about,
   management,
   login
 ]

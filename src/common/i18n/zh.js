@@ -5,30 +5,32 @@ export const zh = {
   Header: {
     title: "Cristal Blog",
     navs: [{
-      text: "首页",
-      route: "/",
+      text: "Archives",
+      route: "/archives",
       ifShow: true,
 		},
 		{
-      text: "技术",
-      route: "/technology",
+      text: "Share",
+      route: "/share",
       ifShow: true,
 		},
 		{
-      text: "学习",
-      route: "/study",
+      text: "About",
+      route: "/about",
       ifShow: true,
-		},
-		{
-      text: "兴趣",
-      route: "/hobby",
+    },
+    {
+      text: "management",
+      route: "/login",
       ifShow: true,
-		},
-		{
-      text: "日志",
-      route: "/note",
+    },
+    {
+      text: "Search",
+      route: "/search",
       ifShow: true,
-    }]
+      icon: 'search'
+    },
+    ]
   }
 
 }

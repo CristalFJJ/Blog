@@ -66,6 +66,7 @@ $font-color-white:#FFFFFF;
 $font-color-brown:rgb(116, 130, 150);
 $font-color-green:rgb(25, 190, 107);
 $font-color-blue:#1464C2; 
+$font-color-red: #eb5055;
 $button-color:#419BF9;
 
 // 背景颜色
@@ -111,7 +112,7 @@ $font-size-12:12px;
   }
 }
 // 生成字体颜色类
-@each $type, $color in (normal, $font-color-normal), (white, $font-color-white), (gray, $font-color-gray), (brown, $font-color-brown),(blue,$font-color-blue),(green,$font-color-green) {
+@each $type, $color in (red,$font-color-red),(normal, $font-color-normal), (white, $font-color-white), (gray, $font-color-gray), (brown, $font-color-brown),(blue,$font-color-blue),(green,$font-color-green) {
   .font-color-#{$type} {
       color: #{$color};
   }
@@ -141,4 +142,13 @@ html, body {
 }
 div,p,ul,li{
   box-sizing: border-box;
+}
+
+// 动画
+.fade-enter-active, .fade-leave-active {
+  transition: 0.5s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+  transform: translateY(-70px);
 }

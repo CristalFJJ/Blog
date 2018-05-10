@@ -4,7 +4,7 @@
       <ul>
         <li>Cristal</li>
         <li>学习好比苦行，需朝课暮诵，朝夕勤修务</li>
-				<li class="change-word">{{prefixWord}}<span v-for="(item,index) in changeWord" :key="index" :style="{color:makeColor(index)}">{{item}}</span></li>
+				<li class="change-word">{{prefixWord}}<span v-for="(item,index) in changeWord" :key="index" :style="{color:makeColor()}">{{item}}</span></li>
       </ul>
     </div>
 		<p>Copyright ©cristal.com All rights reserved.</p>
@@ -19,8 +19,10 @@ export default {
 			prefixTimer: '',
 			prefixMessage: 'I work with ',
 			changeWord: [],
-			someWord:['JavaScript.','Html & Css.','Vue.','Node.js.','Passion & Love.'],
-			changeTimer: '',
+			someWord: [' JavaScript.',' Html & Css.',' Vue.',' Node.js.',' Passion & Love.'],
+			someWordIndex: 0,
+			changeTimerAdd: '',
+			changeTimerLess: '',
 		}
 	},
 	computed:{
@@ -30,7 +32,19 @@ export default {
 		this.init();
 	},
 	methods:{
-		async init(){
+		init(){
+			this.scrollFun();
+		},
+		scrollFun(){
+			let arrive = function arriveBottom(){
+				if(this.$utils.CommonUtils.getScrollTop() + this.$utils.CommonUtils.getWindowHeight() >= this.$utils.CommonUtils.getScrollHeight() - 20){
+					this.startChange();
+					document.removeEventListener('scroll',arrive);
+		　　}
+			}.bind(this);
+			document.addEventListener('scroll',arrive);
+		},
+		async startChange(){
 			await this.prefixFun();
 			await this.changeFun();
 		},
@@ -38,28 +52,61 @@ export default {
 			return new Promise((resolve,reject)=>{
 				clearInterval(this.prefixTimer);
 				let length = this.prefixMessage.length;
-				let count = 0;
+				let count = -1;
 				this.prefixTimer = setInterval(()=>{
 					if(count >= length-1){
 						clearInterval(this.prefixTimer);
 						resolve();
 					}
-					this.changeWord = this.$utils.CommonUtils.randomString((length - count - 1)*2).split('');
-					console.log(this.changeWord);
-					this.prefixWord += this.prefixMessage[count];
+					this.changeWord = this.$utils.CommonUtils.randomString(length - count - 1).split('');
+					if(count>=0){
+						this.prefixWord += this.prefixMessage[count];
+					}
 					count ++;
 				},200);
 			})
 		},
 		changeFun(){
 			return new Promise((resolve,rejevt)=>{
-				clearInterval(this.changeTimer);
+				clearInterval(this.changeTimerAdd);
+				let length = this.someWord[this.someWordIndex].length;
+				let count = 0;
+				this.changeTimerAdd = setInterval(()=>{
+					if(count >= length-1){
+						clearInterval(this.changeTimerAdd);
+						this.changeFunLess(count);
+					}
+					this.changeWord = this.$utils.CommonUtils.randomString(length - count - 1).split('');
+					if(count >= 0){
+						this.prefixWord +=  this.someWord[this.someWordIndex][count];
+					}
+					count ++;
+				},200);
 			})
 		},
-		makeColor(index){
-			let r = Math.floor(Math.random()*index*256);
-			let g = Math.floor(Math.random()*index*256);
-			let b = Math.floor(Math.random()*index*256);
+		changeFunLess(count){
+			setTimeout(()=>{
+				clearInterval(this.changeTimerLess);
+				this.changeTimerLess = setInterval(()=>{
+					if(count<=0){
+						clearInterval(this.changeTimerLess);
+						if(this.someWordIndex < this.someWord.length -1){
+							this.someWordIndex++;
+						}else{
+							this.someWordIndex = 0;
+						}
+						this.changeFun();
+					}
+					this.changeWord = this.$utils.CommonUtils.randomString(count).split('');
+					count --;
+					this.prefixWord = this.prefixWord.substring(0,this.prefixMessage.length + count);
+				},200)
+			},1000);
+		},
+		makeColor(){
+			let r = Math.floor(Math.random()*256);
+			let g = Math.floor(Math.random()*256);
+			let b = Math.floor(Math.random()*256);
 			return `rgb(${r},${g},${b})`;
 		}
 	}

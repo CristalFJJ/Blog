@@ -286,7 +286,7 @@ export default {
 <style lang="scss">
 .login {
   background-image: url(../../../static/image/background.jpg);
-  background-size:100%; 
+  background-size: cover; 
   height: 100%;
   .login-img {
     position: absolute;

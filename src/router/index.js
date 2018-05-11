@@ -6,7 +6,7 @@ const Share = resolve => require(['@/components/share'], resolve);
 const Archives = resolve => require(['@/components/archives'], resolve);
 const Study = resolve => require(['@/components/study'], resolve);
 const About = resolve => require(['@/components/about'], resolve);
-
+const Home = resolve => require(['@/components/home'], resolve);
 const Login = resolve => require(['@/components/login'], resolve);
 
 const Management = resolve => require(['@/components/management'], resolve);
@@ -64,7 +64,7 @@ function getModel(path, component, name = undefined, meta = null, redirect = und
   example.children = [ui]
  */
 // main
-const main = getModel('/', Main, 'main');
+const main = getModel('/', Main, 'main',null,'/home');
 
 //share
 const share = getModel('/share', Share, 'share');
@@ -75,11 +75,17 @@ const archives = getModel('/archives', Archives, 'archives');
 //study
 const study = getModel('/study', Study, 'study');
 
-//technology
+//home
+const home = getModel('/home', Home, 'home');
+
+//about
 const about = getModel('/about', About, 'about');
+
+main.children = [home,archives,share,about];
 
 //login
 const login = getModel('/login', Login, 'login');
+
 
 //management
 const management = getModel('/management', Management, 'management',null,'/management/overview');
@@ -95,9 +101,6 @@ management.children = [overview,article,classification,draft,label,personalSetti
 
 const routes = [
   main,
-  archives,
-  share,
-  about,
   management,
   login
 ]

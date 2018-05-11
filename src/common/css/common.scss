@@ -128,7 +128,7 @@ $font-size-12:12px;
   .text-align-#{$type} { text-align: #{$type}; }
 }
 //flex-start
-@each $type in flex-start,space-around,space-between{
+@each $type in flex-start,space-around,space-between,center{
   .#{$type}{
     @include flex($type,center);
   }
@@ -151,4 +151,14 @@ div,p,ul,li{
 .fade-enter, .fade-leave-to {
   opacity: 0;
   transform: translateY(-70px);
+}
+@keyframes fade-in {
+  0% {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }

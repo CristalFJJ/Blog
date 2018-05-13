@@ -7,6 +7,8 @@ const Archives = resolve => require(['@/components/archives'], resolve);
 const Study = resolve => require(['@/components/study'], resolve);
 const About = resolve => require(['@/components/about'], resolve);
 const Home = resolve => require(['@/components/home'], resolve);
+const PostArticle = resolve => require(['@/components/postArticle'], resolve);
+
 const Login = resolve => require(['@/components/login'], resolve);
 
 const Management = resolve => require(['@/components/management'], resolve);
@@ -44,7 +46,7 @@ function getModel(path, component, name = undefined, meta = null, redirect = und
         if (path === undefined || path === '' || path === null) throw new Error('组件错误！')
         break
       case 'redirect':
-        if (val === null) delete router.redirect
+        if (val === undefined) delete router.redirect
         break
     }
   }
@@ -78,10 +80,13 @@ const study = getModel('/study', Study, 'study');
 //home
 const home = getModel('/home', Home, 'home');
 
+//postArticle
+const postArticle = getModel('/postArticle', PostArticle, 'postArticle');
+
 //about
 const about = getModel('/about', About, 'about');
 
-main.children = [home,archives,share,about];
+main.children = [home,archives,share,about,postArticle];
 
 //login
 const login = getModel('/login', Login, 'login');

@@ -20,7 +20,7 @@ html {
 }
 
 body {
-  min-width: $screen-width;
+  // min-width: $screen-width;
   height: inherit;
 }
 
@@ -144,6 +144,14 @@ div,p,ul,li{
   box-sizing: border-box;
 }
 
+//前台显示
+.main-content{
+  position: relative;
+  max-width: 940px;
+  margin: 0 auto;
+  animation: fade-in;
+  animation-duration: .5s;
+}
 // 动画
 .fade-enter-active, .fade-leave-active {
   transition: 0.5s;

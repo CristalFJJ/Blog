@@ -1,0 +1,121 @@
+<template>
+  <div class="article-comments">
+    <p class="response">Responses</p>
+    <i-form class="article-comments-content" :model="userInfo">
+      <Form-item class="flex-start article-comments-content-header" >
+        <i-input v-model="userInfo.userName" disabled placeholder="昵称">
+          <span slot="prepend">Name:</span>
+        </i-input>
+        <i-input v-model="userInfo.email" disabled placeholder="个人邮箱">
+          <span slot="prepend">Email:</span>
+        </i-input>
+        <i-input v-model="userInfo.site" disabled placeholder="个人网站地址">
+          <span slot="prepend">Site:</span>
+        </i-input>
+      </Form-item>
+      <FormItem class="article-comments-content-textarea">
+        <i-input v-model="userInfo.comment" type="textarea" :rows="7" placeholder="comment something..."></i-input>
+      </FormItem>
+      <FormItem class="article-comments-content-button">
+        <a>SUBMIT</a>
+      </FormItem>
+    </i-form>
+  </div>
+</template>
+
+<script>
+export default {
+  data () {
+    return {
+      userInfo:{
+        userName: 'cristal',
+        email: '624009308@qq.com',
+        site: '',
+        comment: '',
+      }
+    }
+  }
+}
+</script>
+
+<style lang="scss">
+  .article-comments{
+    max-width: 700px;
+    margin: 0 auto;
+    .response{
+      font-size: 14px;
+      font-weight: 400;
+      display: block;
+      padding: 30px 0 30px 20px;
+      color: #5f5f5f;
+    }
+    .article-comments-content{
+      position: relative;
+      margin: 0 0 40px;
+      padding: 10px 20px;
+      border-radius: 3px;
+      background: #fff;
+      box-shadow: 0 1px 4px rgba(0,0,0,.04);
+      .ivu-form-item{
+        margin-bottom: 5px; 
+      }
+      .article-comments-content-header{
+        .ivu-form-item-content{
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+        }
+        .ivu-input-group-prepend{
+          border: none;
+          background-color: #fff;
+          border-bottom: 1px dashed #dddee1;
+        }
+        .ivu-input[disabled]{
+          background-color: #fff;
+        }
+        .ivu-input{
+          border: none;
+          border-bottom: 1px dashed #dddee1;
+          &:focus{
+            border-color: none;
+            box-shadow: none;
+          }
+        }
+      }
+      .article-comments-content-textarea{
+        
+        .ivu-input{
+          border: none;
+          &:focus{
+            border-color: none;
+            box-shadow: none;
+          }
+        }
+      }
+      .article-comments-content-button{
+        position: absolute;
+        right: 40px;
+        bottom: 20px;
+        a{
+          font-size: 14px;
+          display: block;
+          height: 32px;
+          margin: 0 auto;
+          padding: 0 20px;
+          transition-duration: .4s;
+          text-align: center;
+          color: #313131;
+          border: 1px solid #f7f7f7;
+          border-radius: 30px;
+          background-color: #f7f7f7;
+          &:hover{
+            color: #eb5055;
+            border: 1px solid #eb5055;
+            outline-style: none;
+            background-color: #fff;
+          }
+        }
+      }
+    }
+  }
+</style>

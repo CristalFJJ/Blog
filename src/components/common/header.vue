@@ -46,7 +46,7 @@ export default {
 		},
 		goRoute(val,index) {
 			this.selected = index;
-			// this.$router.push(val.route);
+			this.$router.push(val.route);
 		},
 		listenScroll(){
 			document.addEventListener('scroll',(e)=>{

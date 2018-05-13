@@ -1,7 +1,7 @@
 <template>
   <div class="home-page main-content">
 		<ul class="artilce-list clear-float">
-			<li class="fl" v-for="(item,index) in articleArr" :key="index">
+			<li class="fl" v-for="(item,index) in articleArr" :key="index" @click="viewArticle">
         <div class="artilce-list-contain">
           <div class="cover-picture" :style="{backgroundImage:`url(${item.coverPicture})`}"></div>
           <div class="article-desc">
@@ -12,13 +12,13 @@
           <div class="article-label">
             <div class="article-title">{{item.title}}</div>
             <div class="article-classification">
-              {{item.classification}} <div class="article-classification-icon"><Icon :type="getIcon(item.classification)" :style="{color:getColor(item.classification)}"></Icon></div>
+              <span class="article-classification-title">{{item.classification}}</span> <div class="article-classification-icon"><Icon :type="getIcon(item.classification)" :style="{color:getColor(item.classification)}"></Icon></div>
             </div>
           </div>
         </div>
       </li>
 		</ul>
-    <pagination :total="total" :current-page='current' @pagechange="pagechange"></pagination>
+    <pagination class="pagination" :total="total" :current-page='page' @pagechange="pagechange"></pagination>
 	</div>
 </template>
 
@@ -32,8 +32,8 @@ export default {
   data(){
     return{
       total: 150,     // 记录总条数
-      display: 10,   // 每页显示条数
-      current: 1,   // 当前的页数
+      rows: 10,   // 每页显示条数
+      page: 1,   // 当前的页数
       articleArr: [{
         title: '测试一',
         describe: '这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述',
@@ -127,6 +127,9 @@ export default {
         break;
       }
     },
+    viewArticle(){
+      this.$router.push('/postArticle');
+    },
     pagechange(currentPage){
       console.log(currentPage);
     }
@@ -138,12 +141,8 @@ export default {
   .home-page{
     padding: 120px 20px 0;
   }
-  .main-content{
-    position: relative;
-    max-width: 940px;
-    margin: 0 auto;
-    animation: fade-in;
-    animation-duration: .5s;
+  .pagination{
+    margin: 30px 0 35px;
   }
   .artilce-list{
     li{
@@ -251,8 +250,11 @@ export default {
           text-align: right;
           font-size: 14px;
           color: #5f5f5f;
-          cursor: pointer;
+          .article-classification-title{
+            cursor: pointer;
+          }
           .article-classification-icon{
+            cursor: pointer;
             margin-left: 5px;
             width: 36px;
             height: 36px;

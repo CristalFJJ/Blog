@@ -115,6 +115,7 @@ export default {
 
 <style lang="scss" scoped>
 .footer{
+	width: 100%;
 	.footer-content{
 		padding: 20px 0 10px;
 		background: #575756;

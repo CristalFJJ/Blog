@@ -146,7 +146,8 @@ export default {
       }
     },
     viewArticle(_id){
-      this.$router.push({path:'/postArticle',name:'postArticle',params:{data:_id}})
+      this.$utils.SessionLocal.setItem('articleId',_id);
+      this.$router.push({path:'/postArticle',name:'postArticle'})
     },
     pagechange(currentPage){
       this.queryData.page = currentPage;

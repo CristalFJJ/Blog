@@ -101,4 +101,7 @@ export default {
   searchOneDraft(param,success,fail){ //搜索单个
     apiGet(config.SEARCH_ONE_DRAFT, param, success, fail);
   },
+  addComment(param,success,fail){ //添加评论
+    apiPost(config.ADD_COMMENT, param, success, fail);
+  }
 }

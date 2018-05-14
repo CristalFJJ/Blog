@@ -14,10 +14,10 @@
         </i-input>
       </Form-item>
       <FormItem class="article-comments-content-textarea">
-        <i-input v-model="userInfo.comment" type="textarea" @on-focus="commentFocus" :rows="7" placeholder="comment something..."></i-input>
+        <i-input v-model="userInfo.msg" type="textarea" :disabled="disabledWrite" @on-focus="commentFocus" :rows="7" placeholder="comment something..."></i-input>
       </FormItem>
       <FormItem class="article-comments-content-button">
-        <a>SUBMIT</a>
+        <a @click="submitComment">SUBMIT</a>
       </FormItem>
     </i-form>
     <Modal
@@ -45,8 +45,12 @@ export default {
         userName: '',
         email: '',
         site: '',
-        comment: '',
+        portrait: '',
+        userId: '',
+        msg: '',
+        level: '',
       },
+      disabledWrite: false,
       modalShow: false,
     }
   },
@@ -60,13 +64,14 @@ export default {
         Object.keys(this.userInfo).forEach( item=>{
           userInfo[item] && (this.userInfo[item] = userInfo[item]);
         })
+        this.userInfo.userId = userInfo._id;
+        console.log(this.userInfo);
       }
     },
     commentFocus(){
-      console.log(this.userInfo.userName);
-      this.userInfo.userName = ''
       if(!this.userInfo.userName){
         this.modalShow = true;
+        this.disabledWrite = true;
       }
     },
     goLogin(){
@@ -74,6 +79,23 @@ export default {
     },
     cancel(){
       
+    },
+    submitComment(){
+      if(this.disabledWrite){
+        this.modalShow = true;
+        return;
+      }
+      let objData = {
+        articleId: this.$utils.SessionLocal.getItem('articleId'),
+        data: this.userInfo
+      }
+      this.$api.addComment(objData,res => {
+        if(res.code == 200){
+          this.$emit('addComment');
+        }
+      },err => {
+        console.log(err);
+      })
     }
   }
 }

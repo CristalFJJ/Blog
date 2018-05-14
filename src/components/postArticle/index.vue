@@ -14,15 +14,15 @@
           <div class="post-article-info">
             <p>本站文章除注明转载/出处外，均为本站原创，转载前请务必署名</p>
             <br>
-            <p>最后编辑时间为: {{article.upDatedTime}}</p>
+            <p>最后编辑时间为: {{article.upDatedTime?article.upDatedTime:article.createdTime}}</p>
           </div>
         </div>
       </div>
     </div>
     <div class="post-article-comment main-content">
-      <comment from="./postArticle"></comment>
+      <comment from="./postArticle" @addComment="addComment"></comment>
       <comment-list :dataArr="dataArr"></comment-list>
-      <pagination :total="dataAll.length" v-if="dataAll.length>10" :current-page='page' @pagechange="pagechange"></pagination>
+      <pagination :total="article.message.length" v-if="article.message.length>10" :current-page='page' @pagechange="pagechange"></pagination>
     </div>
     <div class="directory-contain">
       <transition name="appear">
@@ -170,12 +170,13 @@ export default {
 
       ],
       article:{
-        title: '测试标题',
-        createdTime: '2018-05-10 09:33:57',
-        upDatedTime: '2018-05-11 09:33:57',
-        classification: 'technology',
-        label:"js,css,html,note",
-        content:'这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容',
+        title: '',
+        createdTime: '',
+        upDatedTime: '',
+        classification: '',
+        label: '',
+        message: [],
+        content:''
       }
     }
   },
@@ -195,15 +196,19 @@ export default {
     window.onscroll = '';
   },
   methods:{
-    init(){
+    async init(){
       window.scrollTo(0,0);
-      let _id = this.$route.params.data;
-      this.searchDetail({_id:_id});
-      if(this.dataAll.length>10){
-        this.dataArr = this.dataAll.slice(0,10);
+      let _id = this.$utils.SessionLocal.getItem('articleId');
+
+      await this.searchDetail({_id:_id});
+      console.log(this.article);
+
+      if(this.article.message.length>10){
+        this.dataArr = this.article.message.slice(0,10);
       }else{
-        this.dataArr = this.dataAll;
+        this.dataArr = this.article.message;
       }
+
       this.directoryControl();
     },
     directoryControl(){ //目录显示
@@ -216,25 +221,30 @@ export default {
         }
       }
     },  
-    searchDetail(val){
-      this.$api.detailArticle(val,res=>{
-        this.article = res.data;
-        this.$nextTick().then(()=>{
-          let h3Arr = Array.from(document.getElementsByTagName('h3')); //获取目录
-          h3Arr.forEach(item => {
-            this.directory.push(item.innerText.slice(2,item.innerText.length));
+    searchDetail(val){ //获取文章信息
+      return new Promise((resolve,reject)=>{
+        this.$api.detailArticle(val,res=>{
+          this.article = res.data;
+          this.$nextTick().then(()=>{
+            let h3Arr = Array.from(document.getElementsByTagName('h3')); //获取目录
+            console.log(h3Arr);
+            h3Arr.forEach(item => {
+              this.directory.push(item.innerText.slice(2,item.innerText.length));
+            })
+            resolve();
           })
+        },err=>{
+          console.log(err);
+          reject();
         })
-      },err=>{
-        console.log(err);
       })
     },
-    pagechange(page){
+    pagechange(page){ //页数变化
       this.page = page;
-      if(this.dataAll.length > this.page * 10){
-        this.dataArr = this.dataAll.slice((this.page - 1) * 10 ,this.page * 10);
+      if(this.article.message.length > this.page * 10){
+        this.dataArr = this.article.message.slice((this.page - 1) * 10 ,this.page * 10);
       }else{
-        this.dataArr = this.dataAll.slice((this.page - 1) * 10 ,this.dataAll.length);
+        this.dataArr = this.article.message.slice((this.page - 1) * 10 ,this.article.message.length);
       }
     },
     scrollTitle(index){ // 目录
@@ -242,7 +252,10 @@ export default {
       let scrollTop = target.offsetTop - 75;
       window.scrollTo(0,scrollTop);
     },
-    
+    addComment(){ //评论添加
+      let _id = this.$utils.SessionLocal.getItem('articleId');
+      this.searchDetail({_id:_id});
+    }
     
   }
 }

@@ -1,5 +1,5 @@
-export const SERVICE = 'http://192.168.0.23:3000';// 公司测试接口
-// export const SERVICE = 'http://192.168.3.28:3000';// 测试接口
+// export const SERVICE = 'http://192.168.0.23:3000';// 公司测试接口
+export const SERVICE = 'http://192.168.3.28:3000';// 测试接口
 
 export const API_PATH = '/blog/api';
 export const API_FULL = SERVICE + API_PATH;
@@ -24,6 +24,7 @@ export const DETAIL_ARTICLE = API_FULL + '/detailArticle'; // 查询文章具体
 export const DELETE_ARTICLE = API_FULL + '/deleteArticle'; // 删除文章
 export const SEARCH_ARTICLE = API_FULL + '/searchArticle'; // 搜索文章
 export const SEARCH_ONE_ARTICLE = API_FULL + '/searchOneArticle'; // 搜索单个文章
+export const ADD_COMMENT = API_FULL + '/addComment'; // 添加评论
 
 /*草稿*/
 export const CREATE_DRAFT = API_FULL + '/createDraft'; //创建草稿

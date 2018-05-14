@@ -66,7 +66,8 @@ export default {
         userName: [{ validator: this.checkName, trigger: 'blur' }],
         passWord:[{validator: this.checkPassWord, trigger: 'blur' }],
         passWordAgain:[{validator: this.checkPassWord, trigger: 'blur'}]
-      }
+      },
+      toRoute: '/management',
     }
   },
   computed:{
@@ -114,6 +115,9 @@ export default {
   },
   methods: {
     init(){
+      if(JSON.stringify(this.$route.params) != "{}"){
+        this.toRoute = this.$route.params.to;
+      }
       let CommonUtils = this.$utils.CommonUtils;
       let remember = this.$utils.Storage.getItem("remember");
 
@@ -146,13 +150,11 @@ export default {
     },
     //是否记住密码
     rememberControl(bol){
-      console.log(bol);
       if(bol){
         this.$utils.Storage.setItem("remember","remember");
       }else{
         this.$utils.Storage.setItem("remember","notRemember");
       }
-      console.log(this.$utils.Storage.getItem("remember"));
     },
     //忘记密码
     forGot(){
@@ -177,9 +179,8 @@ export default {
       this.$api.login(this.userForm,res => {
         if (res.code == 200) {
           let data = res.info;
-          console.log(data);
           this.$utils.Storage.setObj("userInfo", data);
-          this.$router.push("/management");
+          this.$router.push(this.toRoute);
         }else{
           this.$msg(res.msg);
         }

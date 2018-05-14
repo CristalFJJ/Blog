@@ -1,7 +1,7 @@
 <template>
   <div class="home-page main-content">
 		<ul class="artilce-list clear-float">
-			<li class="fl" v-for="(item,index) in articleArr" :key="index" @click="viewArticle">
+			<li class="fl" v-for="(item,index) in articleArr" :key="index" @click="viewArticle(item._id)">
         <div class="artilce-list-contain">
           <div class="cover-picture" :style="{backgroundImage:`url(${item.coverPicture})`}"></div>
           <div class="article-desc">
@@ -18,22 +18,24 @@
         </div>
       </li>
 		</ul>
-    <pagination class="pagination" :total="total" :current-page='page' @pagechange="pagechange"></pagination>
+    <pagination class="pagination" :total="total" :rows="queryData.rows" :current-page='queryData.page' @pagechange="pagechange"></pagination>
 	</div>
 </template>
 
 <script>
 import coverPicture from '../../../static/image/balloon.jpg';
-import pagination from '../common/pagination'
+import pagination from '../common/pagination';
 export default {
   components:{
     pagination
   },
   data(){
     return{
-      total: 150,     // 记录总条数
-      rows: 10,   // 每页显示条数
-      page: 1,   // 当前的页数
+      total: 1,     // 记录总条数
+      queryData:{
+        rows: 12,   // 每页显示条数
+        page: 1,   // 当前的页数
+      },
       articleArr: [{
         title: '测试一',
         describe: '这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述',
@@ -92,9 +94,25 @@ export default {
     }
   },
   mounted(){
-
+    this.init();
   },
   methods:{
+    async init(){
+      await this.getArticleList();
+    },
+    getArticleList(){
+      return new Promise((resolve,reject)=>{
+        this.$api.listArticle(this.queryData,res=>{
+          console.log(res);
+          this.articleArr = res.data;
+          this.total = res.total;
+          resolve();
+        },err=>{
+          console.log(err);
+          reject(err);
+        })
+      })
+    },
     getIcon(type){
       switch(type){
         case　'technology':
@@ -127,11 +145,12 @@ export default {
         break;
       }
     },
-    viewArticle(){
-      this.$router.push('/postArticle');
+    viewArticle(_id){
+      this.$router.push({path:'/postArticle',name:'postArticle',params:{data:_id}})
     },
     pagechange(currentPage){
-      console.log(currentPage);
+      this.queryData.page = currentPage;
+      this.getArticleList();
     }
   }
 }

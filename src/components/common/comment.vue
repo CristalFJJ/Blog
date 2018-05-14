@@ -14,25 +14,66 @@
         </i-input>
       </Form-item>
       <FormItem class="article-comments-content-textarea">
-        <i-input v-model="userInfo.comment" type="textarea" :rows="7" placeholder="comment something..."></i-input>
+        <i-input v-model="userInfo.comment" type="textarea" @on-focus="commentFocus" :rows="7" placeholder="comment something..."></i-input>
       </FormItem>
       <FormItem class="article-comments-content-button">
         <a>SUBMIT</a>
       </FormItem>
     </i-form>
+    <Modal
+        v-model="modalShow"
+        title="需登录后才能留言哦"
+        @on-ok="goLogin"
+        ok-text= "前往"
+        @on-cancel="cancel">
+        <p>去往登录页</p>
+    </Modal>
   </div>
 </template>
 
 <script>
 export default {
+  props:{
+    from:{
+      type: String,
+      required: true
+    }
+  },
   data () {
     return {
       userInfo:{
-        userName: 'cristal',
-        email: '624009308@qq.com',
+        userName: '',
+        email: '',
         site: '',
         comment: '',
+      },
+      modalShow: false,
+    }
+  },
+  mounted(){
+    this.init();
+  },
+  methods:{
+    init(){
+      let userInfo = this.$utils.Account.getUserInfo();
+      if(userInfo){
+        Object.keys(this.userInfo).forEach( item=>{
+          userInfo[item] && (this.userInfo[item] = userInfo[item]);
+        })
       }
+    },
+    commentFocus(){
+      console.log(this.userInfo.userName);
+      this.userInfo.userName = ''
+      if(!this.userInfo.userName){
+        this.modalShow = true;
+      }
+    },
+    goLogin(){
+      this.$router.push({path:'/login',name:'login',params:{to:this.from}});
+    },
+    cancel(){
+      
     }
   }
 }
@@ -60,6 +101,9 @@ export default {
         margin-bottom: 5px; 
       }
       .article-comments-content-header{
+        .ivu-input-group{
+          width:auto;
+        }
         .ivu-form-item-content{
           display: flex;
           justify-content: flex-start;

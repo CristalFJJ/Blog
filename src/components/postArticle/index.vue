@@ -1,66 +1,173 @@
 <template>
-  <div class="post-article main-content">
-    <div class="post-article-header">
-      <h1>{{article.title}}</h1>
-      <div>Published on {{publishTime}} in <a href="javascript:void(0)" class="post-article-classification">{{article.classification}}</a></div>
-    </div>
-    <div class="post-article-content">
-      <p class="post-article-tag">
-        <a href="javascript:void(0)" v-for="(item,index) in labelArr" :key="index"># {{item}}</a>
-      </p>
-      <div class="post-article-main">
-        <p>{{article.content}}</p>
+  <div>
+    <div class="bg-color-white">
+      <div class="post-article main-content">
+        <div class="post-article-header">
+          <h1>{{article.title}}</h1>
+          <div class="post-article-classification">Published on {{publishTime}} in <a href="javascript:void(0)">{{article.classification}}</a></div>
+        </div>
+        <div class="post-article-content">
+          <p class="post-article-tag">
+            <a href="javascript:void(0)" v-for="(item,index) in labelArr" :key="index"># {{item}}</a>
+          </p>
+          <div class="post-article-main" v-html="article.content"></div>
+          <div class="post-article-info">
+            <p>本站文章除注明转载/出处外，均为本站原创，转载前请务必署名</p>
+            <br>
+            <p>最后编辑时间为: {{article.upDatedTime}}</p>
+          </div>
+        </div>
       </div>
-      <div class="post-article-info">
-        <p>本站文章除注明转载/出处外，均为本站原创，转载前请务必署名</p>
-        <br>
-        <p>最后编辑时间为: {{article.upDatedTime}}</p>
-      </div>
     </div>
-    <comment></comment>
-    <comment-list :dataArr="dataArr"></comment-list>
+    <div class="post-article-comment main-content">
+      <comment from="./postArticle"></comment>
+      <comment-list :dataArr="dataArr"></comment-list>
+      <pagination :total="dataAll.length" v-if="dataAll.length>10" :current-page='page' @pagechange="pagechange"></pagination>
+    </div>
+    <div class="directory-contain">
+      <transition name="appear">
+        <div id="directory" v-show="directoryShow">
+          <ul>
+            <li v-for="(item,index) in directory" :key="index">
+              <a href="javascript:void(0)" @click="scrollTitle(index)">{{index+1}} {{item}}</a>
+            </li>
+          </ul>
+        </div>
+      </transition>
+    </div>
+    
   </div>
 </template>
 
 <script>
+import pagination from '../common/pagination'; 
 import comment from '../common/comment';
 import commentList from '../common/commentList';
+import portrait from '../../../static/image/me.png';
 export default {
   components: {
     comment,
-    commentList
+    commentList,
+    pagination
   },
   data () {
     return {
-      dataArr:[
+      page: 1, // 留言区页数
+      directory: [], //目录
+      directoryShow: false, //目录显示
+      dataArr:[],
+      dataAll:[
         {
-          'title': '111',
-          'children': [
+          msg: '留言主要',
+          createdTime: '2018-05-12 09:38:42',
+          portrait: portrait,
+          userName: 'cristal',
+          children: [
             {
-              'title': '111 - 1'
-            }, 
+              msg: '@cristal 留言123231',
+              createdTime: '2018-05-12 09:38:42',
+              portrait: portrait,
+              userName: 'tony',
+            },
             {
-              'title': '111 - 2',
-              'children': [
-                {'title': '111 - 2 - 1'}
-              ]
+              msg: '@tony 留言123231',
+              createdTime: '2018-05-12 09:38:42',
+              portrait: portrait,
+              userName: 'cristal',
             }
           ]
         },
         {
-          'title': '222',
-          'children': [
+          msg: '留言主要',
+          createdTime: '2018-05-12 09:38:42',
+          portrait: portrait,
+          userName: 'cristal',
+          children: [
             {
-              'title': '222 - 1'
-            }, 
+              msg: '@cristal 留言123231',
+              createdTime: '2018-05-12 09:38:42',
+              portrait: portrait,
+              userName: 'tony',
+            },
             {
-              'title': '222 - 2',
-              'children': [
-                {'title': '222 - 2 - 1'}
-              ]
+              msg: '@tony 留言123231',
+              createdTime: '2018-05-12 09:38:42',
+              portrait: portrait,
+              userName: 'cristal',
             }
           ]
-        }
+        },
+        {
+          msg: '留言主要',
+          createdTime: '2018-05-12 09:38:42',
+          portrait: portrait,
+          userName: 'cristal',
+          children: [],
+        },
+        {
+          msg: '留言主要',
+          createdTime: '2018-05-12 09:38:42',
+          portrait: portrait,
+          userName: 'cristal',
+          children: [],
+        },
+        {
+          msg: '留言主要',
+          createdTime: '2018-05-12 09:38:42',
+          portrait: portrait,
+          userName: 'cristal',
+          children: [],
+        },
+        {
+          msg: '留言主要',
+          createdTime: '2018-05-12 09:38:42',
+          portrait: portrait,
+          userName: 'cristal',
+          children: [],
+        },
+        {
+          msg: '留言主要',
+          createdTime: '2018-05-12 09:38:42',
+          portrait: portrait,
+          userName: 'cristal',
+          children: [],
+        },
+        {
+          msg: '留言主要',
+          createdTime: '2018-05-12 09:38:42',
+          portrait: portrait,
+          userName: 'cristal',
+          children: [],
+        },
+        {
+          msg: '留言主要',
+          createdTime: '2018-05-12 09:38:42',
+          portrait: portrait,
+          userName: 'cristal',
+          children: [],
+        },
+        {
+          msg: '留言主要',
+          createdTime: '2018-05-12 09:38:42',
+          portrait: portrait,
+          userName: 'cristal',
+          children: [],
+        },
+        {
+          msg: '留言主要',
+          createdTime: '2018-05-12 09:38:42',
+          portrait: portrait,
+          userName: 'cristal',
+          children: [],
+        },
+        {
+          msg: '留言主要',
+          createdTime: '2018-05-12 09:38:42',
+          portrait: portrait,
+          userName: 'cristal',
+          children: [],
+        },
+
       ],
       article:{
         title: '测试标题',
@@ -68,7 +175,7 @@ export default {
         upDatedTime: '2018-05-11 09:33:57',
         classification: 'technology',
         label:"js,css,html,note",
-        content:'这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容',
+        content:'这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容',
       }
     }
   },
@@ -79,7 +186,64 @@ export default {
     labelArr(){
       let arr = this.article.label.split(',');
       return arr;
-    }
+    },
+  },
+  mounted(){
+    this.init();
+  },
+  destroyed(){
+    window.onscroll = '';
+  },
+  methods:{
+    init(){
+      window.scrollTo(0,0);
+      let _id = this.$route.params.data;
+      this.searchDetail({_id:_id});
+      if(this.dataAll.length>10){
+        this.dataArr = this.dataAll.slice(0,10);
+      }else{
+        this.dataArr = this.dataAll;
+      }
+      this.directoryControl();
+    },
+    directoryControl(){ //目录显示
+      window.onscroll = (e)=>{
+        let scrollTop = document.documentElement.scrollTop;
+        if(scrollTop > 70){
+          this.directoryShow = true;
+        }else{
+          this.directoryShow = false;
+        }
+      }
+    },  
+    searchDetail(val){
+      this.$api.detailArticle(val,res=>{
+        this.article = res.data;
+        this.$nextTick().then(()=>{
+          let h3Arr = Array.from(document.getElementsByTagName('h3')); //获取目录
+          h3Arr.forEach(item => {
+            this.directory.push(item.innerText.slice(2,item.innerText.length));
+          })
+        })
+      },err=>{
+        console.log(err);
+      })
+    },
+    pagechange(page){
+      this.page = page;
+      if(this.dataAll.length > this.page * 10){
+        this.dataArr = this.dataAll.slice((this.page - 1) * 10 ,this.page * 10);
+      }else{
+        this.dataArr = this.dataAll.slice((this.page - 1) * 10 ,this.dataAll.length);
+      }
+    },
+    scrollTitle(index){ // 目录
+      let target = Array.from(document.getElementsByTagName('h3'))[index]; 
+      let scrollTop = target.offsetTop - 75;
+      window.scrollTo(0,scrollTop);
+    },
+    
+    
   }
 }
 </script>
@@ -87,13 +251,15 @@ export default {
 <style lang="scss">
   .post-article{
     max-width: 700px;
-    padding: 130px 25px 20px;
-    // background-color: #FFF;
+    padding: 100px 25px 20px;
     .post-article-header{
       color: #5f5f5f;
       .post-article-classification{
-        color: #5f5f5f;
-        font-weight: 600;
+        margin-top: 5px;
+        a{
+          color: #5f5f5f;
+          font-weight: 600;
+        }
       }
     }
     .post-article-content{
@@ -141,19 +307,66 @@ export default {
       }
       .post-article-main{
         font-size: 14px;
-        p{
+        blockquote, dl, ol,pre, table, ul,h3,p{
           margin: 20px 0;
+          overflow-x: auto;
         }
       }
       .post-article-info{
         font-size: 14px;
         overflow: hidden;
-        margin: 25px -20px 0;
-        padding: 25px 20px 20px;
+        margin: 25px 0px 0;
+        padding: 25px 0px 20px;
         white-space: nowrap;
         text-overflow: ellipsis;
         border-top: 1px solid #e0e0e0;
       }
     }   
+  }
+  .post-article-comment{
+    max-width: 700px;
+    padding: 0 25px 20px;
+  }
+  .directory-contain{
+    position: relative;
+    z-index: 0;
+    max-width: 720px;
+    margin: 0 auto;
+    transition: opacity 1s ease-in-out;
+    text-align: right;
+  }
+  #directory{
+    position: fixed;
+    z-index: 0;
+    top: 100px;
+    display: inline-block;
+    text-align: left;
+    ul{
+      position: relative;
+      border-left: 1px solid #ddd;
+      li{
+        font-size: 14px; 
+        line-height: 1.8;
+        color: #313131;
+        margin-left: 5px;
+        a{
+          color: #313131;
+          &:hover{
+            color: #eb5055;
+          }
+        }
+        &::before{
+          position: relative;
+          top: 0;
+          left: -9px;
+          display: inline-block;
+          width: 8px;
+          height: 8px;
+          content: '';
+          border-radius: 50%;
+          background-color: #eb5055;
+        }
+      }
+    }
   }
 </style>

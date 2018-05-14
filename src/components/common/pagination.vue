@@ -43,6 +43,7 @@
     },
     computed: {
       page: function () { // 总页数
+      console.log(Math.ceil(this.total / this.rows))
         return Math.ceil(this.total / this.rows);
       },
       grouplist: function () { // 获取分页页码

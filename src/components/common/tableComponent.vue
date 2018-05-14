@@ -65,14 +65,16 @@
 			</div>
 			<div class="table-detail-contain">
 				<scroll-bar>
-					<div class="ql-editor table-detail-content" v-html="articleDetail.content"></div>
-					<ul class="space-between table-detail-footer">
-						<li>分类: {{articleDetail.classification}}</li>
-						<li>标签: {{articleDetail.label}}</li>
-						<li>收藏: {{articleDetail.collect?articleDetail.collect.length:0}}</li>
-						<!-- <li>留言: {{articleDetail.msgCount}}</li> -->
-					</ul>
+          <div class="ql-container ql-snow">
+            <div class="ql-editor table-detail-content" v-html="articleDetail.content"></div>
+          </div>
 				</scroll-bar>
+        <ul class="space-between table-detail-footer">
+					<li>分类: {{articleDetail.classification}}</li>
+					<li>标签: {{articleDetail.label}}</li>
+					<li>收藏: {{articleDetail.collect?articleDetail.collect.length:0}}</li>
+					<!-- <li>留言: {{articleDetail.msgCount}}</li> -->
+				</ul>
 			</div>
 		</div>
 
@@ -461,11 +463,11 @@ export default {
     }
   }
   .table-detail-content{
-    text-indent: 2em;
     font-size: 14px;
     letter-spacing: 0.5px;
   }
   .table-detail-footer{
+    margin-top: 5px;
     font-weight: 600;
     padding: 0 15px;
   }

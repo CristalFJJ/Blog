@@ -46,6 +46,13 @@ export default {
 		},
 		goRoute(val,index) {
 			this.selected = index;
+			if(val.text == "management"){
+				let userInfo = this.$utils.Account.getUserInfo();
+      	if(userInfo.userName){
+					this.$router.push('/management');
+					return;
+				}
+			}
 			this.$router.push(val.route);
 		},
 		listenScroll(){

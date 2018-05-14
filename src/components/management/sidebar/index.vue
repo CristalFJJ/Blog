@@ -152,6 +152,7 @@ export default {
     loginOut(){
       let _id = Account.getUserInfo()._id;
       this.$api.loginOut({_id:_id},res => {
+        this.$utils.Storage.remove("userInfo");
         this.$router.push("/login");
       },err =>{
         console.log(err);

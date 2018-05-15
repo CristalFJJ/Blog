@@ -64,8 +64,7 @@ class Transition {
 }
   
 // }
-
-export default {
+export const CollapseTransition = {
   name: 'CollapseTransition',
   functional: true,
   render(h, { children }) {
@@ -74,4 +73,5 @@ export default {
     };
     return h('transition', data, children);
   }
-};
+}
+export const collapse = new Transition();

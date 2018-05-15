@@ -1,4 +1,4 @@
-import CollapseTransition from './ElCollapseTransition';
+import {CollapseTransition} from './ElCollapseTransition';
 const components = [
   CollapseTransition,
 ];

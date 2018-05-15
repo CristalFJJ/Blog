@@ -62,6 +62,7 @@ export default {
   userUpDatePassWord(param, success, fail) { //用户更新密码
     apiPost(config.USER_UPDATE_PASSWORD, param, success, fail);
   },
+
   createArticle(param, success, fail){ //创建文章
     apiPost(config.CREATE_ARTICLE, param, success, fail);
   },
@@ -103,5 +104,12 @@ export default {
   },
   addComment(param,success,fail){ //添加评论
     apiPost(config.ADD_COMMENT, param, success, fail);
-  }
+  },
+  addReply(param,success,fail){ //添加文章回复
+    apiPost(config.ADD_REPLY, param, success, fail);
+  },
+  deleteReply(param,success,fail){ //删除文章回复
+    apiPost(config.DELETE_REPLY, param, success, fail);
+  },
+  
 }

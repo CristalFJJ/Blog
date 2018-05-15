@@ -22,6 +22,7 @@ Vue.use(Scrollbar);
 import Components from './common/js/components'; //组件
 Vue.use(Components);
 
+
 import message from '../src/components/common/message';//提示框
 
 import 'quill/dist/quill.core.css';

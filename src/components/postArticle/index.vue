@@ -4,7 +4,10 @@
       <div class="post-article main-content">
         <div class="post-article-header">
           <h1>{{article.title}}</h1>
-          <div class="post-article-classification">Published on {{publishTime}} in <a href="javascript:void(0)">{{article.classification}}</a></div>
+          <div class="post-article-classification">
+            Published on {{publishTime}} in <a href="javascript:void(0)">{{article.classification}}</a>
+            with <a href="javascript:void(0)" @click="scrollMessage">{{article.message.length}} message </a>
+          </div>
         </div>
         <div class="post-article-content">
           <p class="post-article-tag">
@@ -21,8 +24,8 @@
     </div>
     <div class="post-article-comment main-content">
       <comment from="./postArticle" @addComment="addComment"></comment>
-      <comment-list :dataArr="dataArr"></comment-list>
-      <pagination :total="article.message.length" v-if="article.message.length>10" :current-page='page' @pagechange="pagechange"></pagination>
+      <comment-list from="./postArticle" :dataArr="dataArr" @reply="reply" @replyDelete="replyDelete"></comment-list>
+      <pagination :total="article.message.length" v-if="article.message.length>rows" :rows="rows" :current-page='page' @pagechange="pagechange"></pagination>
     </div>
     <div class="directory-contain">
       <transition name="appear">
@@ -53,122 +56,10 @@ export default {
   data () {
     return {
       page: 1, // 留言区页数
+      rows: 6, // 一页显示多少条留言
       directory: [], //目录
       directoryShow: false, //目录显示
       dataArr:[],
-      dataAll:[
-        {
-          msg: '留言主要',
-          createdTime: '2018-05-12 09:38:42',
-          portrait: portrait,
-          userName: 'cristal',
-          children: [
-            {
-              msg: '@cristal 留言123231',
-              createdTime: '2018-05-12 09:38:42',
-              portrait: portrait,
-              userName: 'tony',
-            },
-            {
-              msg: '@tony 留言123231',
-              createdTime: '2018-05-12 09:38:42',
-              portrait: portrait,
-              userName: 'cristal',
-            }
-          ]
-        },
-        {
-          msg: '留言主要',
-          createdTime: '2018-05-12 09:38:42',
-          portrait: portrait,
-          userName: 'cristal',
-          children: [
-            {
-              msg: '@cristal 留言123231',
-              createdTime: '2018-05-12 09:38:42',
-              portrait: portrait,
-              userName: 'tony',
-            },
-            {
-              msg: '@tony 留言123231',
-              createdTime: '2018-05-12 09:38:42',
-              portrait: portrait,
-              userName: 'cristal',
-            }
-          ]
-        },
-        {
-          msg: '留言主要',
-          createdTime: '2018-05-12 09:38:42',
-          portrait: portrait,
-          userName: 'cristal',
-          children: [],
-        },
-        {
-          msg: '留言主要',
-          createdTime: '2018-05-12 09:38:42',
-          portrait: portrait,
-          userName: 'cristal',
-          children: [],
-        },
-        {
-          msg: '留言主要',
-          createdTime: '2018-05-12 09:38:42',
-          portrait: portrait,
-          userName: 'cristal',
-          children: [],
-        },
-        {
-          msg: '留言主要',
-          createdTime: '2018-05-12 09:38:42',
-          portrait: portrait,
-          userName: 'cristal',
-          children: [],
-        },
-        {
-          msg: '留言主要',
-          createdTime: '2018-05-12 09:38:42',
-          portrait: portrait,
-          userName: 'cristal',
-          children: [],
-        },
-        {
-          msg: '留言主要',
-          createdTime: '2018-05-12 09:38:42',
-          portrait: portrait,
-          userName: 'cristal',
-          children: [],
-        },
-        {
-          msg: '留言主要',
-          createdTime: '2018-05-12 09:38:42',
-          portrait: portrait,
-          userName: 'cristal',
-          children: [],
-        },
-        {
-          msg: '留言主要',
-          createdTime: '2018-05-12 09:38:42',
-          portrait: portrait,
-          userName: 'cristal',
-          children: [],
-        },
-        {
-          msg: '留言主要',
-          createdTime: '2018-05-12 09:38:42',
-          portrait: portrait,
-          userName: 'cristal',
-          children: [],
-        },
-        {
-          msg: '留言主要',
-          createdTime: '2018-05-12 09:38:42',
-          portrait: portrait,
-          userName: 'cristal',
-          children: [],
-        },
-
-      ],
       article:{
         title: '',
         createdTime: '',
@@ -201,10 +92,9 @@ export default {
       let _id = this.$utils.SessionLocal.getItem('articleId');
 
       await this.searchDetail({_id:_id});
-      console.log(this.article);
 
-      if(this.article.message.length>10){
-        this.dataArr = this.article.message.slice(0,10);
+      if(this.article.message.length > this.rows){
+        this.dataArr = this.article.message.slice(0,this.rows);
       }else{
         this.dataArr = this.article.message;
       }
@@ -227,7 +117,6 @@ export default {
           this.article = res.data;
           this.$nextTick().then(()=>{
             let h3Arr = Array.from(document.getElementsByTagName('h3')); //获取目录
-            console.log(h3Arr);
             h3Arr.forEach(item => {
               this.directory.push(item.innerText.slice(2,item.innerText.length));
             })
@@ -239,12 +128,45 @@ export default {
         })
       })
     },
+    scrollMessage(){
+      let target = document.querySelector('.post-article-comment');
+      let scrollTop = target.offsetTop;
+      window.scrollTo(0,scrollTop);
+    },
+    upDatecomment(val,type){ // 更新评论
+      this.$api.detailArticle(val,res=>{
+        this.article.message = res.data.message;
+        if(type == 'updateComment'){
+          if(this.article.message.length > this.page * this.rows){
+            this.page = Math.ceil(this.article.message.length / this.rows);
+            this.dataArr = this.article.message.slice((this.page - 1) * this.rows ,this.page * this.rows);
+          }else{
+            this.dataArr = this.article.message.slice((this.page - 1) * this.rows ,this.article.message.length);
+          }
+          this.$nextTick().then(()=>{
+            let scrollBottom = document.documentElement.scrollHeight || document.body.scrollHeight;
+            window.scrollTo(0,scrollBottom);
+            this.$msg('留言成功',1.5,'success');
+          })
+        }else{
+          this.dataArr = this.article.message.slice((this.page - 1) * this.rows ,this.page * this.rows);
+          if(type == 'updateReply'){
+            this.$msg('留言成功',1.5,'success');
+          }else{
+            this.$msg('删除留言成功',1.5,'success');
+          }
+        }
+        
+      },err=>{
+        console.log(err);
+      })
+    },
     pagechange(page){ //页数变化
       this.page = page;
-      if(this.article.message.length > this.page * 10){
-        this.dataArr = this.article.message.slice((this.page - 1) * 10 ,this.page * 10);
+      if(this.article.message.length > this.page * this.rows){
+        this.dataArr = this.article.message.slice((this.page - 1) * this.rows ,this.page * this.rows);
       }else{
-        this.dataArr = this.article.message.slice((this.page - 1) * 10 ,this.article.message.length);
+        this.dataArr = this.article.message.slice((this.page - 1) * this.rows ,this.article.message.length);
       }
     },
     scrollTitle(index){ // 目录
@@ -254,7 +176,36 @@ export default {
     },
     addComment(){ //评论添加
       let _id = this.$utils.SessionLocal.getItem('articleId');
-      this.searchDetail({_id:_id});
+      this.upDatecomment({_id:_id},'updateComment');
+    },
+    reply(val){ //评论回复
+      let param = {
+        articleId: this.$utils.SessionLocal.getItem('articleId'),
+        commentIndex : val.index + (this.page - 1) * this.rows,
+        data: val.data
+      }
+      this.$api.addReply(param,(res)=>{
+        if(res.code == 200){
+          this.upDatecomment({_id:param.articleId},'updateReply');
+        }
+      },(err)=>{
+
+      })
+    },
+    replyDelete(val){ //删除评论
+      let param = {
+        articleId: this.$utils.SessionLocal.getItem('articleId'),
+        commentIndex : val.index + (this.page - 1) * this.rows,
+        createdTime: val.createdTime
+      }
+      this.$api.deleteReply(param,(res)=>{
+        if(res.code == 200){
+          this.upDatecomment({_id:param.articleId},'deleteReply');
+        }
+      },(err)=>{
+
+      })
+      console.log(param.createdTime,param.commentIndex);
     }
     
   }

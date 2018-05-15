@@ -65,7 +65,6 @@ export default {
           userInfo[item] && (this.userInfo[item] = userInfo[item]);
         })
         this.userInfo.userId = userInfo._id;
-        console.log(this.userInfo);
       }
     },
     commentFocus(){
@@ -85,6 +84,10 @@ export default {
         this.modalShow = true;
         return;
       }
+      if(this.$utils.CommonUtils.isEmptyOrNull(this.userInfo.msg)){
+        this.$msg('留言内容不能为空');
+        return;
+      }
       let objData = {
         articleId: this.$utils.SessionLocal.getItem('articleId'),
         data: this.userInfo
@@ -92,6 +95,7 @@ export default {
       this.$api.addComment(objData,res => {
         if(res.code == 200){
           this.$emit('addComment');
+          this.userInfo.msg = '';
         }
       },err => {
         console.log(err);
@@ -161,7 +165,7 @@ export default {
       .article-comments-content-button{
         position: absolute;
         right: 40px;
-        bottom: 20px;
+        bottom: 10px;
         a{
           font-size: 14px;
           display: block;

@@ -1,5 +1,5 @@
 import { RegexEnum } from './enum/regexEnum'; // 正则规则枚举
-
+import { collapse } from './components/ElCollapseTransition'; //collapseTransnsition
 export const CommonUtils = {
   isEmptyOrNull(v) { // 判断字符串是否为空
     return typeof (v) === 'undefined' || v == '' || v == null ? true : false;
@@ -320,3 +320,6 @@ class CookieStorage {
   }
 }
 export const Cookie = new CookieStorage();
+
+//collapse Transition
+export const collapseFun = collapse;

@@ -12,7 +12,7 @@ axios
     let token = Account.getToken();
     if (!CommonUtils.isEmptyOrNull(token)) { // 判断是否存在token，如果存在的话，则每个http header都加上toke
       if (!CommonUtils.isEmptyOrNull(token)) {
-				console.log(token);
+				// console.log(token);
         config.headers.Authorization = `${token}`;
       }
     }

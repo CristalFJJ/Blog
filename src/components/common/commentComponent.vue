@@ -5,6 +5,9 @@
         <div class="comment-component-header flex-start">
           <div class="comment-component-header-portrait"><img :src="data.portrait" alt=""></div>
           <a class="comment-component-header-userName" :href="data.site?data.site:'javaScript:void(0)'">{{data.userName}}</a>
+          <Tooltip content="管理员认证" placement="top">
+            <div class="comment-component-header-admin" v-if="data.level == 'supreme'">Admin</div>
+          </Tooltip>
         </div>
 
         <p class="comment-component-message">{{data.msg}}</p>
@@ -13,7 +16,7 @@
           <div class="space-between">
             <p class="comment-component-time">{{data.createdTime}}</p>
             <div class="flex-start">
-              <p class="comment-component-delete" @click="replyDelete">删除</p>
+              <p class="comment-component-delete" v-if="userInfo.level == 'supreme'" @click="replyDelete">删除</p>
               <p class="comment-component-reply" @click="replyPrepare">回复</p>
             </div>
             
@@ -87,7 +90,7 @@
     data(){
       return{
         userInfo:{
-          userName: 'cristal',
+          userName: '',
           email: '',
           site: '',
           portrait: '',
@@ -110,17 +113,20 @@
       }
     },
     mounted(){
+      this.init();
     },
     methods: {
-      replyPrepare(){ //递归子组件会优先触发这个
+      init(){
         let userInfo = this.$utils.Account.getUserInfo();
         if(userInfo){
           Object.keys(this.userInfo).forEach( item=>{
             userInfo[item] && (this.userInfo[item] = userInfo[item]);
           })
-          console.log(this.userInfo);
           this.userInfo.userId = userInfo._id;
-        }else{
+        }
+      },
+      replyPrepare(){ //递归子组件会优先触发这个
+        if(this.$utils.CommonUtils.isEmptyOrNull(this.userInfo.userName)){
           this.modalShow = true;
           return;
         }
@@ -128,16 +134,6 @@
         this.replyAreaShow = true;
       },
       replyPrepareChild(){ 
-        let userInfo = this.$utils.Account.getUserInfo();
-        if(userInfo){
-          Object.keys(this.userInfo).forEach( item=>{
-            userInfo[item] && (this.userInfo[item] = userInfo[item]);
-          })
-          this.userInfo.userId = userInfo._id;
-        }else{
-          this.modalShow = true;
-          return;
-        }
         this.$emit('replyClose'); // 上面触发了一次打开父的和子的，再一次关闭所有包括子留言  由于递归组件底层会跟着联动 暂时用的是笨方法
         this.replyAreaShow = true;
         this.$emit('replyCloseChild'); // 关闭父的
@@ -150,9 +146,11 @@
           this.$msg('回复内容不能为空');
           return;
         }
+        console.log(this.userInfo)
         this.$emit('reply',{writer:this.data.userName,userInfo:this.userInfo});
       },
       replyChild(val){
+        console.log(val.userInfo);
         this.$emit('reply',{writer:val.writer,userInfo:val.userInfo});
       },
       goLogin(){
@@ -196,7 +194,20 @@
         line-height: 45px;
         margin-left: 20px;
         font-size: 13px;
+        font-weight: 600;
         color: #5f5f5f;
+      }
+      .comment-component-header-admin{
+        width: 40px;
+        text-align: center;
+        line-height: 18px;
+        margin-left: 8px;
+        border-radius: 3px;
+        background-color: #38cfd4;
+        color: #fff;
+        font-weight: 400;
+        font-size: 12px;
+        cursor: pointer;
       }
     }
     .comment-component-message{

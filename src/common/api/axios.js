@@ -1,6 +1,6 @@
 import axios from 'axios';
 import {SERVICE} from './config';
-import {CommonUtils, Account} from '../js/blogUtils';
+import {CommonUtils,Account,Storage} from '../js/blogUtils';
 axios.defaults.baseURL = SERVICE; // 设置默认服务地址
 axios.defaults.timeout = 0; // 设置超时时间
 
@@ -45,6 +45,7 @@ axios
         //多个接口401时只执行一次提示和跳转
         if(!is401){
           is401 = true;
+          Storage.remove("userInfo");
           alert('身份验证已失效，请重新登录再操作');
           CommonUtils.getDefaultPath();
         }

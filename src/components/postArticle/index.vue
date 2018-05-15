@@ -24,7 +24,7 @@
     </div>
     <div class="post-article-comment main-content">
       <comment from="./postArticle" @addComment="addComment"></comment>
-      <comment-list from="./postArticle" :dataArr="dataArr" @reply="reply" @replyDelete="replyDelete"></comment-list>
+      <comment-list class="post-article-comment-list" from="./postArticle" :dataArr="dataArr" @reply="reply" @replyDelete="replyDelete"></comment-list>
       <pagination :total="article.message.length" v-if="article.message.length>rows" :rows="rows" :current-page='page' @pagechange="pagechange"></pagination>
     </div>
     <div class="directory-contain">
@@ -137,15 +137,12 @@ export default {
       this.$api.detailArticle(val,res=>{
         this.article.message = res.data.message;
         if(type == 'updateComment'){
-          if(this.article.message.length > this.page * this.rows){
-            this.page = Math.ceil(this.article.message.length / this.rows);
-            this.dataArr = this.article.message.slice((this.page - 1) * this.rows ,this.page * this.rows);
-          }else{
-            this.dataArr = this.article.message.slice((this.page - 1) * this.rows ,this.article.message.length);
-          }
+          this.page = 1;
+          this.dataArr = this.article.message.slice(0,this.rows);
           this.$nextTick().then(()=>{
-            let scrollBottom = document.documentElement.scrollHeight || document.body.scrollHeight;
-            window.scrollTo(0,scrollBottom);
+            let dom = document.querySelector('.post-article-comment-list');
+            let scrollTop = dom.offsetTop + dom.offsetParent.offsetTop - 40;
+            window.scrollTo(0,scrollTop);
             this.$msg('留言成功',1.5,'success');
           })
         }else{

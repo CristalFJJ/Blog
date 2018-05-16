@@ -217,7 +217,9 @@
       color: #313131;
       font-size: 14px;
       line-height: 1.8;
-      
+      word-break:normal;  
+      white-space:pre-warp;  
+      word-wrap:break-word;  
     }
     
     .comment-component-meta{

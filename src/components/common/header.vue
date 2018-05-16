@@ -127,7 +127,7 @@ header{
 				line-height: 60px;
 			}
 		}
-		@media only screen and (max-width: 751px) {
+		@media only screen and (max-width: 680px) {
 			.header-name{
 				margin-left: 20px; 
 			}

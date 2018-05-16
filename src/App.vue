@@ -38,5 +38,22 @@ export default {
       border: 2px solid #333;
       font-weight: 700;
     }
+    @media only screen and (max-width: 880px) {
+      .top{
+        width: 45px;
+        height: 45px;
+        line-height: 45px;
+      }
+    }
+    @media only screen and (max-width: 580px) {
+      .top{
+        width: 35px;
+        height: 35px;
+        line-height: 35px;
+        border: 1px solid #333;
+        font-weight: 500;
+        font-size: 12px;
+      }
+    }
   }
 </style>

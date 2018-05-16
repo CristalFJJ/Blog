@@ -1,8 +1,8 @@
 <template>
   <div class="home-page main-content">
 		<ul class="artilce-list clear-float">
-			<li class="fl" v-for="(item,index) in articleArr" :key="index" @click="viewArticle(item._id)">
-        <div class="artilce-list-contain">
+			<li class="fl" v-for="(item,index) in articleArr" :key="index">
+        <div class="artilce-list-contain"  @click="viewArticle(item._id)">
           <div class="cover-picture" :style="{backgroundImage:`url(${item.coverPicture})`}"></div>
           <div class="article-desc">
             <p>{{item.describe}}</p>
@@ -108,6 +108,40 @@ export default {
 <style lang="scss" scoped>
   .home-page{
     padding: 120px 20px 0;
+  }
+  @media only screen and (max-width: 880px) {
+    .home-page{
+      padding: 80px 0 0;
+      .pagination{
+        margin: 25px 0 30px;
+      }
+      .artilce-list{
+        li{
+          width: 50%;
+          padding: 10px;
+          &:nth-child(odd){
+            padding-left: 20px;
+          }
+          &:nth-child(even){
+            padding-right: 20px;
+          }
+        }
+      }
+    }
+  }
+  @media only screen and (max-width: 580px) {
+    .home-page{
+      padding: 70px 0 0;
+      .artilce-list{
+        li{
+          width: 100%;
+          padding: 10px 20px;
+          &:first-child{
+            padding-top: 20px;
+          }
+        }
+      }
+    }
   }
   .pagination{
     margin: 30px 0 35px;

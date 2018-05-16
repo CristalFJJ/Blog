@@ -275,15 +275,18 @@ export default {
       }
       .post-article-info{
         font-size: 14px;
-        overflow: hidden;
         margin: 25px 0px 0;
         padding: 25px 0px 20px;
-        white-space: nowrap;
-        text-overflow: ellipsis;
         border-top: 1px solid #e0e0e0;
       }
     }   
   }
+  @media only screen and (max-width: 700px) {
+    .post-article{
+      padding: 80px 25px 0;
+    }
+  }
+
   .post-article-comment{
     max-width: 700px;
     padding: 0 25px 20px;
@@ -328,6 +331,11 @@ export default {
           background-color: #eb5055;
         }
       }
+    }
+  }
+  @media only screen and (max-width: 1000px) {
+    .directory-contain{
+      display: none;
     }
   }
 </style>

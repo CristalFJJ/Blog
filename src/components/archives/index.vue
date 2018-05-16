@@ -72,9 +72,11 @@ export default {
     padding: 100px 20px 40px;
     .post-list-date{
       margin: 10px 0;
-      font-size: 14px;
+      font-size: 16px;
       color: #5f5f5f;
+      padding: 0 30px; 
       span{
+        font-size: 14px;
         color: #eb5055;
       }
     }
@@ -103,6 +105,30 @@ export default {
           font-size: 12px;
           margin-top: 15px;
         }
+      }
+    }
+  }
+  @media only screen and (max-width: 880px) {
+    .archive-page{
+      padding: 80px 0 20px;
+      .post-list-item{
+        width: 50%;
+        padding: 10px;
+        &:nth-child(odd){
+          padding-left: 20px;
+        }
+        &:nth-child(even){
+          padding-right: 20px;
+        }
+      }
+    }
+  }
+  @media only screen and (max-width: 580px) {
+    .archive-page{
+      padding: 70px 0 20px;
+      .post-list-item{
+        width: 100%;
+        padding: 10px 20px;
       }
     }
   }

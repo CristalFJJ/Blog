@@ -25,6 +25,7 @@
 <script>
 import coverPicture from '../../../static/image/balloon.jpg';
 import pagination from '../common/pagination';
+import { mapMutations } from "vuex";
 export default {
   components:{
     pagination
@@ -36,74 +37,20 @@ export default {
         rows: 12,   // 每页显示条数
         page: 1,   // 当前的页数
       },
-      articleArr: [{
-        title: '测试一',
-        describe: '这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述这是描述',
-        coverPicture: coverPicture,
-        classification: 'technology',
-        createdTime: '2018-05-11',
-      },{
-        title: '测试一',
-        describe: '这是描述这是描述这是描述这是描述',
-        coverPicture: coverPicture,
-        classification: 'study',
-        createdTime: '2018-05-11',
-      },{
-        title: '测试一',
-        describe: '这是描述这是描述这是描述这是描述',
-        coverPicture: coverPicture,
-        classification: 'note',
-        createdTime: '2018-05-11',
-      },{
-        title: '测试一',
-        describe: '这是描述这是描述这是描述这是描述',
-        coverPicture: coverPicture,
-        classification: 'hobby',
-        createdTime: '2018-05-11',
-      },{
-        title: '测试一',
-        describe: '这是描述这是描述这是描述这是描述',
-        coverPicture: coverPicture,
-        classification: 'technology',
-        createdTime: '2018-05-11',
-      },{
-        title: '测试一',
-        describe: '这是描述这是描述这是描述这是描述',
-        coverPicture: coverPicture,
-        classification: 'technology',
-        createdTime: '2018-05-11',
-      },{
-        title: '测试一',
-        describe: '这是描述这是描述这是描述这是描述',
-        coverPicture: coverPicture,
-        classification: 'technology',
-        createdTime: '2018-05-11',
-      },{
-        title: '测试一',
-        describe: '这是描述这是描述这是描述这是描述',
-        coverPicture: coverPicture,
-        classification: 'technology',
-        createdTime: '2018-05-11',
-      },{
-        title: '测试一',
-        describe: '这是描述这是描述这是描述这是描述',
-        coverPicture: coverPicture,
-        classification: 'technology',
-        createdTime: '2018-05-11',
-      }],
+      articleArr: [],
     }
   },
   mounted(){
     this.init();
   },
   methods:{
+    ...mapMutations(['selected_fn']),
     async init(){
       await this.getArticleList();
     },
     getArticleList(){
       return new Promise((resolve,reject)=>{
         this.$api.listArticle(this.queryData,res=>{
-          console.log(res);
           this.articleArr = res.data;
           this.total = res.total;
           resolve();
@@ -147,7 +94,8 @@ export default {
     },
     viewArticle(_id){
       this.$utils.SessionLocal.setItem('articleId',_id);
-      this.$router.push({path:'/postArticle',name:'postArticle'})
+      this.selected_fn(-1);
+      this.$router.push({path:'/postArticle',name:'postArticle'});
     },
     pagechange(currentPage){
       this.queryData.page = currentPage;

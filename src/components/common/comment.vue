@@ -37,6 +37,10 @@ export default {
     from:{
       type: String,
       required: true
+    },
+    type:{
+      type: String,
+      default:'article',
     }
   },
   data () {
@@ -88,18 +92,31 @@ export default {
         this.$msg('留言内容不能为空');
         return;
       }
-      let objData = {
-        articleId: this.$utils.SessionLocal.getItem('articleId'),
-        data: this.userInfo
-      }
-      this.$api.addComment(objData,res => {
-        if(res.code == 200){
-          this.$emit('addComment');
-          this.userInfo.msg = '';
+      if(this.type == 'article'){ //文章留言
+        let objData = {
+          articleId: this.$utils.SessionLocal.getItem('articleId'),
+          data: this.userInfo
         }
-      },err => {
-        console.log(err);
-      })
+        this.$api.addComment(objData,res => {
+          if(res.code == 200){
+            this.$emit('addComment');
+            this.userInfo.msg = '';
+          }
+        },err => {
+          console.log(err);
+        })
+      }else{ // 留言板留言
+        this.$api.createMessage(this.userInfo,res=>{
+          if(res.code == 200){
+            this.$emit('addComment',res.data);
+            this.userInfo.msg = '';
+          }
+        },err => {
+
+        })
+      }
+      
+      
     }
   }
 }
@@ -165,7 +182,7 @@ export default {
       .article-comments-content-button{
         position: absolute;
         right: 40px;
-        bottom: 10px;
+        bottom: 12px;
         a{
           font-size: 14px;
           display: block;

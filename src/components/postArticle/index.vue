@@ -148,7 +148,7 @@ export default {
         }else{
           this.dataArr = this.article.message.slice((this.page - 1) * this.rows ,this.page * this.rows);
           if(type == 'updateReply'){
-            this.$msg('留言成功',1.5,'success');
+            this.$msg('回复成功',1.5,'success');
           }else{
             this.$msg('删除留言成功',1.5,'success');
           }

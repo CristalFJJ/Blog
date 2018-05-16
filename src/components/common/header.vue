@@ -28,24 +28,31 @@
 </template>
 
 <script>
+import { mapState, mapMutations } from "vuex";
 export default {
 	data () {
 		return {
 			route: this.$t('Header.navs'),
 			headerShow: true,
-			selected: 0,
 			scrollTop:0,
 		}
 	},
+	computed: {
+    ...mapState({
+      selected: state => state.Common.selected, // 当前选择
+    })
+  },
 	mounted () {
 		this.listenScroll();
 	},
 	methods: {
+		...mapMutations(['selected_fn']),
 		backIndex(){
+			this.selected_fn(-1);
 			this.$router.push('/');
 		},
 		goRoute(val,index) {
-			this.selected = index;
+			this.selected_fn(index);
 			if(val.text == "management"){
 				let userInfo = this.$utils.Account.getUserInfo();
       	if(userInfo.userName){

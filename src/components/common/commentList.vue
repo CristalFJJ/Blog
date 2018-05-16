@@ -41,7 +41,7 @@ export default {
     reply(val,index){
       let data = Object.assign({},val.userInfo);
       data.msg = `@${val.writer}  ${data.msg }`;
-      this.$emit('reply',{data:data,index:index})
+      this.$emit('reply',{data:data,index:index,_id:val._id})
       this.cancelReply();
       let dom = this.$refs.commentContent[index].$el;
       let scrollTop = dom.offsetTop + dom.offsetParent.offsetTop + dom.offsetHeight - 500;
@@ -77,7 +77,7 @@ export default {
       })
     },
     replyDelete(val,index){
-      this.$emit('replyDelete',{createdTime:val,index:index});
+      this.$emit('replyDelete',{createdTime:val.createdTime,index:index,_id:val._id});
     }
   }
 }

@@ -1,8 +1,8 @@
 <template>
 	<div class="front-desk">
 		<Header></Header>
-    <router-view></router-view>
-    <Footer></Footer>
+    <router-view class="front-desk-content"></router-view>
+    <Footer class="front-desk-footer"></Footer>
 	</div>
 </template>
 <script>

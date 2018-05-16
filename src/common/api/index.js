@@ -41,6 +41,7 @@ function apiPost(url, param = {}, sucess, fail) {
     });
 }
 export default {
+  //用户登录接口
   login(param, success, fail) { // 登录接口
     apiPost(config.LOGIN_IN, param, success, fail);
 	},
@@ -63,6 +64,7 @@ export default {
     apiPost(config.USER_UPDATE_PASSWORD, param, success, fail);
   },
 
+  //文章管理接口
   createArticle(param, success, fail){ //创建文章
     apiPost(config.CREATE_ARTICLE, param, success, fail);
   },
@@ -84,6 +86,8 @@ export default {
   searchOneArticle(param,success,fail){ //搜索单个
     apiGet(config.SEARCH_ONE_ARTICLE, param, success, fail);
   },
+
+  //草稿箱接口
   createDraft(param, success, fail){ //创建草稿
     apiPost(config.CREATE_DRAFT, param, success, fail);
   },
@@ -110,6 +114,20 @@ export default {
   },
   deleteReply(param,success,fail){ //删除文章回复
     apiPost(config.DELETE_REPLY, param, success, fail);
+  },
+
+  //留言接口
+  createMessage(param,success,fail){ // 新增留言
+    apiPost(config.CREATE_MESSAGE,param, success, fail);
+  },
+  listMessage(param,success,fail){ // 查询留言
+    apiGet(config.LIST_MESSAGE,param, success, fail);
+  },
+  deleteMessage(param,success,fail){ // 删除留言
+    apiPost(config.DELETE_MESSAGE,param, success, fail);
+  },
+  messageReply(param,success,fail){ // 回复留言
+    apiPost(config.MESSAGE_REPLY,param,success,fail);
   },
   
 }

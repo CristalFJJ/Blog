@@ -146,12 +146,10 @@
           this.$msg('回复内容不能为空');
           return;
         }
-        console.log(this.userInfo)
-        this.$emit('reply',{writer:this.data.userName,userInfo:this.userInfo});
+        this.$emit('reply',{writer:this.data.userName,userInfo:this.userInfo,_id:this.data._id});
       },
       replyChild(val){
-        console.log(val.userInfo);
-        this.$emit('reply',{writer:val.writer,userInfo:val.userInfo});
+        this.$emit('reply',{writer:val.writer,userInfo:val.userInfo,_id:val._id});
       },
       goLogin(){
         this.$router.push({path:'/login',name:'login',params:{to:this.from}});
@@ -160,7 +158,11 @@
         
       },
       sureDelete(){
-        this.$emit('replyDelete',this.data.createdTime);
+        let objData = {
+          createdTime: this.data.createdTime,
+          _id: this.data._id
+        }
+        this.$emit('replyDelete',objData);
       },
       sureDeleteChild(val){
         this.$emit('replyDelete',val);

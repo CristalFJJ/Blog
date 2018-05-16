@@ -67,7 +67,7 @@ export default {
         passWord:[{validator: this.checkPassWord, trigger: 'blur' }],
         passWordAgain:[{validator: this.checkPassWord, trigger: 'blur'}]
       },
-      toRoute: '/management',
+      toRoute: '/',
     }
   },
   computed:{
@@ -179,7 +179,6 @@ export default {
       this.$api.login(this.userForm,res => {
         if (res.code == 200) {
           let data = res.info;
-          console.log(data);
           this.$utils.Storage.setObj("userInfo", data);
           this.$router.push(this.toRoute);
         }else{

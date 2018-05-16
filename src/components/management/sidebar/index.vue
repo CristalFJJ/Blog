@@ -100,7 +100,7 @@ export default {
     this.init();
   },
   methods: {
-    ...mapMutations(['menu_active_name_fn','open_name_fn']),
+    ...mapMutations(['menu_active_name_fn','open_name_fn','selected_fn']),
     init(){
       this.$router.push('/management/overview');
       this.userInfo();
@@ -109,6 +109,7 @@ export default {
       });
     },
     back(){
+      this.selected_fn(-1);
       this.$router.push('/');
     },
     userInfo(){
@@ -154,9 +155,11 @@ export default {
       this.$api.loginOut({_id:_id},res => {
         this.$utils.Storage.remove("userInfo");
         this.$router.push("/login");
+        this.selected_fn(-1);
       },err =>{
         console.log(err);
         this.$router.push("/login");
+        this.selected_fn(-1);
       })
     },
   },
@@ -167,7 +170,7 @@ export default {
       this.$nextTick().then(()=>{
         this.$refs.menu.updateOpened();
         this.$refs.menu.updateActiveName();
-      })
+      });
     }
   }
 };

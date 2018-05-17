@@ -1,15 +1,15 @@
 <template>
   <div class="article-comments">
-    <p class="response">Responses</p>
+    <p class="response">{{titleText}}</p>
     <i-form class="article-comments-content" :model="userInfo">
-      <Form-item class="flex-start article-comments-content-header" >
+      <Form-item class="article-comments-content-header">
         <i-input v-model="userInfo.userName" disabled placeholder="昵称">
           <span slot="prepend">Name:</span>
         </i-input>
-        <i-input v-model="userInfo.email" disabled placeholder="个人邮箱">
+        <i-input :title="userInfo.email" v-model="userInfo.email" disabled placeholder="个人邮箱">
           <span slot="prepend">Email:</span>
         </i-input>
-        <i-input v-model="userInfo.site" disabled placeholder="个人网站地址">
+        <i-input :title="userInfo.site" v-model="userInfo.site" disabled placeholder="个人网站地址">
           <span slot="prepend">Site:</span>
         </i-input>
       </Form-item>
@@ -41,6 +41,10 @@ export default {
     type:{
       type: String,
       default:'article',
+    },
+    titleText:{
+      type: String,
+      default: 'Responses'
     }
   },
   data () {
@@ -115,8 +119,6 @@ export default {
 
         })
       }
-      
-      
     }
   }
 }
@@ -140,17 +142,18 @@ export default {
       border-radius: 3px;
       background: #fff;
       box-shadow: 0 1px 4px rgba(0,0,0,.04);
+      overflow: hidden;
       .ivu-form-item{
         margin-bottom: 5px; 
       }
       .article-comments-content-header{
-        .ivu-input-group{
-          width:auto;
-        }
         .ivu-form-item-content{
           display: flex;
           justify-content: flex-start;
           align-items: center;
+        }
+        .ivu-input-group{
+          width: 33.33%;
         }
         .ivu-input-group-prepend{
           border: none;
@@ -205,4 +208,5 @@ export default {
       }
     }
   }
+  
 </style>

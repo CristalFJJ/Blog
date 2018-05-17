@@ -8,6 +8,7 @@ const Study = resolve => require(['@/components/study'], resolve);
 const About = resolve => require(['@/components/about'], resolve);
 const Home = resolve => require(['@/components/home'], resolve);
 const PostArticle = resolve => require(['@/components/postArticle'], resolve);
+const Search = resolve => require(['@/components/search'], resolve);
 
 const Login = resolve => require(['@/components/login'], resolve);
 
@@ -86,7 +87,10 @@ const postArticle = getModel('/postArticle', PostArticle, 'postArticle');
 //about
 const about = getModel('/about', About, 'about');
 
-main.children = [home,archives,share,about,postArticle];
+//search
+const search = getModel('/search', Search, 'search');
+
+main.children = [home,archives,share,about,postArticle,search];
 
 //login
 const login = getModel('/login', Login, 'login');

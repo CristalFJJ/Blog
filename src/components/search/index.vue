@@ -1,7 +1,7 @@
 <template>
   <div class="main-content search-page">
-    <i-input @on-keypress="enterSearch" :maxlength="30" v-model="searchVal" icon="search" placeholder="Enter something..."></i-input>
-    <div class="search-tags" :style="{height:'500px'}">
+    <i-input @on-keypress="enterSearch" @on-click="search" :maxlength="30" v-model="searchVal" icon="search" placeholder="Enter something..."></i-input>
+    <div class="search-tags">
       <p>👇 The following tabs can help you!</p>
       <a class="bg-color-white" @click="searchTag(item.type)" href="javaScript:void(0)" v-for="(item,index) in tagArr" :key="index"># {{item.type}}（{{item.num}}）</a>
     </div>
@@ -52,9 +52,19 @@ export default {
       },]
     }
   },
+  mounted(){
+    this.init();
+  },
   methods:{
     init(){
-
+      this.statisticalLabel();
+    },
+    statisticalLabel(){
+      this.$api.statisticalLabel({},res=>{
+        console.log(res);
+      },err=>{
+        console.log(err);
+      })
     },
     enterSearch(e){
       if(e.keyCode == 13){
@@ -62,10 +72,21 @@ export default {
       }
     },
     search(){
-      console.log(this.searchVal);
+      if(this.$utils.CommonUtils.isEmptyOrNull(this.searchVal)) return; 
+      let obj = {
+        content: this.searchVal,
+        limit: 0,
+        way: 'Search'
+      };
+      this.$router.push({path:'/searchArticle',name:'searchArticle',query:obj});
     },
     searchTag(val){
-      console.log(val);
+      let obj = {
+        content: val,
+        limit: 0,
+        way: 'Tag'
+      };
+      this.$router.push({path:'/searchArticle',name:'searchArticle',query:obj});
     }
   }
 }
@@ -82,7 +103,6 @@ export default {
       line-height: 40px;
       border: 1px solid rgba(184,197,214,.2);
       border-radius: 20px;
-
       padding: 0 40px 0 20px;
       box-shadow: 0 1px 4px rgba(0,0,0,.04);
       &:focus{
@@ -97,11 +117,13 @@ export default {
     .search-tags{
       padding: 15px 0;
       text-align: center;
+      min-height: calc(100vh - 350px);
       p{
         margin: 20px 0 0;
         font-size: 14px;
         line-height: 1.8;
         color: #313131;
+        margin-bottom: 20px;
       }
       a{
         font-size: 13px;

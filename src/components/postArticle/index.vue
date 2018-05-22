@@ -5,13 +5,13 @@
         <div class="post-article-header">
           <h1>{{article.title}}</h1>
           <div class="post-article-classification">
-            Published on {{publishTime}} in <a href="javascript:void(0)">{{article.classification}}</a>
+            Published on {{publishTime}} in <a href="javascript:void(0)" @click="searchClassification(article.classification)">{{article.classification}}</a>
             with <a href="javascript:void(0)" @click="scrollMessage">{{article.message.length}} message </a>
           </div>
         </div>
         <div class="post-article-content">
           <p class="post-article-tag">
-            <a href="javascript:void(0)" v-for="(item,index) in labelArr" :key="index"># {{item}}</a>
+            <a href="javascript:void(0)" v-for="(item,index) in labelArr" :key="index" @click="searchTag(item)"># {{item}}</a>
           </p>
           <div class="post-article-main" v-html="article.content"></div>
           <div class="post-article-info">
@@ -203,6 +203,22 @@ export default {
 
       })
       console.log(param.createdTime,param.commentIndex);
+    },
+    searchClassification(val){
+      let obj = {
+        content: val,
+        limit: 0,
+        way: 'Category'
+      };
+      this.$router.push({path:'/searchArticle',name:'searchArticle',query:obj});
+    },
+    searchTag(val){
+       let obj = {
+        content: val,
+        limit: 0,
+        way: 'Tag'
+      };
+      this.$router.push({path:'/searchArticle',name:'searchArticle',query:obj});
     }
     
   }

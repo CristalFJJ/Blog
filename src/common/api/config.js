@@ -27,7 +27,7 @@ export const SEARCH_ONE_ARTICLE = API_FULL + '/searchOneArticle'; // 搜索单�
 export const ADD_COMMENT = API_FULL + '/addComment'; // 添加评论
 export const ADD_REPLY = API_FULL + '/addReply'; // 添加回复
 export const DELETE_REPLY = API_FULL +'/deleteReply'; // 删除留言
-
+export const STATISTICAL_LABEL = API_FULL +'/statisticalLabel'; // 统计标签
 
 /*草稿*/
 export const CREATE_DRAFT = API_FULL + '/createDraft'; //创建草稿

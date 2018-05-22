@@ -228,7 +228,10 @@ export default {
       this.searchFuzzyBol = true;
       this.searchData = [];
       this.searchTimer = setTimeout(()=>{
-        let obj = {content: val};
+        let obj = {
+          content: val,
+          limit:10
+        };
         if(!this.searchALL){
           obj.searchClass = this.searchClass;
         };

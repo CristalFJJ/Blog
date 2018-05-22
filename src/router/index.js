@@ -4,7 +4,7 @@ import VueRouter from 'vue-router';
 const Main = resolve => require(['@/components/main'], resolve);
 const Share = resolve => require(['@/components/share'], resolve);
 const Archives = resolve => require(['@/components/archives'], resolve);
-const Study = resolve => require(['@/components/study'], resolve);
+const SearchArticle = resolve => require(['@/components/searchArticle'], resolve);
 const About = resolve => require(['@/components/about'], resolve);
 const Home = resolve => require(['@/components/home'], resolve);
 const PostArticle = resolve => require(['@/components/postArticle'], resolve);
@@ -75,8 +75,8 @@ const share = getModel('/share', Share, 'share');
 //archives
 const archives = getModel('/archives', Archives, 'archives');
 
-//study
-const study = getModel('/study', Study, 'study');
+//searchArticle
+const searchArticle = getModel('/searchArticle', SearchArticle, 'searchArticle');
 
 //home
 const home = getModel('/home', Home, 'home');
@@ -90,7 +90,7 @@ const about = getModel('/about', About, 'about');
 //search
 const search = getModel('/search', Search, 'search');
 
-main.children = [home,archives,share,about,postArticle,search];
+main.children = [home,archives,share,about,postArticle,search,searchArticle];
 
 //login
 const login = getModel('/login', Login, 'login');

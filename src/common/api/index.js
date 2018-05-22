@@ -86,7 +86,10 @@ export default {
   searchOneArticle(param,success,fail){ //搜索单个
     apiGet(config.SEARCH_ONE_ARTICLE, param, success, fail);
   },
-
+  statisticalLabel(param,success,fail){
+    apiGet(config.STATISTICAL_LABEL, param, success, fail);
+  },
+  
   //草稿箱接口
   createDraft(param, success, fail){ //创建草稿
     apiPost(config.CREATE_DRAFT, param, success, fail);

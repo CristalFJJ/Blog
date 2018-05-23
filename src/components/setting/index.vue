@@ -1,18 +1,26 @@
 <template>
-  <div>
-    <div class="personal-setting space-between">
+  <div class="main-content setting">
+    <div class="personal-setting">
       <div class="personal-setting-left">
-        <p class="font-color-blue font-size-20">个人设置</p>
+        <div class="space-between">
+          <p class="font-size-20 font-color-gray">个人设置</p>
+          <Tooltip content="退出登录" placement="top">
+            <div  @click="loginOut">
+              <Icon class="login-out-icon" type="power"></Icon>
+            </div>
+          </Tooltip>
+          
+        </div>
         <Form ref="formData" :model="formData" >
           <FormItem label="个性签名" prop="name">
-            <Input type="text" v-model="formData.remarks" placeholder="remark">
+            <i-input type="text" v-model="formData.remarks" placeholder="remark">
               <Icon type="paintbrush" slot="prepend"></Icon>
-            </Input>
+            </i-input>
           </FormItem>
           <FormItem prop="email" label="电子邮箱地址">
-            <Input type="text" v-model="formData.email" placeholder="email">
+            <i-input type="text" v-model="formData.email" placeholder="email">
               <Icon type="email" slot="prepend"></Icon>
-            </Input>
+            </i-input>
           </FormItem>
           <FormItem prop="site" label="个人网站">
             <i-input type="text" v-model="formData.site" placeholder="site">
@@ -48,7 +56,9 @@
               </template>
             </div>
             <Modal title="预览" v-model="visible">
-              <img :src="uploadList.url" v-if="visible" style="width: 100%">
+              <div>
+                <img :src="uploadList.url" v-if="visible" style="width:100%">
+              </div>
             </Modal>
           </FormItem>
           <FormItem>
@@ -57,17 +67,17 @@
             </div>
           </FormItem>
         </Form>
-        <p class="font-color-blue font-size-20 completion-margin">密码修改</p>
+        <p class="font-color-gray font-size-20 completion-margin">密码修改</p>
         <Form ref="formData" :model="passWord">
           <FormItem label="用户密码">
-            <Input type="password" v-model="passWord.first" placeholder="passWord">
+            <i-input type="password" v-model="passWord.first" placeholder="passWord">
               <Icon type="ios-locked-outline" slot="prepend"></Icon>
-            </Input>
+            </i-input>
           </FormItem>
           <FormItem label="用户密码确认">
-            <Input type="password" v-model="passWord.again" placeholder="againPassWord">
+            <i-input type="password" v-model="passWord.again" placeholder="againPassWord">
               <Icon type="ios-locked-outline" slot="prepend"></Icon>
-            </Input>
+            </i-input>
           </FormItem>
           <FormItem>
             <div class="personal-setting-left-upDate">
@@ -76,21 +86,15 @@
           </FormItem>
         </Form>
       </div>
-      
-      <div class="personal-setting-right">
-        <div  class="static-img">
-          <img :src="personalImg" alt="">
-        </div>
-      </div>
     </div>
-    
+    <Loading :spinShow="spinShow"></Loading>
     
   </div>
 </template>
 
 <script>
-import personalImg from '../../../../../static/image/personal.jpg';
-import {SERVICE} from '../../../../common/api/config';
+import { mapMutations } from "vuex";
+import {SERVICE} from '../../common/api/config';
 export default {
   data() {
     return {
@@ -108,8 +112,8 @@ export default {
       visible: false,
       uploadList: {},
       imgFile:'',
-      personalImg: personalImg,
-    };
+      spinShow: false,
+    }
   },
   computed: {
     percentageColor () {
@@ -124,26 +128,34 @@ export default {
     this.init();
   },
   methods: {
+    ...mapMutations(['selected_fn']),
     init(){
       let userInfo = this.$utils.Account.getUserInfo();
+      this.spinShow = true;
       this.$api.userFind({_id:userInfo._id},res=>{
         let data = res.data;
         this.formData.remarks = data.remarks || '';
         this.formData.email = data.email || '';
         this.formData.site = data.site || '';
-        if(data.portrait.includes('defaultAvatar')){
+        if(data.portrait.includes('defaultAvatar') && !data.portrait.includes('http')){
           data.portrait = SERVICE + data.portrait
         }
         this.$set(this.uploadList,'url', data.portrait);
         this.$set(this.uploadList,'status', "finished");
+        setTimeout(()=>{
+          this.spinShow = false;
+        },500)
       },err=>{
         console.log(err);
       })
     },
     upDateDate() {
       if(this.formData.email !='' && !this.$utils.RegexUtils.email(this.formData.email)){ //验证邮箱格式
-        console.log(this.formData.email);
         this.$msg('邮箱格式有误');
+        return 
+      }
+      if(this.formData.site !='' && !this.$utils.RegexUtils.isUrl(this.formData.site)){ //验证网站格式
+        this.$msg('网站格式有误,填写完整网站，如：需加上协议“http://”',3);
         return 
       }
       let userInfo = this.$utils.Account.getUserInfo();
@@ -153,7 +165,7 @@ export default {
         remarks: this.formData.remarks,
         email: this.formData.email,
         site: this.formData.site,
-        portrait: this.uploadList.url
+        portrait: this.uploadList.url,
       }
       this.$api.userUpDate(obj,res=>{
         if(res.code == 200){
@@ -211,6 +223,17 @@ export default {
       reader.readAsDataURL(file);  
       return false;
     },
+    loginOut(){
+      let _id = this.$utils.Account.getUserInfo()._id;
+      this.$api.loginOut({_id:_id},res => {
+        this.$utils.Storage.remove("userInfo");
+        this.$router.push("/login");
+        this.selected_fn(-1);
+      },err =>{
+        this.$router.push("/login");
+        this.selected_fn(-1);
+      })
+    },
   },
   watch:{
     
@@ -220,8 +243,10 @@ export default {
 </script>
 
 <style lang="scss">
+.setting{
+  max-width: 700px;
+  padding: 100px 25px 30px;
   .personal-setting{
-    height: calc(100vh - 60px);
     background-color: #FFF;
     border-radius: 4px;
     padding: 30px;
@@ -229,18 +254,30 @@ export default {
     .ivu-form-item-label-upDate{
       font-size: 14px;
     }
-    .ivu-input-group .ivu-input{
+    .ivu-i-input-group .ivu-i-input{
       width: 250px;
     }
+    .login-out-icon{
+      font-size: 20px;
+      color: #eb5055;
+      cursor: pointer;
+    }
     .personal-setting-left{
-      width: 280px;
+      .ivu-btn-primary{
+        background-color: #eb5055;
+        border-color: #eb5055;
+        &:hover{
+          background-color: #ff666b;
+          border-color: #ff666b;
+        }
+      }
       .upload-form{
+        font-size: 16px;
         .ivu-form-item-label{
           float: none;
         }
         .ivu-form-item-content{
           margin-top: 10px;
-          width: 280px;
           display: flex;
           justify-content: space-between;
           align-items: center;
@@ -302,12 +339,13 @@ export default {
           }
         }
       }
+      
       .personal-setting-left-upDate{
-        width: 280px;
+        width: 100%;
         text-align: center;
       }
       .completion-margin{
-        margin-top: calc(100vh - 830px);
+        margin-top:30px;
       }
     }
     .personal-setting-right{
@@ -331,4 +369,6 @@ export default {
       }
     }
   }
+}
+  
 </style>

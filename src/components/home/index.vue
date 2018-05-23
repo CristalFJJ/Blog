@@ -19,9 +19,9 @@
       </li>
 		</ul>
     <pagination class="pagination" :total="total" :rows="queryData.rows" :current-page='queryData.page' @pagechange="pagechange"></pagination>
+    <Loading :spinShow="spinShow"></Loading>
 	</div>
 </template>
-
 <script>
 import coverPicture from '../../../static/image/balloon.jpg';
 import pagination from '../common/pagination';
@@ -38,6 +38,7 @@ export default {
         page: 1,   // 当前的页数
       },
       articleArr: [],
+      spinShow: false,
     }
   },
   mounted(){
@@ -50,9 +51,13 @@ export default {
     },
     getArticleList(){
       return new Promise((resolve,reject)=>{
+        this.spinShow = true;
         this.$api.listArticle(this.queryData,res=>{
           this.articleArr = res.data;
           this.total = res.total;
+          setTimeout(()=>{
+            this.spinShow = false;
+          },500)
           resolve();
         },err=>{
           console.log(err);

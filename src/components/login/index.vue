@@ -115,8 +115,8 @@ export default {
   },
   methods: {
     init(){
-      if(JSON.stringify(this.$route.params) != "{}"){
-        this.toRoute = this.$route.params.to;
+      if(JSON.stringify(this.$route.query) != "{}"){
+        this.toRoute = this.$route.query.to;
       }
       let CommonUtils = this.$utils.CommonUtils;
       let remember = this.$utils.Storage.getItem("remember");
@@ -180,6 +180,14 @@ export default {
         if (res.code == 200) {
           let data = res.info;
           this.$utils.Storage.setObj("userInfo", data);
+          if(this.toRoute == '/management'){
+            if(data.level == 'supreme'){
+              this.$router.push('/management');
+            }else{
+              this.$router.push('/setting');
+            }
+            return;
+          }
           this.$router.push(this.toRoute);
         }else{
           this.$msg(res.msg);
@@ -211,7 +219,6 @@ export default {
           this.userNameCheck = 2;
           callback();
         }
-        
       })
     },
     //检测密码是否重复
@@ -261,9 +268,16 @@ export default {
             token: res.info.token
           } 
           this.$utils.Storage.setObj("userInfo", obj);
-          this.$router.push("/management");
+           if(this.toRoute == '/management'){
+            if(obj.level == 'supreme'){
+              this.$router.push('/management');
+            }else{
+              this.$router.push('/setting');
+            }
+            return;
+          }
+          this.$router.push(this.toRoute);
         }
-        console.log(res);
       },err => {
         console.log(err);
       });

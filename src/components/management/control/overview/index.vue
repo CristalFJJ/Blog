@@ -161,8 +161,13 @@ export default {
   methods:{
     init(){
       let userInfo = this.$utils.Account.getUserInfo();
-      this.userName = userInfo.userName;
-      this.searchArticle();
+      if(userInfo){
+        this.userName = userInfo.userName;
+        this.searchArticle();
+      }else{
+        this.$router.push({path:'/login',name:'login',query:{to:'/management'}})
+      }
+      
     },
     searchArticle(){
       let obj = {

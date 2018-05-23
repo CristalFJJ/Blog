@@ -82,7 +82,7 @@ export default {
       }
     },
     goLogin(){
-      this.$router.push({path:'/login',name:'login',params:{to:this.from}});
+      this.$router.push({path:'/login',name:'login',query:{to:this.from}});
     },
     cancel(){
       
@@ -116,7 +116,7 @@ export default {
             this.userInfo.msg = '';
           }
         },err => {
-
+          console.log(err);
         })
       }
     }

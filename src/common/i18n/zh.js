@@ -5,27 +5,27 @@ export const zh = {
   Header: {
     title: "Cristal Blog",
     navs: [{
-      text: "Archives",
+      name: "archives",
       route: "/archives",
       ifShow: true,
 		},
 		{
-      text: "Share",
+      name: "share",
       route: "/share",
       ifShow: true,
 		},
 		{
-      text: "About",
+      name: "about",
       route: "/about",
       ifShow: true,
     },
     {
-      text: "management",
+      name: "management",
       route: "/login",
       ifShow: true,
     },
     {
-      text: "Search",
+      name: "search",
       route: "/search",
       ifShow: true,
       icon: 'search'

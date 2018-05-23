@@ -11,15 +11,14 @@
           <p class="about-page-content-about">我是 Cristal ...</p>
           <h3 style="margin-top:20px"><span>#</span> 相关社区</h3>
           <ul class="about-community">
-            <li><a href="https://juejin.im/user/5ad619acf265da239236daa1">juejin</a></li>
-            <li><a href="https://segmentfault.com/u/cristal">SegmentFault</a></li>
-            <li><a href="https://www.zhihu.com/people/cris-76-27/activities">zhihu</a></li>
+            <li><a href="https://juejin.im/user/5ad619acf265da239236daa1" target="_blank">juejin</a></li>
+            <li><a href="https://segmentfault.com/u/cristal" target="_blank">SegmentFault</a></li>
+            <li><a href="https://www.zhihu.com/people/cris-76-27/activities" target="_blank">zhihu</a></li>
           </ul>
           <div class="personal-email">
             <input id="copy-substitute" ref="substitute" type="text">
             <p>个人邮箱: <a href="javaScript:void(0)" @click="copyEmail($event)">cristal_F@163.com</a></p>
           </div>
-          
         </div>
       </div>
     </div>
@@ -28,7 +27,6 @@
       <commentList class="about-page-comment-list" from="./postArticle" :dataArr="dataArr" @reply="reply" @replyDelete="replyDelete"></commentList>
       <pagination v-if="dataArr.length>0" class="pagination" :total="total" :rows="queryData.rows" :current-page='queryData.page' @pagechange="pagechange"></pagination>
     </div>
-    
   </div>
   
 </template>
@@ -138,7 +136,6 @@ export default {
       }
       
     }
-
     .about-page-content{
       margin-top: 20px;
       font-size: 14px;

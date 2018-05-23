@@ -152,7 +152,7 @@
         this.$emit('reply',{writer:val.writer,userInfo:val.userInfo,_id:val._id});
       },
       goLogin(){
-        this.$router.push({path:'/login',name:'login',params:{to:this.from}});
+        this.$router.push({path:'/login',name:'login',query:{to:this.from}});
       },
       cancel(){
         

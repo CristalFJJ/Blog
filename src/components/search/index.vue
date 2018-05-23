@@ -3,7 +3,7 @@
     <i-input @on-keypress="enterSearch" @on-click="search" :maxlength="30" v-model="searchVal" icon="search" placeholder="Enter something..."></i-input>
     <div class="search-tags">
       <p>👇 The following tabs can help you!</p>
-      <a class="bg-color-white" @click="searchTag(item.type)" href="javaScript:void(0)" v-for="(item,index) in tagArr" :key="index"># {{item.type}}（{{item.num}}）</a>
+      <a class="bg-color-white" @click="searchTag(item.type)" href="javaScript:void(0)" v-for="(item,index) in tagArr" :key="index"># {{item.label}}（{{item.num}}）</a>
     </div>
   </div>
 </template>
@@ -13,43 +13,7 @@ export default {
   data(){
     return{
       searchVal: '',
-      tagArr:[{
-        type: 'javaScript',
-        num: 10
-      },{
-        type: 'css',
-        num: 10
-      },{
-        type: 'html',
-        num: 10
-      },{
-        type: 'node',
-        num: 10
-      },{
-        type: 'javaScript',
-        num: 10
-      },{
-        type: 'node',
-        num: 10
-      },{
-        type: 'javaScript',
-        num: 10
-      },{
-        type: 'webpack',
-        num: 10
-      },{
-        type: 'hobby',
-        num: 10
-      },{
-        type: 'music',
-        num: 10
-      },{
-        type: 'book',
-        num: 10
-      },{
-        type: 'sing',
-        num: 10
-      },]
+      tagArr:[]
     }
   },
   mounted(){
@@ -61,7 +25,7 @@ export default {
     },
     statisticalLabel(){
       this.$api.statisticalLabel({},res=>{
-        console.log(res);
+        this.tagArr = res.data;
       },err=>{
         console.log(err);
       })

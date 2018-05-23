@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <!-- <canvas id="canvas"></canvas> -->
     <router-view></router-view>
     <Back-top :height="100" :bottom="100">
       <div class="top">TOP</div>
@@ -9,11 +8,12 @@
 </template>
 
 <script>
-import dotLine from './common/js/dot';
+import dotLine from './common/js/components/dot';
 export default {
   name: 'app',
   mounted () {
-    
+    console.log(dotLine);
+    dotLine('canvas');
   }
 }
 </script>
@@ -25,7 +25,7 @@ export default {
       position: absolute;
       left: 0;
       top: 0;
-      z-index: -1;
+      z-index: 40;
       background:transparent;
     }
     .top{

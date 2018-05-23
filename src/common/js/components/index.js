@@ -1,6 +1,8 @@
 import {CollapseTransition} from './ElCollapseTransition';
+import Loading from './loading';
 const components = [
   CollapseTransition,
+  Loading
 ];
 const install = function(Vue, opts = {}) {
   components.map(component => {
@@ -14,5 +16,6 @@ if (typeof window !== 'undefined' && window.Vue) {
 const moduleComponents = {
   install,
   CollapseTransition,
+  Loading
 }
 export default moduleComponents;

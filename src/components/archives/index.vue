@@ -13,6 +13,7 @@
         </div>
       </li>
     </ul>
+    <Loading :spinShow="spinShow"></Loading>
   </div>
 </template>
 
@@ -21,7 +22,8 @@ import { mapMutations } from "vuex";
 export default {
   data(){
     return{
-      dateArr: []
+      dateArr: [],
+      spinShow: false,
     }
   },
   mounted(){
@@ -30,6 +32,7 @@ export default {
   methods:{
     ...mapMutations(['selected_fn']),
     init(){
+      this.spinShow = true;
       this.search();
     },
     search(){
@@ -39,6 +42,9 @@ export default {
           res.data.forEach((item,index)=>{
             this.judgeDate(this.dateArr,item)
           });
+          setTimeout(()=>{
+            this.spinShow = false;
+          },500)
           resolve();
         },err=>{
           console.log(err); 

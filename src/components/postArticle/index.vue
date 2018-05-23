@@ -38,7 +38,7 @@
         </div>
       </transition>
     </div>
-    
+     <Loading :spinShow="spinShow"></Loading>
   </div>
 </template>
 
@@ -68,7 +68,8 @@ export default {
         label: '',
         message: [],
         content:''
-      }
+      },
+      spinShow: false,
     }
   },
   computed: {
@@ -98,7 +99,10 @@ export default {
       }else{
         this.dataArr = this.article.message;
       }
-
+      setTimeout(()=>{
+        this.spinShow = false;
+      },500)
+      
       this.directoryControl();
     },
     directoryControl(){ //目录显示
@@ -113,6 +117,7 @@ export default {
     },  
     searchDetail(val){ //获取文章信息
       return new Promise((resolve,reject)=>{
+        this.spinShow = true;
         this.$api.detailArticle(val,res=>{
           this.article = res.data;
           this.$nextTick().then(()=>{

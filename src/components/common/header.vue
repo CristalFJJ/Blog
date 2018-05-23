@@ -6,7 +6,7 @@
 				<ul class="flex-start header-list-pc">
 					<li v-for="(item,index) in route" :key="index" @click="goRoute(item,index)" :class="selected==index?'selected':''">
 						<Icon v-if="item.icon" type="search"></Icon>
-						<span v-else>{{item.text}}</span>
+						<span v-else>{{capitalized(item.name)}}</span>
 					</li>
 				</ul>
 				<ul class="flex-start header-list-phone">
@@ -17,7 +17,7 @@
 						</span>
 						<ul class="header-mobile-menu-list">
 							<li v-for="(item,index) in route" :key="index" @click="goRoute(item,index)" :class="selected==index?'selected':''">
-								<span v-if="!item.icon">{{item.text}}</span>
+								<span v-if="!item.icon">{{item.name}}</span>
 							</li>
 						</ul>
 					</li>
@@ -51,16 +51,23 @@ export default {
 			this.selected_fn(-1);
 			this.$router.push('/');
 		},
+		capitalized(str){
+			return str.substring(0,1).toUpperCase()+str.substring(1); 
+		},
 		goRoute(val,index) {
 			this.selected_fn(index);
-			if(val.text == "management"){
+			if(val.name == "management"){
 				let userInfo = this.$utils.Account.getUserInfo();
       	if(userInfo.userName){
-					this.$router.push('/management');
+					if(userInfo.level == 'supreme'){
+						this.$router.push('/management');
+					}else{
+						this.$router.push('/setting');
+					}
 					return;
 				}
 			}
-			this.$router.push(val.route);
+			this.$router.push({path:val.route,name:val.name,query:{to:`/${val.name}`}});
 		},
 		listenScroll(){
 			document.addEventListener('scroll',(e)=>{

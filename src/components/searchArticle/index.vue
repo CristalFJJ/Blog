@@ -13,6 +13,7 @@
         </div>
       </li>
     </ul>
+    <Loading :spinShow="spinShow"></Loading>
   </div>
 </template>
 
@@ -24,6 +25,7 @@ export default {
       dataArr: [],
       way: '',
       content: '',
+      spinShow: false,
     }
   },
   mounted(){
@@ -35,8 +37,12 @@ export default {
       let obj = this.$route.query;
       this.way = obj.way;
       this.content = obj.content;
+      this.spinShow = true;
       this.$api.searchArticle(obj,res=>{
         this.dataArr = res.data;
+        setTimeout(()=>{
+          this.spinShow = false;
+        },500)
       },err=>{
         console.log(err);
       })

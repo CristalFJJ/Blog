@@ -6,29 +6,33 @@
           <h1>Share</h1>
         </div>
         <div class="prose">
-          <p>突然发现想找书看的时候找不到，</p>
+          <p>记忆轻浅，只有在某个不经意的情境里，才会若有若无的想起</p>
           <p>所以</p>
-          <p>这里放一些我看过听过的值得一留的书籍、音乐、电影，作记录,</p>
-          <p>也做推荐，方便他人。</p>
+          <p>这里记录一些看过听过的值得一留的书籍、音乐、电影</p>
+          <p>留作痕迹</p>
         </div>
         <div class="share-page-content">
           <div class="music">
             <h3>
               音乐<span class="line"></span>
             </h3>
-            <p>《虚无的十字架》、《球状闪电》、《无声告白》、《霍乱时期的爱情》、《看见》、《活着》、《狼图腾》、《百年孤独》、《嫌疑人X的献身》、《白夜行》、《悟空传》、《地球往事》、《我是个算命先生》、《仙逆》、《求魔》、《黄金时代三部曲》、《他们最幸福》、《万物生长三部曲》、《活着活着就老了》、《解忧杂货店》、《目送》、《素年锦时》、《眠空》、《得未曾有》、《信息简史》、《君子之道》、《天舞纪》、《站在两个世界的边缘》、《1Q84》、《失乐园》、《诛仙》、《道可道》</p>
+            <p>
+              <a href="javaScript:void(0)" v-for="(item,index) in music" :key="index">《{{item}}》</a>
+            </p>
           </div>
           <div class="film">
             <h3>
               电影<span class="line"></span>
             </h3>
-            <p>《死神的精度》、《第36个故事》、《暗战》、《冲锋车》、《极品飞车》、《盛夏的方程式》、《秦时明月》、《罗小黑战记》</p>
+            <p><a href="javaScript:void(0)" v-for="(item,index) in film" :key="index">《{{item}}》</a></p>
           </div>
           <div class="book">
             <h3>
               书籍<span class="line"></span>
             </h3>
-            <p>《明日晴れるから》、《all of me – 张靓颖》、《车站－李健》、《在冬天和奶奶一起晒太阳 – 赵照》、《为你我受冷风吹 – 林忆莲》、《颓废 – 弦子》、《印象西湖雨 – 张靓颖》、《太多 – 陈冠蒲》、《她的改变 – 雷光夏》、《天作之合 – 赵季平》、《良人 – 邓福如》、《长头发 – 许佩哲》、《有梦的人 – 任贤齐》、《哭砂 – 叶倩文》、《距离 – 陈绮贞》、《We Are One – Kelly Sweet》、《Say Hello – Rosie Thoma》、《Life is like a boat – Rie fu》、《明日を信じて – 西村由紀江》、《同手同脚 – 林宜融》、《乱红 – 陈悦》、《I didn’t know – 张靓颖》、《相思 – 毛阿敏》</p>
+            <p>
+              <a href="javaScript:void(0)" v-for="(item,index) in book" :key="index">《{{item}}》</a>
+            </p>
           </div>
         </div>
       </div>
@@ -60,6 +64,42 @@ export default {
         page: 1,
         rows: 6
       },
+      music:[
+        '夜空中最亮的星',
+        '敢爱敢做',
+        '后来的我们',
+        '达尔文',
+        '风再起时',
+        '被驯服的象',
+        '不醉不会',
+        '祝君好',
+        'Ther',
+        '今天只做一件事',
+        '光年之外',
+        'Beautiful World',
+        '心中尚未崩坏的地方',
+        '盛夏光年',
+        '一路向北',
+        '一列绿皮',
+        '不来也不去',
+        '假如让我说下去',
+        '彩虹',
+        '知足',
+        '手写的重前',
+        'Croawtian Rhapsody'
+      ],
+      film:[
+        '头号玩家',
+        '小萝莉的猴神大叔',
+        '看不见的客人',
+        '华尔街之狼',
+        '大话西游',
+        '釜山行',
+      ],
+      book:[
+        '白夜行',
+        
+      ]
     }
   },
   mounted() {
@@ -146,6 +186,14 @@ export default {
         color: #5f5f5f;
       }
       
+    }
+    .music,.film,.book{
+      p{
+        a{
+          color: #5f5f5f;
+          margin-right: 10px;
+        }
+      }
     }
     .prose{
       margin-top: 20px;

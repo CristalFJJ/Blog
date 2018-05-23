@@ -128,6 +128,7 @@ router.beforeEach((to, from, next) => {
       bus.$msg('网络异常，请检查网络并刷新页面');
       return;
   }
+  
   loadingStart(to.name); // 加载loading条
   
   if (to.matched.some(res => res.meta.requiresAuth)) {

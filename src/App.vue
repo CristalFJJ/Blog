@@ -12,8 +12,7 @@ import dotLine from './common/js/components/dot';
 export default {
   name: 'app',
   mounted () {
-    console.log(dotLine);
-    dotLine('canvas');
+    // dotLine('canvas');
   }
 }
 </script>

@@ -11,14 +11,14 @@
           <p>这里记录一些看过听过的值得一留的书籍、音乐、电影</p>
           <p>留作痕迹</p>
         </div>
-        <audio src="http://music.163.com/api/song/detail/?id=25706282&ids=%5B25706282%5D&csrf_token=" controls>播放</audio>
+        <audio src="http://m2.music.126.net/0ljwNg6-tb38o87tSlxadw==/7978056371345236.mp3" controls>播放</audio>
         <div class="share-page-content">
           <div class="music">
             <h3>
               音乐<span class="line"></span>
             </h3>
             <p>
-              <a href="javaScript:void(0)" @click="playMusic(item)" v-for="(item,index) in music" :key="index">《{{item}}》</a>
+              <a href="javaScript:void(0)" @click="playMusic(item)" v-for="(item,index) in music" :key="index">《{{item.name}}》</a>
             </p>
           </div>
           <div class="film">
@@ -66,28 +66,110 @@ export default {
         rows: 6
       },
       music:[
-        '夜空中最亮的星',
-        '敢爱敢做',
-        '后来的我们',
-        '达尔文',
-        '风再起时',
-        '被驯服的象',
-        '不醉不会',
-        '祝君好',
-        'Ther',
-        '今天只做一件事',
-        '光年之外',
-        'Beautiful World',
-        '心中尚未崩坏的地方',
-        '盛夏光年',
-        '一路向北',
-        '一列绿皮',
-        '不来也不去',
-        '假如让我说下去',
-        '彩虹',
-        '知足',
-        '手写的重前',
-        'Croawtian Rhapsody'
+        {
+          name: '夜空中最亮的星',
+          singer: '逃跑计划',
+          id: 25706282,
+        },
+        {
+          name: '敢爱敢做',
+          singer: '林子祥',
+          id: 28253731,
+        },
+        {
+          name: '后来的我们',
+          singer: '五月天',
+          id: 28253731,
+        },
+        {
+          name: '达尔文',
+          singer: '蔡健雅',
+          id: 28253731,
+        },
+        {
+          name: '风再起时',
+          singer: '张国荣',
+          id: 28253731,
+        },
+        {
+          name: '被驯服的象',
+          singer: '蔡健雅',
+          id: 28253731,
+        },
+        {
+          name: '不醉不会',
+          singer: '田馥甄',
+          id: 28253731,
+        },
+        {
+          name: '祝君好',
+          singer: '张智霖',
+          id: 28253731,
+        },
+        {
+          name: 'Ther',
+          singer: 'Kraffa',
+          id: 28253731,
+        },
+        {
+          name: '今天只做一件事',
+          singer: '陈奕迅',
+          id: 28253731,
+        },
+        {
+          name: '光年之外',
+          singer: '邓紫棋',
+          id: 28253731,
+        },
+        {
+          name: 'Beautiful World',
+          singer: 'Westlife',
+          id: 28253731,
+        },
+        {
+          name: '心中尚未崩坏的地方 World',
+          singer: '五月天',
+          id: 28253731,
+        },
+        {
+          name: '盛夏光年',
+          singer: '五月天',
+          id: 28253731,
+        },
+        {
+          name: '一路向北',
+          singer: '周杰伦',
+          id: 28253731,
+        },
+        {
+          name: '一列绿皮',
+          singer: '伏仪',
+          id: 28253731,
+        },
+        {
+          name: '不来也不去',
+          singer: '陈奕迅',
+        },
+        {
+          name: '假如让我说下去',
+          singer: '杨千嬅',
+        },
+        {
+          name: '彩虹',
+          singer: '周杰伦',
+        },
+        {
+          name: '知足',
+          singer: '五月天',
+        },
+        {
+          name: '手写的重前',
+          singer: '周杰伦',
+        },
+        {
+          name: 'Croawtian Rhapsody',
+          singer: 'Maksim Mrvica',
+        },
       ],
       film:[
         '头号玩家',
@@ -176,12 +258,13 @@ export default {
     },
     playMusic(val){
       let params = {
-        s: val,
+        s: val.name,
         type: 1,
-        limit: 10
+        limit: 10,
+        singer: val.singer
       }
       this.$api.searchMusic(params,res=>{
-        console.log(res); 
+        console.log(JSON.parse(res.data)); 
       },err=>{
         console.log(err);
       })

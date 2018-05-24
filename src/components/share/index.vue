@@ -11,13 +11,14 @@
           <p>这里记录一些看过听过的值得一留的书籍、音乐、电影</p>
           <p>留作痕迹</p>
         </div>
+        <audio src="http://music.163.com/api/song/detail/?id=25706282&ids=%5B25706282%5D&csrf_token=" controls>播放</audio>
         <div class="share-page-content">
           <div class="music">
             <h3>
               音乐<span class="line"></span>
             </h3>
             <p>
-              <a href="javaScript:void(0)" v-for="(item,index) in music" :key="index">《{{item}}》</a>
+              <a href="javaScript:void(0)" @click="playMusic(item)" v-for="(item,index) in music" :key="index">《{{item}}》</a>
             </p>
           </div>
           <div class="film">
@@ -172,6 +173,18 @@ export default {
       this.$refs.substitute.select(); // 选中文本
       document.execCommand("copy"); // 执行浏览器复制命令
       this.$msg('拷贝成功',1.5,'success');
+    },
+    playMusic(val){
+      let params = {
+        s: val,
+        type: 1,
+        limit: 10
+      }
+      this.$api.searchMusic(params,res=>{
+        console.log(res); 
+      },err=>{
+        console.log(err);
+      })
     }
   }
 }
@@ -193,6 +206,11 @@ export default {
           color: #5f5f5f;
           margin-right: 10px;
         }
+      }
+    }
+    .film,.book{
+      a{
+        cursor: text;
       }
     }
     .prose{

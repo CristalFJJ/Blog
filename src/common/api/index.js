@@ -133,4 +133,8 @@ export default {
     apiPost(config.MESSAGE_REPLY,param,success,fail);
   },
   
+  //音乐
+  searchMusic(param,success,fail){ // 搜索音乐
+    apiGet(config.SEARCH_MUSIC,param,success,fail);
+  }
 }

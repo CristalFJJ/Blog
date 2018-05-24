@@ -209,6 +209,7 @@ export default {
     },
     handleBeforeUpload (file) {
       let reader = new FileReader(); 
+      console.log(file);
       //为文件读取成功设置事件  
       reader.onload = e => {
         this.$set(this.uploadList,'url', e.target.result);

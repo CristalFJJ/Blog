@@ -4,12 +4,14 @@
 			<div class="header space-between" >
 				<p class="header-name" @click="backIndex">{{$t('Common.name')}}.</p>
 				<ul class="flex-start header-list-pc">
+					<li class="music-button"><Icon type="music-note"></Icon></li>
 					<li v-for="(item,index) in route" :key="index" @click="goRoute(item,index)" :class="selected==index?'selected':''">
 						<Icon v-if="item.icon" type="search"></Icon>
 						<span v-else>{{capitalized(item.name)}}</span>
 					</li>
 				</ul>
 				<ul class="flex-start header-list-phone">
+					<li class="music-button"><Icon type="music-note"></Icon></li>
 					<li class="search-icon" :class="selected=='icon'?'selected':''" @click="goRoute({route: '/search'},'icon')"><Icon type="search"></Icon></li>
 					<li class="header-mobile-menu">
 						<span class="icon-menu cross">
@@ -98,6 +100,9 @@ header{
 		max-width:100%;
 		margin: auto;
 		height:70px;
+		.music-button{
+			margin-top: 5px;
+		}
 		.header-name{
 			margin-left: 30px; 
 			color: #313131;
@@ -195,7 +200,7 @@ header{
 				
 			}
 			.search-icon{
-				margin: 3px 20px 0 0;
+				margin: 3px 20px 0 20px;
 				i{
 					font-size:22px;
 				}

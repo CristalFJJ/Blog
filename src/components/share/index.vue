@@ -11,7 +11,7 @@
           <p>这里记录一些看过听过的值得一留的书籍、音乐、电影</p>
           <p>留作痕迹</p>
         </div>
-        <audio src="http://m2.music.126.net/0ljwNg6-tb38o87tSlxadw==/7978056371345236.mp3" controls>播放</audio>
+        <audio :src="musicUrl" controls>播放</audio>
         <div class="share-page-content">
           <div class="music">
             <h3>
@@ -51,6 +51,7 @@
 import comment from '../common/comment';
 import commentList from '../common/commentList';
 import pagination from '../common/pagination';
+import {songList,filmList,bookList} from '../common/list.js';
 export default {
   components:{
     comment,
@@ -61,128 +62,14 @@ export default {
     return {
       dataArr:[],
       total: 1,
+      musicUrl: '',
       queryData:{
         page: 1,
         rows: 6
       },
-      music:[
-        {
-          name: '夜空中最亮的星',
-          singer: '逃跑计划',
-          id: 25706282,
-        },
-        {
-          name: '敢爱敢做',
-          singer: '林子祥',
-          id: 28253731,
-        },
-        {
-          name: '后来的我们',
-          singer: '五月天',
-          id: 28253731,
-        },
-        {
-          name: '达尔文',
-          singer: '蔡健雅',
-          id: 28253731,
-        },
-        {
-          name: '风再起时',
-          singer: '张国荣',
-          id: 28253731,
-        },
-        {
-          name: '被驯服的象',
-          singer: '蔡健雅',
-          id: 28253731,
-        },
-        {
-          name: '不醉不会',
-          singer: '田馥甄',
-          id: 28253731,
-        },
-        {
-          name: '祝君好',
-          singer: '张智霖',
-          id: 28253731,
-        },
-        {
-          name: 'Ther',
-          singer: 'Kraffa',
-          id: 28253731,
-        },
-        {
-          name: '今天只做一件事',
-          singer: '陈奕迅',
-          id: 28253731,
-        },
-        {
-          name: '光年之外',
-          singer: '邓紫棋',
-          id: 28253731,
-        },
-        {
-          name: 'Beautiful World',
-          singer: 'Westlife',
-          id: 28253731,
-        },
-        {
-          name: '心中尚未崩坏的地方 World',
-          singer: '五月天',
-          id: 28253731,
-        },
-        {
-          name: '盛夏光年',
-          singer: '五月天',
-          id: 28253731,
-        },
-        {
-          name: '一路向北',
-          singer: '周杰伦',
-          id: 28253731,
-        },
-        {
-          name: '一列绿皮',
-          singer: '伏仪',
-          id: 28253731,
-        },
-        {
-          name: '不来也不去',
-          singer: '陈奕迅',
-        },
-        {
-          name: '假如让我说下去',
-          singer: '杨千嬅',
-        },
-        {
-          name: '彩虹',
-          singer: '周杰伦',
-        },
-        {
-          name: '知足',
-          singer: '五月天',
-        },
-        {
-          name: '手写的重前',
-          singer: '周杰伦',
-        },
-        {
-          name: 'Croawtian Rhapsody',
-          singer: 'Maksim Mrvica',
-        },
-      ],
-      film:[
-        '头号玩家',
-        '小萝莉的猴神大叔',
-        '看不见的客人',
-        '华尔街之狼',
-        '大话西游',
-        '釜山行',
-      ],
-      book:[
-        '白夜行',
-        
-      ]
+      music: songList,
+      film: filmList,
+      book: bookList
     }
   },
   mounted() {
@@ -260,11 +147,10 @@ export default {
       let params = {
         s: val.name,
         type: 1,
-        limit: 10,
         singer: val.singer
       }
       this.$api.searchMusic(params,res=>{
-        console.log(JSON.parse(res.data)); 
+        this.musicUrl = res.data;
       },err=>{
         console.log(err);
       })

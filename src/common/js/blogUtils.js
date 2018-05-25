@@ -36,7 +36,7 @@ export const CommonUtils = {
     window.onresize = '';
 	},
 	getDefaultPath(){ //返回入口面
-		window.location.href = window.location.origin;
+		window.location.href = window.location.origin + '/#/login';
   },
   regValidator(regx, value) {
     /**

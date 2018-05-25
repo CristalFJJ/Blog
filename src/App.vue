@@ -4,13 +4,18 @@
     <Back-top :height="100" :bottom="100">
       <div class="top">TOP</div>
     </Back-top>
+    <songList class="app-song-list"></songList>
   </div>
 </template>
 
 <script>
 import dotLine from './common/js/components/dot';
+import songList from './components/common/songList';
 export default {
   name: 'app',
+  components: {
+    songList
+  },
   mounted () {
     // dotLine('canvas');
   }

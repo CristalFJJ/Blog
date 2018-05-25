@@ -170,6 +170,13 @@ div,p,ul,li{
   transform: translateY(-70px);
 }
 
+.music-enter-active, .music-leave-active {
+  transition: 1s;
+}
+.music-enter, .music-leave-to {
+  transform: translateY(220px);
+}
+
 .appear-enter-active, .appear-leave-active {
   transition: 0.5s;
 }
@@ -229,3 +236,19 @@ div,p,ul,li{
     opacity: 1;
   }
 }
+
+@keyframes twinkling{   /*透明度由0到1*/  
+  0%{  
+    color: #313131;             /*透明度为0*/  
+  } 
+  80%{
+    color: #be4040;             /*透明度为1*/  
+    box-shadow: 0px 0px 30px #be4040;
+    background-color: rgba(190, 64, 64, 0.3);
+  } 
+  100%{  
+    color: #be4040;             /*透明度为1*/  
+    box-shadow: 0px 0px 30px #be4040;
+    background-color: rgba(190, 64, 64, 0.3);
+  }  
+}  

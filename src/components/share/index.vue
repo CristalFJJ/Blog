@@ -11,14 +11,13 @@
           <p>这里记录一些看过听过的值得一留的书籍、音乐、电影</p>
           <p>留作痕迹</p>
         </div>
-        <audio :src="musicUrl" controls>播放</audio>
         <div class="share-page-content">
           <div class="music">
             <h3>
               音乐<span class="line"></span>
             </h3>
             <p>
-              <a href="javaScript:void(0)" @click="playMusic(item)" v-for="(item,index) in music" :key="index">《{{item.name}}》</a>
+              <a href="javaScript:void(0)" @click="playMusic(item,index)" v-for="(item,index) in music" :key="index">《{{item.name}}》</a>
             </p>
           </div>
           <div class="film">
@@ -143,17 +142,12 @@ export default {
       document.execCommand("copy"); // 执行浏览器复制命令
       this.$msg('拷贝成功',1.5,'success');
     },
-    playMusic(val){
+    playMusic(val,index){
       let params = {
-        s: val.name,
-        type: 1,
-        singer: val.singer
+        val: val,
+        index: index
       }
-      this.$api.searchMusic(params,res=>{
-        this.musicUrl = res.data;
-      },err=>{
-        console.log(err);
-      })
+      window.bus.$emit('playMusic',params);
     }
   }
 }

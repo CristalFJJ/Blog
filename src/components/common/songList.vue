@@ -1,30 +1,112 @@
 <template>
   <div class="music-list">
-    <ul>
-      <li class="music-list-button">
-        <span class="list-control" :class="playMusic?'list-play':'list-pause'" @click="switchPlay">
-          <span class="list-control-icon"></span>
-        </span>
-      </li>
-      <li class="music-list-detail" v-for="(item,index) in songArr" :key="index" >
-        <span>{{item.name}} - {{item.singer}}</span>
-      </li>
-    </ul>
+    <audio :src="musicUrl" id="audio" autoplay @pause="pause" @play="play" @ended="ended"></audio>
+    <div class="music-list-button">
+      <span class="list-control" :class="playMusic?'list-pause':'list-play'" @click="switchPlay">
+        <span class="list-control-icon"></span>
+      </span>
+    </div>
+    <!-- <scroll-bar> -->
+      <div class="scroll-bar">
+        <ul>
+          <li class="music-list-detail" :class="musicIndex===index?'selectMusic':''" v-for="(item,index) in songArr" :key="index" @click="listenMusic(item,index)">
+            <span>{{item.name}} - {{item.singer}}</span>
+          </li>
+        </ul>
+      </div>
+    <!-- </scroll-bar> -->
+    
   </div>
 </template>
 
 <script>
-import {songList} from './list.js'
+import {songList} from './list.js';
+import { mapState, mapMutations } from "vuex";
 export default {
   data(){
     return{
       songArr: songList,
-      playMusic: false,
+      musicUrl: '',
+      musicIndex: '',
     }
   },
+  computed: {
+    ...mapState({
+      playMusic: state => state.Common.playMusic, // 是否播放
+    })
+  },
+  mounted () {
+    this.init();
+  },
   methods:{
-    switchPlay(){
-      this.playMusic = !this.playMusic;
+    ...mapMutations(['play_music_fn']),
+    init(){
+      window.bus.$on('playMusic',res=>{
+        this.listenMusic(res.val,res.index);
+      })
+    },
+    pause(){
+      this.play_music_fn(false);
+    },
+    play(){
+      this.play_music_fn(true);
+    },
+    ended(){
+      let index = 0;
+      if(this.musicIndex == this.songArr.length - 1){
+        index = 0;
+      }else{
+        index = this.musicIndex + 1;
+      }
+      this.listenMusic(this.songArr[index],index);
+    },
+    async switchPlay(){
+      if(this.musicUrl === ''){
+        await this.listenMusic(this.songArr[0],0);
+      }
+      let audio = document.getElementById('audio');
+      if(audio.paused) {
+        audio.play();
+      }else{
+        audio.pause();
+      } 
+    },
+    listenMusic(val,index){
+      return new Promise((resolve,reject)=>{
+        let params = {
+          s: val.name,
+          type: 1,
+          singer: val.singer
+        }
+        let audio = document.getElementById('audio');
+        if(this.musicIndex === index){
+          if(audio.paused) {
+            audio.play();
+          }else{
+            audio.pause();
+          }
+          resolve();
+        }else{
+          console.log(params);
+          this.$api.searchMusic(params,res=>{
+            this.musicIndex = index;
+            this.musicUrl = res.data;
+            console.log(this.musicUrl);
+            resolve()
+          },err=>{
+            reject(err);
+            console.log(err);
+          })
+        }
+        
+      })
+      
+    }
+  },
+  watch: {
+    musicIndex:function(val){
+      let dom = document.getElementsByClassName('music-list-detail')[val];
+      dom.parentNode.scrollTop = dom.offsetTop - 46;
     }
   }
 }
@@ -35,13 +117,10 @@ export default {
     width: 100%;
     position: fixed;
     bottom: 0;
-    ul{
-      background-color: rgba(26,26,26,0.81); 
-      li{
-        text-align: center;
-      }
-    }
+    z-index: 999;
+    background-color: rgba(26,26,26,0.81); 
     .music-list-button{
+      text-align: center;
       width: 100%;
       height: 48px;
       color: #fff;
@@ -104,13 +183,36 @@ export default {
         }
       }
     }
+    .scroll-bar{
+      width: 100%;
+      overflow: hidden;
+    }
+    ul{
+      height: 190px;
+      width: 100%;
+      box-sizing: content-box;
+      padding-right: 20px; 
+      overflow-y: scroll;
+      overflow-x: hidden;
+      li{
+        box-sizing: content-box;
+        width: calc(100% - 20px); 
+        text-align: center;
+        &:hover{
+          background: rgba(0,0,0,0.7);
+          color: #df846c;
+        }
+      }
+      .selectMusic{
+        background: rgba(0,0,0,0.7);
+        color: #df846c;
+      }
+    }
     .music-list-detail{
       line-height: 24px;
       padding: 6px 24px;
       color: #999;
-      span{
-        cursor: pointer;
-      }
+      cursor: pointer;
     }
   }
   

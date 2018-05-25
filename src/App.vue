@@ -4,17 +4,25 @@
     <Back-top :height="100" :bottom="100">
       <div class="top">TOP</div>
     </Back-top>
-    <songList class="app-song-list"></songList>
+    <transition name="music">
+      <songList v-show="musicShow" class="app-song-list"></songList>
+    </transition>
   </div>
 </template>
 
 <script>
 import dotLine from './common/js/components/dot';
 import songList from './components/common/songList';
+import { mapState} from "vuex";
 export default {
   name: 'app',
   components: {
     songList
+  },
+  computed: {
+    ...mapState({
+      musicShow: state => state.Common.musicShow, // 是否显示
+    })
   },
   mounted () {
     // dotLine('canvas');

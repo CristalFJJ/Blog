@@ -25,7 +25,7 @@ export const songList = [
   },
   {
     name: '不醉不会',
-    singer: '田馥甄',
+    singer: '徐佳莹',
   },
   {
     name: '祝君好',

@@ -42,4 +42,4 @@ new Vue({
   template: '<App/>',
   components: { App }
 })
-console.log(Vue.options.components);
+// console.log(Vue.options.components);

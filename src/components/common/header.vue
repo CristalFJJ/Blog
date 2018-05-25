@@ -4,7 +4,7 @@
 			<div class="header space-between" >
 				<p class="header-name" @click="backIndex">{{$t('Common.name')}}.</p>
 				<ul class="flex-start header-list-pc">
-					<li class="music-button"><Icon type="music-note"></Icon></li>
+					<li class="music-button" @click="musicShowControl"><Icon type="music-note" :class="playMusic?'twinkling':''"></Icon></li>
 					<li v-for="(item,index) in route" :key="index" @click="goRoute(item,index)" :class="selected==index?'selected':''">
 						<Icon v-if="item.icon" type="search"></Icon>
 						<span v-else>{{capitalized(item.name)}}</span>
@@ -37,18 +37,24 @@ export default {
 			route: this.$t('Header.navs'),
 			headerShow: true,
 			scrollTop:0,
+			musicTimer: '', //音乐闪烁定时器
 		}
 	},
 	computed: {
     ...mapState({
-      selected: state => state.Common.selected, // 当前选择
+			selected: state => state.Common.selected, // 当前选择
+			playMusic: state => state.Common.playMusic, // 是否播放
+			musicShow: state => state.Common.musicShow, // 是否播放
     })
   },
 	mounted () {
 		this.listenScroll();
 	},
 	methods: {
-		...mapMutations(['selected_fn']),
+		...mapMutations(['selected_fn','music_show_fn']),
+		musicShowControl(){
+			this.music_show_fn(!this.musicShow);
+		},
 		backIndex(){
 			this.selected_fn(-1);
 			this.$router.push('/');
@@ -102,6 +108,10 @@ header{
 		height:70px;
 		.music-button{
 			margin-top: 5px;
+		}
+		.twinkling{
+			border-radius: 100px;
+			animation: twinkling 1s ease-in-out infinite alternate;
 		}
 		.header-name{
 			margin-left: 30px; 

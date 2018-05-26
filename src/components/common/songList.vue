@@ -196,7 +196,7 @@ export default {
       overflow-x: hidden;
       li{
         box-sizing: content-box;
-        width: calc(100% - 20px); 
+        width: calc(100% - 32px); 
         text-align: center;
         &:hover{
           background: rgba(0,0,0,0.7);
@@ -206,6 +206,11 @@ export default {
       .selectMusic{
         background: rgba(0,0,0,0.7);
         color: #df846c;
+      }
+      @media only screen and (max-width: 580px) {
+        li{
+          width: auto;
+        }
       }
     }
     .music-list-detail{

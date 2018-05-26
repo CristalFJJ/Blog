@@ -372,6 +372,17 @@ export default {
       height: 40px;
       max-width: 400px;
     }
+    @media only screen and (max-width: 580px) {
+      .ivu-input-group {
+        width: 80%;
+      }
+      .login-forgot {
+        width: 80%;
+      }
+      .ivu-btn-long{
+        width: 80%;
+      }
+    }
   }
 }
 </style>

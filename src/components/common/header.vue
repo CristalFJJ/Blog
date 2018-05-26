@@ -11,7 +11,7 @@
 					</li>
 				</ul>
 				<ul class="flex-start header-list-phone">
-					<li class="music-button"><Icon type="music-note"></Icon></li>
+					<li class="music-button" @click="musicShowControl"><Icon type="music-note" :class="playMusic?'twinkling':''"></Icon></li>
 					<li class="search-icon" :class="selected=='icon'?'selected':''" @click="goRoute({route: '/search'},'icon')"><Icon type="search"></Icon></li>
 					<li class="header-mobile-menu">
 						<span class="icon-menu cross">
@@ -44,7 +44,7 @@ export default {
     ...mapState({
 			selected: state => state.Common.selected, // 当前选择
 			playMusic: state => state.Common.playMusic, // 是否播放
-			musicShow: state => state.Common.musicShow, // 是否播放
+			musicShow: state => state.Common.musicShow, // 是否显示
     })
   },
 	mounted () {
@@ -53,6 +53,7 @@ export default {
 	methods: {
 		...mapMutations(['selected_fn','music_show_fn']),
 		musicShowControl(){
+			console.log(this.musicShow);
 			this.music_show_fn(!this.musicShow);
 		},
 		backIndex(){

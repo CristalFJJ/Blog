@@ -135,7 +135,7 @@ export default {
 			font-size: 16px;
 		}
 		.change-word{
-			height: 24px;
+			// height: 24px;
 			font-size: 16px;
 			color: white;
 		}
@@ -149,5 +149,53 @@ export default {
 		font-size: 14px;
 		line-height: 50px;
 	}
+	@media only screen and (max-width: 880px) {
+    .footer-content{
+			padding: 5px 0 5px;
+			li{
+				margin: 5px auto 5px;
+			}
+			li:nth-child(1){
+				font-weight: 700;
+				font-size: 22px;
+			}
+			li:nth-child(2){
+				letter-spacing: 2px;
+				font-weight: 300;
+				font-size: 16px;
+			}
+			.change-word{
+				font-size: 16px;
+			}
+		}
+		>p{
+			line-height: 40px;
+		}
+  }
+  @media only screen and (max-width: 580px) {
+    .footer-content{
+			padding: 2px 0 2px;
+			li{
+				margin: 2px auto 2px;
+			}
+			li:nth-child(1){
+				font-weight: 600;
+				font-size: 16px;
+			}
+			li:nth-child(2){
+				letter-spacing: 2px;
+				font-weight: 300;
+				font-size: 12px;
+			}
+			.change-word{
+				// height: 24px;
+				font-size: 12px;
+			}
+		}
+		>p{
+			line-height: 30px;
+			font-size: 12px;
+		}
+  }
 }
 </style>

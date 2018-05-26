@@ -128,7 +128,7 @@ export default {
     this.init();
   },
   methods: {
-    ...mapMutations(['selected_fn']),
+    ...mapMutations(['selected_fn','music_show_fn']),
     init(){
       let userInfo = this.$utils.Account.getUserInfo();
       this.spinShow = true;
@@ -229,6 +229,7 @@ export default {
         this.$utils.Storage.remove("userInfo");
         this.$router.push("/login");
         this.selected_fn(-1);
+        this.music_show_fn(false);
       },err =>{
         this.$router.push("/login");
         this.selected_fn(-1);

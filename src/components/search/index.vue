@@ -81,7 +81,7 @@ export default {
     .search-tags{
       padding: 15px 0;
       text-align: center;
-      min-height: calc(100vh - 350px);
+      min-height: calc(100vh - 330px);
       p{
         margin: 20px 0 0;
         font-size: 14px;
@@ -102,6 +102,16 @@ export default {
         &:hover{
           color: #eb5055;
         }
+      }
+    }
+    @media only screen and (max-width: 880px) {
+      .search-tags{
+        min-height: calc(100vh - 300px);
+      }
+    }
+    @media only screen and (max-width: 580px) {
+      .search-tags{
+        min-height: calc(100vh - 240px);
       }
     }
   }

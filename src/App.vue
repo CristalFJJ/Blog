@@ -48,7 +48,7 @@ export default {
       background: #FFF;
       color: #333;
       border: 2px solid #333;
-      font-weight: 700;
+      font-weight: 700; 
     }
     @media only screen and (max-width: 880px) {
       .top{

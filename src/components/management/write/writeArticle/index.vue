@@ -210,7 +210,7 @@ export default {
       this.article.userName = userInfo.userName;
       this.article.level = userInfo.level;
       this.$api.createDraft(this.article,res=>{
-        this.$router.push("/management/draft");
+        this.$msg('备份入草稿箱',1.5,'success');
       },err=>{
         console.log('err',err);
       })

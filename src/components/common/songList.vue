@@ -22,6 +22,7 @@
 <script>
 import {songList} from './list.js';
 import { mapState, mapMutations } from "vuex";
+import {SERVICE} from '../../common/api/config';
 export default {
   data(){
     return{
@@ -87,10 +88,9 @@ export default {
           }
           resolve();
         }else{
-          console.log(params);
           this.$api.searchMusic(params,res=>{
             this.musicIndex = index;
-            this.musicUrl = res.data;
+            this.musicUrl = SERVICE + res.data;
             console.log(this.musicUrl);
             resolve()
           },err=>{

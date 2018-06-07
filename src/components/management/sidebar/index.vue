@@ -117,9 +117,9 @@ export default {
       this.$api.userFind({_id:userInfo._id},res=>{
         let data = res.data;
         this.userName = data.userName;
-        if(data.portrait.includes('defaultAvatar')){
-          data.portrait = SERVICE+data.portrait
-        }
+        // if(data.portrait.includes('defaultAvatar')){
+        //   data.portrait = SERVICE + data.portrait
+        // }
         this.imgSrc = data.portrait;
       },err=>{
         console.log(err);

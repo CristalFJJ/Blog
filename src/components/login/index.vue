@@ -188,6 +188,7 @@ export default {
             }
             return;
           }
+          console.log(data);
           this.$router.push(this.toRoute);
         }else{
           this.$msg(res.msg);

@@ -3,7 +3,7 @@
     <div class="footer-content">
       <ul>
         <li>Cristal</li>
-        <li>学习好比苦行，需朝课暮诵，朝夕勤修务</li>
+        <li>选择适合自己的，而不是在追寻的路上逐渐迷失了方向。</li>
 				<li class="change-word">{{prefixWord}}<span v-for="(item,index) in changeWord" :key="index" :style="{color:makeColor()}">{{item}}</span></li>
       </ul>
     </div>

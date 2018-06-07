@@ -293,6 +293,16 @@ export default {
           margin: 20px 0;
           overflow-x: auto;
         }
+        pre{
+          background: black;
+          color: #FFF;
+          padding: 10px;
+          border-radius: 10px;
+        }
+        ul,li{
+          list-style: square;
+        }
+
       }
       .post-article-info{
         font-size: 14px;

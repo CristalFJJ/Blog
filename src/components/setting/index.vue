@@ -256,7 +256,7 @@ export default {
       font-size: 14px;
     }
     .ivu-i-input-group .ivu-i-input{
-      width: 250px;
+      // width: 250px;
     }
     .login-out-icon{
       font-size: 20px;

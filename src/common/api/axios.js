@@ -1,7 +1,8 @@
 import axios from 'axios';
 import {SERVICE} from './config';
 import {CommonUtils,Account,Storage} from '../js/blogUtils';
-axios.defaults.baseURL = SERVICE; // 设置默认服务地址
+// axios.defaults.baseURL = SERVICE; // 设置默认服务地址
+axios.defaults.baseURL = '/'; // 设置默认服务地址
 axios.defaults.timeout = 0; // 设置超时时间
 
 // http请求拦截器 var loadinginstace;

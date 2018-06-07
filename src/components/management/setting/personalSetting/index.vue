@@ -131,9 +131,9 @@ export default {
         this.formData.remarks = data.remarks || '';
         this.formData.email = data.email || '';
         this.formData.site = data.site || '';
-        if(data.portrait.includes('defaultAvatar')){
-          data.portrait = SERVICE + data.portrait
-        }
+        // if(data.portrait.includes('defaultAvatar')){
+        //   data.portrait = SERVICE + data.portrait
+        // }
         this.$set(this.uploadList,'url', data.portrait);
         this.$set(this.uploadList,'status', "finished");
       },err=>{

@@ -38,6 +38,7 @@ export default {
       this.way = obj.way;
       this.content = obj.content;
       this.spinShow = true;
+      console.log(obj)
       this.$api.searchArticle(obj,res=>{
         this.dataArr = res.data;
         setTimeout(()=>{
@@ -91,6 +92,7 @@ export default {
 <style lang="scss">
   .search-list-page{
     padding: 100px 20px 40px;
+    max-width: 940px;
     min-height: calc(100vh - 204px);
     .search-list-page-title{
       margin: 10px 0;

@@ -75,6 +75,7 @@ export default {
 
 <style lang="scss">
   .archive-page {
+    max-width: 940px;
     padding: 100px 20px 40px;
     .post-list-date{
       margin: 10px 0;

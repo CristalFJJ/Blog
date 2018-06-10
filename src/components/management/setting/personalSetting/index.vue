@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="management-personal-setting">
     <div class="personal-setting space-between">
       <div class="personal-setting-left">
         <p class="font-color-blue font-size-20">个人设置</p>
@@ -131,9 +131,9 @@ export default {
         this.formData.remarks = data.remarks || '';
         this.formData.email = data.email || '';
         this.formData.site = data.site || '';
-        // if(data.portrait.includes('defaultAvatar')){
-        //   data.portrait = SERVICE + data.portrait
-        // }
+        if(data.portrait.includes('defaultAvatar')){
+          data.portrait = SERVICE + data.portrait
+        }
         this.$set(this.uploadList,'url', data.portrait);
         this.$set(this.uploadList,'status', "finished");
       },err=>{
@@ -220,6 +220,7 @@ export default {
 </script>
 
 <style lang="scss">
+.management-personal-setting{
   .personal-setting{
     height: calc(100vh - 60px);
     background-color: #FFF;
@@ -331,4 +332,6 @@ export default {
       }
     }
   }
+}
+  
 </style>

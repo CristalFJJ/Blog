@@ -137,9 +137,9 @@ export default {
         this.formData.remarks = data.remarks || '';
         this.formData.email = data.email || '';
         this.formData.site = data.site || '';
-        // if(data.portrait.includes('defaultAvatar') && !data.portrait.includes('http')){
-        //   data.portrait = SERVICE + data.portrait
-        // }
+        if(data.portrait.includes('defaultAvatar') && !data.portrait.includes('http')){
+          data.portrait = SERVICE + data.portrait
+        }
         this.$set(this.uploadList,'url', data.portrait);
         this.$set(this.uploadList,'status', "finished");
         setTimeout(()=>{
@@ -256,7 +256,7 @@ export default {
       font-size: 14px;
     }
     .ivu-i-input-group .ivu-i-input{
-      // width: 250px;
+      width: 100%;
     }
     .login-out-icon{
       font-size: 20px;

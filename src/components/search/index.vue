@@ -3,7 +3,7 @@
     <i-input @on-keypress="enterSearch" @on-click="search" :maxlength="30" v-model="searchVal" icon="search" placeholder="Enter something..."></i-input>
     <div class="search-tags">
       <p>👇 The following tabs can help you!</p>
-      <a class="bg-color-white" @click="searchTag(item.type)" href="javaScript:void(0)" v-for="(item,index) in tagArr" :key="index"># {{item.label}}（{{item.num}}）</a>
+      <a class="bg-color-white" @click="searchTag(item.label)" href="javaScript:void(0)" v-for="(item,index) in tagArr" :key="index"># {{item.label}}（{{item.num}}）</a>
     </div>
   </div>
 </template>

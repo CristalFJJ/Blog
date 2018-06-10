@@ -10,10 +10,10 @@
 						<span v-else>{{capitalized(item.name)}}</span>
 					</li>
 				</ul>
-				<ul class="flex-start header-list-phone">
+				<ul class="flex-start header-list-phone" :class="phoneShow?'showClass':''">
 					<li class="music-button" @click="musicShowControl"><Icon type="music-note" :class="playMusic?'twinkling':''"></Icon></li>
 					<li class="search-icon" :class="selected=='icon'?'selected':''" @click="goRoute({route: '/search'},'icon')"><Icon type="search"></Icon></li>
-					<li class="header-mobile-menu">
+					<li class="header-mobile-menu" @click="phoneListShow">
 						<span class="icon-menu cross">
 							<span class="middle"></span>
 						</span>
@@ -36,8 +36,9 @@ export default {
 		return {
 			route: this.$t('Header.navs'),
 			headerShow: true,
-			scrollTop:0,
+			scrollTop: 0,
 			musicTimer: '', //音乐闪烁定时器
+			phoneShow: false, //手机列表显示
 		}
 	},
 	computed: {
@@ -53,7 +54,6 @@ export default {
 	methods: {
 		...mapMutations(['selected_fn','music_show_fn']),
 		musicShowControl(){
-			console.log(this.musicShow);
 			this.music_show_fn(!this.musicShow);
 		},
 		backIndex(){
@@ -64,6 +64,7 @@ export default {
 			return str.substring(0,1).toUpperCase()+str.substring(1); 
 		},
 		goRoute(val,index) {
+			this.phoneShow = false;
 			this.selected_fn(index);
 			if(val.name == "management"){
 				let userInfo = this.$utils.Account.getUserInfo();
@@ -76,6 +77,7 @@ export default {
 					return;
 				}
 			}
+			console.log(this.phoneShow)
 			this.$router.push({path:val.route,name:val.name,query:{to:`/${val.name}`}});
 		},
 		listenScroll(){
@@ -88,12 +90,20 @@ export default {
 				}
 				this.scrollTop = document.documentElement.scrollTop;
 			})
+		},
+		phoneListShow(){
+			this.phoneShow = !this.phoneShow;
+		}
+	},
+	watch: {
+		phoneShow:function(val,oldVal){
+			console.log(val)
 		}
 	}
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 header{
   position: fixed;
   z-index: 1000;
@@ -186,31 +196,36 @@ header{
 						background-color: #eee;
 					}
 				}
-				&:hover .icon-menu{
-					transform: rotateZ(360deg);
-				}
-				&:hover .cross::before{
-					top: 5px;
-					transform: rotate(45deg);
-					box-shadow: 0 0 0 #fff;
-					background: #eb5055;
-				}
-				&:hover .middle{
-					opacity: 0;
-					background: #eb5055;
-				}
-				&:hover .cross::after{
-					bottom: 5px;
-					transform: rotate(135deg);
-					box-shadow: 0 0 0 #fff;
-					background: #eb5055;
-				}
-				&:hover .header-mobile-menu-list{
+			}
+		}
+		.showClass{
+			.icon-menu{
+				transform: rotateZ(360deg);
+			}
+			.cross::before{
+				top: 5px;
+				transform: rotate(45deg);
+				box-shadow: 0 0 0 #fff;
+				background: #eb5055;
+			}
+			.middle{
+				opacity: 0;
+				background: #eb5055;
+			}
+			.cross::after{
+				bottom: 5px;
+				transform: rotate(135deg);
+				box-shadow: 0 0 0 #fff;
+				background: #eb5055;
+			}
+			.header-mobile-menu{
+				.header-mobile-menu-list{
 					transform: translateX(-94px);
 				}
-				
 			}
-			.search-icon{
+			
+		}
+		.search-icon{
 				margin: 3px 20px 0 20px;
 				i{
 					font-size:22px;
@@ -256,7 +271,7 @@ header{
 					transform-origin: 50% 50% 0;
 					background: #313131;
 				}
-			}
+			
 		}
 	}
 }

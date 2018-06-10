@@ -110,15 +110,16 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
   .home-page{
+    max-width: 940px;
     padding: 120px 20px 0;
   }
   @media only screen and (max-width: 880px) {
     .home-page{
       padding: 80px 0 0;
       .pagination{
-        margin: 25px 0 30px;
+        // margin: 25px 0 30px;
       }
       .artilce-list{
         li{
@@ -149,7 +150,7 @@ export default {
     }
   }
   .pagination{
-    margin: 30px 0 35px;
+    // margin: 30px 0 35px;
   }
   .artilce-list{
     li{

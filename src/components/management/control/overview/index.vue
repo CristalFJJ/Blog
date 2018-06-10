@@ -39,7 +39,7 @@
          <scroll-bar>
           <li>
               <span>2018/04/01</span>
-              <span>测试</span>
+              <span>测试</span> 
               <span>测试XXXXXXXXXXXXXXXXXXXXX</span>
           </li>
             <li>

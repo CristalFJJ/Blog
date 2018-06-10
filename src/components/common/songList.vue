@@ -90,7 +90,7 @@ export default {
         }else{
           this.$api.searchMusic(params,res=>{
             this.musicIndex = index;
-            // this.musicUrl = SERVICE + res.data;
+            this.musicUrl = SERVICE + res.data;
             this.musicUrl = res.data;
             resolve()
           },err=>{

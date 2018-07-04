@@ -1,6 +1,6 @@
 // export const SERVICE = 'http://192.168.0.24:3000';// 公司测试接口
-export const SERVICE = 'http://192.168.3.28:3000';// 测试接口
-// export const SERVICE = 'http://172.16.22.168:3000'; //正式接口
+// export const SERVICE = 'http://192.168.3.28:3000';// 测试接口
+export const SERVICE = 'http://47.106.202.109'; //正式接口
 
 export const API_PATH = '/blog/api';
 export const API_FULL = SERVICE + API_PATH;

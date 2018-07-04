@@ -7,7 +7,7 @@
 				<li class="change-word">{{prefixWord}}<span v-for="(item,index) in changeWord" :key="index" :style="{color:makeColor()}">{{item}}</span></li>
       </ul>
     </div>
-		<p>Copyright ©cristal.com All rights reserved.</p>
+		<p>Copyright ©www.cristalf.com All rights reserved.</p>
   </div>
 </template>
 

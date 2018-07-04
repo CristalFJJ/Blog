@@ -67,7 +67,7 @@ export default {
         passWord:[{validator: this.checkPassWord, trigger: 'blur' }],
         passWordAgain:[{validator: this.checkPassWord, trigger: 'blur'}]
       },
-      toRoute: '/',
+      toRoute: '/setting',
     }
   },
   computed:{

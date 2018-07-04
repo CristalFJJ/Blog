@@ -1,16 +1,16 @@
 export const songList = [
-  {
-    name: '夜空中最亮的星',
-    singer: '逃跑计划',
-  },
-  {
-    name: '敢爱敢做',
-    singer: '林子祥',
-  },
-  {
-    name: '后来的我们',
-    singer: '五月天',
-  },
+  // {
+  //   name: '夜空中最亮的星',
+  //   singer: '逃跑计划',
+  // },
+  // {
+  //   name: '敢爱敢做',
+  //   singer: '林子祥',
+  // },
+  // {
+  //   name: '后来的我们',
+  //   singer: '五月天',
+  // },
   {
     name: '达尔文',
     singer: '蔡健雅',
@@ -31,10 +31,10 @@ export const songList = [
     name: '祝君好',
     singer: '张智霖',
   },
-  {
-    name: 'Ther',
-    singer: 'Kraffa',
-  },
+  // {
+  //   name: 'Ther',
+  //   singer: 'Kraffa',
+  // },
   {
     name: '今天只做一件事',
     singer: '陈奕迅',
@@ -43,22 +43,22 @@ export const songList = [
     name: '光年之外',
     singer: 'G.E.M.邓紫棋',
   },
-  {
-    name: 'Beautiful World',
-    singer: 'Westlife',
-  },
-  {
-    name: '心中尚未崩坏的地方',
-    singer: '五月天',
-  },
-  {
-    name: '盛夏光年',
-    singer: '五月天',
-  },
-  {
-    name: '一路向北',
-    singer: '周杰伦',
-  },
+  // {
+  //   name: 'Beautiful World',
+  //   singer: 'Westlife',
+  // },
+  // {
+  //   name: '心中尚未崩坏的地方',
+  //   singer: '五月天',
+  // },
+  // {
+  //   name: '盛夏光年',
+  //   singer: '五月天',
+  // },
+  // {
+  //   name: '一路向北',
+  //   singer: '周杰伦',
+  // },
   {
     name: '一列绿皮',
     singer: '伏仪',
@@ -71,18 +71,18 @@ export const songList = [
     name: '假如让我说下去',
     singer: '杨千嬅',
   },
-  {
-    name: '你不是真正的快乐',
-    singer: '五月天',
-  },
-  {
-    name: '以父之名',
-    singer: '周杰伦',
-  },
-  {
-    name: 'Croawtian Rhapsody',
-    singer: 'Maksim Mrvica',
-  },
+  // {
+  //   name: '你不是真正的快乐',
+  //   singer: '五月天',
+  // },
+  // {
+  //   name: '以父之名',
+  //   singer: '周杰伦',
+  // },
+  // {
+  //   name: 'Croawtian Rhapsody',
+  //   singer: 'Maksim Mrvica',
+  // },
 ]
 
 export const filmList = [

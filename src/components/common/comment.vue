@@ -6,10 +6,10 @@
         <i-input v-model="userInfo.userName" disabled placeholder="昵称">
           <span slot="prepend">Name:</span>
         </i-input>
-        <i-input :title="userInfo.email" v-model="userInfo.email" disabled placeholder="个人邮箱">
+        <i-input :title="userInfo.email" v-model="userInfo.email" disabled placeholder="邮箱">
           <span slot="prepend">Email:</span>
         </i-input>
-        <i-input :title="userInfo.site" v-model="userInfo.site" disabled placeholder="个人网站地址">
+        <i-input :title="userInfo.site" v-model="userInfo.site" disabled placeholder="网站">
           <span slot="prepend">Site:</span>
         </i-input>
       </Form-item>
